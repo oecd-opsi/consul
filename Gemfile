@@ -97,6 +97,7 @@ group :development do
   gem "database_cleaner", "~> 1.7.0"
   gem "erb_lint", require: false
   gem "github_changelog_generator", "~> 1.15.0"
+  gem "lefthook"
   gem "mdl", "~> 0.5.0", require: false
   gem "rubocop", "~> 0.83.0", require: false
   gem "rubocop-performance", "~> 1.6.1", require: false
