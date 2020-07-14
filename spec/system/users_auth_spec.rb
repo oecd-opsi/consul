@@ -4,7 +4,8 @@ describe "Users" do
   context "Regular authentication" do
     context "Sign up" do
       scenario "Success" do
-        message = "You have been sent a message containing a verification link. Please click on this link to activate your account."
+        message = "You have been sent a message containing a verification link. "\
+                  "Please click on this link to activate your account."
         visit "/"
         click_link "Register"
 
@@ -102,7 +103,16 @@ describe "Users" do
   context "OAuth authentication" do
     context "Twitter" do
       let(:twitter_hash) { { provider: "twitter", uid: "12345", info: { name: "manuela" }} }
-      let(:twitter_hash_with_email) { { provider: "twitter", uid: "12345", info: { name: "manuela", email: "manuelacarmena@example.com" }} }
+      let(:twitter_hash_with_email) do
+        {
+          provider: "twitter",
+          uid: "12345",
+          info: {
+            name: "manuela",
+            email: "manuelacarmena@example.com"
+          }
+        }
+      end
       let(:twitter_hash_with_verified_email) do
         {
           provider: "twitter",
@@ -141,7 +151,8 @@ describe "Users" do
         click_link "Sign up with Twitter"
 
         expect(page).to have_current_path(new_user_session_path)
-        expect(page).to have_content "To continue, please click on the confirmation link that we have sent you via email"
+        expect(page).to have_content "To continue, please click on the confirmation link that"\
+                                      " we have sent you via email"
 
         confirm_email
         expect(page).to have_content "Your account has been confirmed"
@@ -158,7 +169,7 @@ describe "Users" do
         expect(page).to have_field("user_email", with: "manuelacarmena@example.com")
       end
 
-      scenario "Sign up, when no email was provided by OAuth provider" do
+      scenario "Sign up, without email provided by OAuth provider" do
         OmniAuth.config.add_mock(:twitter, twitter_hash)
 
         visit "/"
@@ -169,7 +180,8 @@ describe "Users" do
         fill_in "user_email", with: "manueladelascarmenas@example.com"
         click_button "Register"
 
-        expect(page).to have_content "To continue, please click on the confirmation link that we have sent you via email"
+        expect(page).to have_content "To continue, please click on the confirmation link"\
+                                      " that we have sent you via email"
 
         confirm_email
         expect(page).to have_content "Your account has been confirmed"
@@ -246,7 +258,8 @@ describe "Users" do
         expect(page).to have_field("user_email", with: "manuelacarmena@example.com")
       end
 
-      scenario "Try to register with the email of an already existing user, when no email was provided by oauth" do
+      scenario "Try to register with the email of an already existing user,"\
+               " without email provided by oauth" do
         create(:user, username: "peter", email: "manuela@example.com")
         OmniAuth.config.add_mock(:twitter, twitter_hash)
 
@@ -264,7 +277,8 @@ describe "Users" do
         fill_in "user_email", with: "somethingelse@example.com"
         click_button "Register"
 
-        expect(page).to have_content "To continue, please click on the confirmation link that we have sent you via email"
+        expect(page).to have_content "To continue, please click on the confirmation link"\
+                                     " that we have sent you via email"
 
         confirm_email
         expect(page).to have_content "Your account has been confirmed"
@@ -281,7 +295,8 @@ describe "Users" do
         expect(page).to have_field("user_email", with: "somethingelse@example.com")
       end
 
-      scenario "Try to register with the email of an already existing user, when an unconfirmed email was provided by oauth" do
+      scenario "Try to register with the email of an already existing user,"\
+               " when an unconfirmed email was provided by oauth" do
         create(:user, username: "peter", email: "manuelacarmena@example.com")
         OmniAuth.config.add_mock(:twitter, twitter_hash_with_email)
 
@@ -295,7 +310,8 @@ describe "Users" do
         fill_in "user_email", with: "somethingelse@example.com"
         click_button "Register"
 
-        expect(page).to have_content "To continue, please click on the confirmation link that we have sent you via email"
+        expect(page).to have_content "To continue, please click on the confirmation link"\
+                                     " that we have sent you via email"
 
         confirm_email
         expect(page).to have_content "Your account has been confirmed"
@@ -333,7 +349,8 @@ describe "Users" do
         click_link "Sign up with Wordpress"
 
         expect(page).to have_current_path(new_user_session_path)
-        expect(page).to have_content "To continue, please click on the confirmation link that we have sent you via email"
+        expect(page).to have_content "To continue, please click on the confirmation link"\
+                                      " that we have sent you via email"
 
         confirm_email
         expect(page).to have_content "Your account has been confirmed"
@@ -351,7 +368,10 @@ describe "Users" do
       end
 
       scenario "Try to register with username and email of an already existing user" do
-        create(:user, username: "manuela", email: "manuelacarmena@example.com", password: "judgementday")
+        create(:user,
+               username: "manuela",
+               email: "manuelacarmena@example.com",
+               password: "judgementday")
         OmniAuth.config.add_mock(:wordpress_oauth2, wordpress_hash)
 
         visit "/"
@@ -371,7 +391,8 @@ describe "Users" do
         click_button "Register"
 
         expect(page).to have_current_path(new_user_session_path)
-        expect(page).to have_content "To continue, please click on the confirmation link that we have sent you via email"
+        expect(page).to have_content "To continue, please click on the confirmation link"\
+                                      " that we have sent you via email"
 
         confirm_email
         expect(page).to have_content "Your account has been confirmed"
@@ -387,6 +408,242 @@ describe "Users" do
 
         visit edit_user_registration_path
         expect(page).to have_field("user_email", with: "manuela@consul.dev")
+      end
+    end
+
+    context "Auth0" do
+      let(:auth0_hash) { { provider: "auth0", uid: "12345", info: { name: "manuela" }} }
+      let(:auth0_hash_with_email) do
+        {
+          provider: "auth0",
+          uid: "12345",
+          info: {
+            name: "manuela",
+            email: "manuelacarmena@example.com"
+          }
+        }
+      end
+      let(:auth0_hash_with_verified_email) do
+        {
+          provider: "auth0",
+          uid: "12345",
+          info: {
+            name: "manuela",
+            email: "manuelacarmena@example.com",
+            verified: "1"
+          }
+        }
+      end
+
+      before do
+        Setting["feature.auth0_login"] = true
+      end
+
+      after do
+        Setting["feature.auth0_login"] = false
+      end
+
+      scenario "Sign up when Oauth provider has a verified email" do
+        OmniAuth.config.add_mock(:auth0, auth0_hash_with_verified_email)
+
+        visit "/"
+        click_link "Register"
+
+        click_link "Sign up with Auth0"
+
+        expect_to_be_signed_in
+
+        click_link "My account"
+        expect(page).to have_field("account_username", with: "manuela")
+
+        visit edit_user_registration_path
+        expect(page).to have_field("user_email", with: "manuelacarmena@example.com")
+      end
+
+      scenario "Sign up when Oauth provider has an unverified email" do
+        OmniAuth.config.add_mock(:auth0, auth0_hash_with_email)
+
+        visit "/"
+        click_link "Register"
+
+        click_link "Sign up with Auth0"
+
+        expect(page).to have_current_path(new_user_session_path)
+        expect(page).to have_content "To continue, please click on the confirmation link that"\
+                                      " we have sent you via email"
+
+        confirm_email
+        expect(page).to have_content "Your account has been confirmed"
+
+        visit "/"
+        click_link "Sign in"
+        click_link "Sign in with Auth0"
+        expect_to_be_signed_in
+
+        click_link "My account"
+        expect(page).to have_field("account_username", with: "manuela")
+
+        visit edit_user_registration_path
+        expect(page).to have_field("user_email", with: "manuelacarmena@example.com")
+      end
+
+      scenario "Sign up, when no email was provided by OAuth provider" do
+        OmniAuth.config.add_mock(:auth0, auth0_hash)
+
+        visit "/"
+        click_link "Register"
+        click_link "Sign up with Auth0"
+
+        expect(page).to have_current_path(finish_signup_path)
+        fill_in "user_email", with: "manueladelascarmenas@example.com"
+        click_button "Register"
+
+        expect(page).to have_content "To continue, please click on the confirmation link that we"\
+                                      " have sent you via email"
+
+        confirm_email
+        expect(page).to have_content "Your account has been confirmed"
+
+        visit "/"
+        click_link "Sign in"
+        click_link "Sign in with Auth0"
+        expect_to_be_signed_in
+
+        click_link "My account"
+        expect(page).to have_field("account_username", with: "manuela")
+
+        visit edit_user_registration_path
+        expect(page).to have_field("user_email", with: "manueladelascarmenas@example.com")
+      end
+
+      scenario "Cancelling signup" do
+        OmniAuth.config.add_mock(:auth0, auth0_hash)
+
+        visit "/"
+        click_link "Register"
+        click_link "Sign up with Auth0"
+
+        expect(page).to have_current_path(finish_signup_path)
+        click_link "Cancel login"
+
+        visit "/"
+        expect_not_to_be_signed_in
+      end
+
+      scenario "Sign in, user was already signed up with OAuth" do
+        user = create(:user, email: "manuela@consul.dev", password: "judgementday")
+        create(:identity, uid: "12345", provider: "auth0", user: user)
+        OmniAuth.config.add_mock(:auth0, auth0_hash)
+
+        visit "/"
+        click_link "Sign in"
+        click_link "Sign in with Auth0"
+
+        expect_to_be_signed_in
+
+        click_link "My account"
+        expect(page).to have_field("account_username", with: user.username)
+
+        visit edit_user_registration_path
+        expect(page).to have_field("user_email", with: user.email)
+      end
+
+      scenario "Try to register with the username of an already existing user" do
+        create(:user, username: "manuela", email: "manuela@consul.dev", password: "judgementday")
+        OmniAuth.config.add_mock(:auth0, auth0_hash_with_verified_email)
+
+        visit "/"
+        click_link "Register"
+        click_link "Sign up with Auth0"
+
+        expect(page).to have_current_path(finish_signup_path)
+
+        expect(page).to have_field("user_username", with: "manuela")
+
+        click_button "Register"
+
+        expect(page).to have_current_path(do_finish_signup_path)
+
+        fill_in "user_username", with: "manuela2"
+        click_button "Register"
+
+        expect_to_be_signed_in
+
+        click_link "My account"
+        expect(page).to have_field("account_username", with: "manuela2")
+
+        visit edit_user_registration_path
+        expect(page).to have_field("user_email", with: "manuelacarmena@example.com")
+      end
+
+      scenario "Try to register with the email of an already existing user,"\
+               " without email provided by oauth" do
+        create(:user, username: "peter", email: "manuela@example.com")
+        OmniAuth.config.add_mock(:auth0, auth0_hash)
+
+        visit "/"
+        click_link "Register"
+        click_link "Sign up with Auth0"
+
+        expect(page).to have_current_path(finish_signup_path)
+
+        fill_in "user_email", with: "manuela@example.com"
+        click_button "Register"
+
+        expect(page).to have_current_path(do_finish_signup_path)
+
+        fill_in "user_email", with: "somethingelse@example.com"
+        click_button "Register"
+
+        expect(page).to have_content "To continue, please click on the confirmation link"\
+                                      " that we have sent you via email"
+
+        confirm_email
+        expect(page).to have_content "Your account has been confirmed"
+
+        visit "/"
+        click_link "Sign in"
+        click_link "Sign in with Auth0"
+        expect_to_be_signed_in
+
+        click_link "My account"
+        expect(page).to have_field("account_username", with: "manuela")
+
+        visit edit_user_registration_path
+        expect(page).to have_field("user_email", with: "somethingelse@example.com")
+      end
+
+      scenario "Try to register with the email of an already existing user,"\
+                " when an unconfirmed email was provided by oauth" do
+        create(:user, username: "peter", email: "manuelacarmena@example.com")
+        OmniAuth.config.add_mock(:auth0, auth0_hash_with_email)
+
+        visit "/"
+        click_link "Register"
+        click_link "Sign up with Auth0"
+
+        expect(page).to have_current_path(finish_signup_path)
+
+        expect(page).to have_field("user_email", with: "manuelacarmena@example.com")
+        fill_in "user_email", with: "somethingelse@example.com"
+        click_button "Register"
+
+        expect(page).to have_content "To continue, please click on the confirmation"\
+                                      " link that we have sent you via email"
+
+        confirm_email
+        expect(page).to have_content "Your account has been confirmed"
+
+        visit "/"
+        click_link "Sign in"
+        click_link "Sign in with Auth0"
+        expect_to_be_signed_in
+
+        click_link "My account"
+        expect(page).to have_field("account_username", with: "manuela")
+
+        visit edit_user_registration_path
+        expect(page).to have_field("user_email", with: "somethingelse@example.com")
       end
     end
   end
