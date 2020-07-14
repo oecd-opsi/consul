@@ -309,6 +309,10 @@ sr:
       sign_in: Приступите користећи Twitter
       sign_up: Пријавите се користећи Twitter
       name: Twitter
+    auth0:
+      sign_in: Приступите користећи Auth0
+      sign_up: Пријавите се користећи Auth0
+      name: Auth0
     info_sign_in: "Приступите користећи:"
     info_sign_up: "Пријавите се користећи:"
     or_fill: "Или попуните следећи образац:"

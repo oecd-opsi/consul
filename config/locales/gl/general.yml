@@ -287,6 +287,10 @@ gl:
       sign_in: Entra con Twitter
       sign_up: Rexístrate con Twitter
       name: Twitter
+    auth0:
+      sign_in: Entra con Auth0
+      sign_up: Rexístrate con Auth0
+      name: Auth0
     info_sign_in: "Entra con:"
     info_sign_up: "Rexístrate con:"
     or_fill: "Ou cubre o formulario seguinte:"

@@ -337,6 +337,10 @@ ar:
       sign_in: تسجيل الدخول باستخدام Twitter
       sign_up: تسجيل باستخدام Twitter
       name: Twitter
+    auth0:
+      sign_in: تسجيل الدخول باستخدام Auth0
+      sign_up: تسجيل باستخدام Auth0
+      name: Auth0
     info_sign_in: "تسجيل الدخول باستخدام:"
     info_sign_up: "تسجيل الدخول باستخدام:"
     or_fill: "أو املأ النموذج التالي:"

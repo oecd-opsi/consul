@@ -288,6 +288,10 @@ bs:
       sign_in: Prijava preko Twittera
       sign_up: Otvori nalog preko Twittera
       name: Twitter
+    auth0:
+      sign_in: Prijava preko Auth0
+      sign_up: Otvori nalog preko Auth0
+      name: Auth0
     info_sign_in: "Prijavi se preko:"
     info_sign_up: "Otvori nalog preko:"
     or_fill: "Ili ispuni ovaj formular:"

@@ -101,7 +101,8 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 10
 
   # Setup a pepper to generate the encrypted password.
-  # config.pepper = '43d5d80fc0a95d9aa618ca138b747b1d7623020544249e2672bf3a19846fa47baa29117cba30c9edcd3fcd10d379cd65c485a3f931a7a19efb3a794796828432'
+  # config.pepper = '43d5d80fc0a95d9aa618ca138b747b1d7623020544249e2672bf3a19846fa47b'\
+  #                 'aa29117cba30c9edcd3fcd10d379cd65c485a3f931a7a19efb3a794796828432'
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
@@ -241,9 +242,23 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-  config.omniauth :twitter, Rails.application.secrets.twitter_key, Rails.application.secrets.twitter_secret
-  config.omniauth :facebook, Rails.application.secrets.facebook_key, Rails.application.secrets.facebook_secret, scope: "email", info_fields: "email,name,verified"
-  config.omniauth :google_oauth2, Rails.application.secrets.google_oauth2_key, Rails.application.secrets.google_oauth2_secret
+  config.omniauth :auth0,
+                  Rails.application.secrets.auth0_key,
+                  Rails.application.secrets.auth0_secret,
+                  Rails.application.secrets.auth0_domain,
+                  callback_path: "/users/auth/auth0/callback",
+                  scope: "openid email profile"
+  config.omniauth :twitter,
+                  Rails.application.secrets.twitter_key,
+                  Rails.application.secrets.twitter_secret
+  config.omniauth :facebook,
+                  Rails.application.secrets.facebook_key,
+                  Rails.application.secrets.facebook_secret,
+                  scope: "email",
+                  info_fields: "email,name,verified"
+  config.omniauth :google_oauth2,
+                  Rails.application.secrets.google_oauth2_key,
+                  Rails.application.secrets.google_oauth2_secret
   config.omniauth :wordpress_oauth2,
                   Rails.application.secrets.wordpress_oauth2_key,
                   Rails.application.secrets.wordpress_oauth2_secret,

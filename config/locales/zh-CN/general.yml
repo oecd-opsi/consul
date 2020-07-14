@@ -251,6 +251,10 @@ zh-CN:
       sign_in: 用Twitter登录
       sign_up: 用Twitter注册
       name: Twitter
+    auth0:
+      sign_in: 用Auth0登录
+      sign_up: 用Auth0注册
+      name: Auth0
     info_sign_in: "登录用："
     info_sign_up: "注册用："
     or_fill: "或者填写以下表格："
