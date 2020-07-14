@@ -74,7 +74,7 @@ so:
         other: "hal faalo%{count} Talooyin ku saabsan abuurista dood"
       votes:
         zero: Looma baahna codad
-        one: 1 Cod 
+        one: 1 Cod
         other: "%{count} codadka"
     edit:
       editing: Beddel dood
@@ -261,6 +261,10 @@ so:
       sign_in: Ku soo gal tuwiter
       sign_up: Iska diwangeli tuwitaar
       name: Tuwiitar
+    auth0:
+      sign_in: Ku soo gal Auth0
+      sign_up: Iska diwangeli Auth0
+      name: Auth0
     info_sign_in: "Ku saxiix:"
     info_sign_up: "Isku qor:"
     or_fill: "Ama buuxi foomka soo socda:"
@@ -375,7 +379,7 @@ so:
         other: "%{count} tageereyal"
       votes:
         zero: Looma baahna codad
-        one: 1 Cod 
+        one: 1 Cod
         other: "%{count} codadka"
       supports_necessary: "%{number} taageerada loo baahan yahay"
       total_percent: 100%

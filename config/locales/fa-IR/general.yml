@@ -128,7 +128,7 @@ fa:
     proposal: طرح های پیشنهادی
     proposal_notification: "اطلاعیه ها"
     budget/investment: سرمایه گذاری
-    poll/shift: تغییر 
+    poll/shift: تغییر
     poll/question/answer: پاسخ
     user: "حساب\n"
     verification/sms: تلفن
@@ -166,10 +166,12 @@ fa:
       name: فیس بوک
     twitter:
       name: توییتر
+    auth0:
+      name: Auth0
   proposals:
     create:
       form:
-        submit_button: ایجاد طرح 
+        submit_button: ایجاد طرح
     edit:
       form:
         submit_button: ذخیره تغییرات
@@ -207,7 +209,7 @@ fa:
         title: طرح های پیشنهادی
     new:
       form:
-        submit_button: ایجاد طرح 
+        submit_button: ایجاد طرح
     proposal:
       comments:
         zero: بدون نظر
@@ -215,7 +217,7 @@ fa:
         other: "%{count} نظرات"
       support: پشتیبانی
       supports:
-        zero: بدون پشتیبانی 
+        zero: بدون پشتیبانی
         one: 1 پشتیبانی
         other: "%{count}پشتیبانی"
       votes:
@@ -326,7 +328,7 @@ fa:
       deleted_budget_investment: این پروژه سرمایه گذاری حذف شده است
       proposals: طرح های پیشنهادی
       debates: مباحثه
-      budget_investments: بودجه سرمایه گذاری ها 
+      budget_investments: بودجه سرمایه گذاری ها
       comments: توضیحات
       actions: اقدامات
       filters:

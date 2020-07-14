@@ -251,6 +251,10 @@ zh-TW:
       sign_in: 用Twitter登錄
       sign_up: 用Twitter登記
       name: Twitter
+    auth0:
+      sign_in: 用Auth0登錄
+      sign_up: 用Auth0登記
+      name: Auth0
     info_sign_in: "登錄用："
     info_sign_up: "登記用："
     or_fill: "或填寫以下表格："

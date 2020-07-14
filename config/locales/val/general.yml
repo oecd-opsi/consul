@@ -261,6 +261,10 @@ val:
       sign_in: Entra amb Twitter
       sign_up: Regístrat amb Twitter
       name: Twitter
+    auth0:
+      sign_in: Entra amb Auth0
+      sign_up: Regístrat amb Auth0
+      name: Auth0
     info_sign_in: "Entra amb:"
     info_sign_up: "Regístrat amb:"
     or_fill: "O ompli el següent formulari:"

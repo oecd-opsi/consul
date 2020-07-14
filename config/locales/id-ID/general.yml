@@ -242,6 +242,10 @@ id:
       sign_in: Login dengan Google
       sign_up: Login dengan Google
       name: Twitter
+    auth0:
+      sign_in: Login dengan Auth0
+      sign_up: Login dengan Auth0
+      name: Auth0
     info_sign_in: "Masuk dengan:"
     info_sign_up: "Mendaftar dengan:"
     or_fill: "Atau mengisi formulir berikut:"

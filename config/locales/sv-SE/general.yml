@@ -294,6 +294,10 @@ sv:
       sign_in: Logga in med Twitter
       sign_up: Registrera dig med Twitter
       name: Twitter
+    auth0:
+      sign_in: Logga in med Auth0
+      sign_up: Registrera dig med Auth0
+      name: Auth0
     info_sign_in: "Logga in med:"
     info_sign_up: "Registrera dig med:"
     or_fill: "Eller fyll i följande formulär:"

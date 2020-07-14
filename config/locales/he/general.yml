@@ -311,6 +311,10 @@ he:
       sign_in: התחברות באמצעות טוויטר
       sign_up: הרשמה באמצעות טוויטר
       name: טוויטר
+    auth0:
+      sign_in: התחברות באמצעות Auth0
+      sign_up: הרשמה באמצעות Auth0
+      name: Auth0
     info_sign_in: "התחברות באמצעות:"
     info_sign_up: "הרשמה באמצעות:"
     or_fill: "או דרך מילוי הטופס הבא:"
