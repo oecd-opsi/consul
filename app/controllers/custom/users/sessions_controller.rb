@@ -1,7 +1,7 @@
 class Users::SessionsController < Devise::SessionsController
   def new
     if Setting["feature.auth0_login"]
-      redirect_to ENV["WORDPRESS_SIGN_UP_URL"]
+      redirect_to "#{ENV["WORDPRESS_SIGN_UP_URL"]}?redirect_uri=#{confirm_login_url}"
     else
       super
     end
@@ -17,7 +17,7 @@ class Users::SessionsController < Devise::SessionsController
       end
     end
 
-    def default_after_sign_out_for(resource)
+    def after_sign_out_path_for(resource)
       request.referer.present? && !request.referer.match("management") ? request.referer : super
     end
 
