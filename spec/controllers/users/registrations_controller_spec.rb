@@ -1,6 +1,22 @@
 require "rails_helper"
 
 describe Users::RegistrationsController do
+  context "when Auth0 login is enabled" do
+    before do
+      request.env["devise.mapping"] = Devise.mappings[:user]
+      Setting["feature.auth0_login"] = true
+    end
+
+    after do
+      Setting["feature.auth0_login"] = false
+    end
+
+    it "redirects user to WordPress Sign Up page" do
+      get :new
+      expect(response).to redirect_to(ENV["WORDPRESS_SIGN_UP_URL"])
+    end
+  end
+
   describe "POST check_username" do
     before do
       request.env["devise.mapping"] = Devise.mappings[:user]
