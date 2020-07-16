@@ -1,0 +1,233 @@
+<% menu_items = [
+  {
+    "title": "Government After Shock Event",
+    "href": "https://oecd-opsi.org/government-after-shock/"
+  },
+  {
+    "title": "Our Work",
+    "href": "https://oecd-opsi.org/our-work/",
+    "children": [
+      {
+        "title": "COVID-19 Responses",
+        "href": "https://oecd-opsi.org/covid-response/"
+      },
+      {
+        "title": "H2020",
+        "href": "https://oecd-opsi.org/our-work/horizon2020/"
+      },
+      {
+        "title": "Toolkit Navigator",
+        "href": "https://oecd-opsi.org/toolkit-navigator/"
+      },
+      {
+        "title": "Projects",
+        "href": "https://oecd-opsi.org/our-work/projects/"
+      },
+      {
+        "title": "Newsletter",
+        "href": "https://oecd-opsi.org/sign-up-to-opsis-newsletter/"
+      },
+      {
+        "title": "Publications",
+        "href": "https://oecd-opsi.org/our-work/publications/"
+      },
+      {
+        "title": "Case studies",
+        "href": "https://oecd-opsi.org/innovations"
+      }
+    ]
+  },
+  {
+    "title": "Blog",
+    "href": "https://oecd-opsi.org/blog/"
+  },
+  {
+    "title": "About OPSI",
+    "href": "https://oecd-opsi.org/about-observatory-of-public-sector-innovation/",
+    "children": [
+      {
+        "title": "About our partners",
+        "href": "https://oecd-opsi.org/about-observatory-of-public-sector-innovation/about-our-partners/"
+      },
+      {
+        "title": "About our in-country contacts",
+        "href": "https://oecd-opsi.org/about-observatory-of-public-sector-innovation/about-our-in-country-contacts/"
+      }
+    ]
+  },
+  # {
+  #   "title": "Log In",
+  #   "href": "https://oecd-opsi.org/login/?redirect_to=https%3A%2F%2Foecd-opsi.org%2F"
+  # },
+  # {
+  #   "title": "Join",
+  #   "href": "https://oecd-opsi.org/register/"
+  # }
+]
+
+if user_signed_in?
+
+else
+  menu_items.push(
+    { "title": "Log In", "href": new_user_session_path },
+    { "title": "Join", "href": new_user_registration_path },
+  )
+end
+
+if show_admin_menu?(current_user)
+  menu_items_admin = []
+  # menu_items_admin.push({ title: , href:  })
+
+  if current_user.administrator?
+    menu_items_admin.push({ title: t("layouts.header.administration"), href: admin_root_path })
+  end
+
+  if current_user.administrator? || current_user.moderator?
+    menu_items_admin.push({ title: t("layouts.header.moderation"), href: moderation_root_path })
+  end
+
+  if feature?(:budgets) &&
+            (current_user.administrator? || current_user.valuator?)
+    menu_items_admin.push({ title: t("layouts.header.valuation"), href: valuation_root_path })
+  end
+
+  if current_user.administrator? || current_user.manager?
+    menu_items_admin.push({ title: t("layouts.header.management"), href: management_sign_in_path })
+  end
+
+  if current_user.poll_officer? && Poll.current.any?
+    menu_items_admin.push({ title: t("layouts.header.officing"), href: officing_root_path })
+  end
+
+  menu_items.push({ title: t("layouts.header.administration_menu"), children: menu_items_admin })
+end
+
+%>
+
+<header class="c-header">
+  <div class="c-header__top">
+    <div class="row">
+      <div class="column hide-for-small-only">
+        <% if I18n.available_locales.size > 1 %>
+          <div class="float-right c-header__locale" id="js-locale" data-current-locale="<%= I18n.locale %>">
+            <form class="c-header__locale-form">
+              <label class="c-header__locale-label" for="locale-switcher">
+                <%= t("layouts.header.locale") %>
+              </label>
+              <select class="js-location-changer c-header__locale-select" name="locale-switcher" id="locale-switcher">
+                <% I18n.available_locales.map do |loc| %>
+                  <option <%= "selected" if loc == I18n.locale %>
+                          value="<%= current_path_with_query_params(locale: loc) %>">
+                    <%= name_for_locale(loc) %>
+                  </option>
+                <% end %>
+              </select>
+            </form>
+          </div>
+        <% end %>
+      </div>
+      <div class="column small-12 medium-6 large-4">
+        <div class="c-header__logo-wrapper clearfix">
+          <%= link_to root_path, accesskey: "0" do %>
+            <%= image_tag(image_path_for("logo_custom_header.png"), class: "float-left", alt: t("layouts.header.logo")) %>
+          <% end %>
+        </div>
+      </div>
+      <div class="column small-12 medium-6 large-8 hide-for-small-only c-header__desktop-menu-column">
+        <ul class="c-header__menu-list float-right">
+          <% menu_items.each do |item| %>
+            <li class="c-header__menu-element">
+              <% if item[:href].blank? %>
+                <a href="#" tabindex="-1" aria-hidden="true" class="c-header__menu-link"> <%= item[:title] %> </a>
+              <% else %>
+                <a href="<%= item[:href] %>" class="c-header__menu-link"> <%= item[:title] %> </a>
+              <% end %>
+              <% if item.has_key?(:children) %>
+                <div class="c-header__submenu">
+                  <div class="row c-header__submenu-row">
+                    <div class="column">
+                      <ul class="c-header__submenu-list">
+                        <% item[:children].each do |subitem| %>
+                          <li class="c-header__submenu-element">
+                            <a href="<%= subitem[:href] %>" class="c-header__menu-link c-header__menu-link--submenu"> <%= subitem[:title] %> </a>
+                          </li>
+                        <% end %>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </li>
+          <% end %>
+
+          <% if user_signed_in? %>
+            <li class="c-header__menu-element c-header__menu-element--notifications">
+              <%= link_to notifications_path, rel: "nofollow",
+                          class: "c-header__menu-link c-header__menu-link--notifications" do %>
+                <div class="c-header__notifications">
+                  <span class="show-for-sr">
+                    <%= t("layouts.header.notification_item.notifications") %>
+                  </span>
+
+                  <% if current_user.notifications.unread.count > 0 %>
+                    <div class="c-header__notifications-circle" aria-hidden="true">
+                      <%= current_user.notifications.unread.count > 9 ? '9+' : current_user.notifications.unread.count %>
+                    </div>
+                    <span class="icon-notification" aria-hidden="true"
+                          title="<%= t("layouts.header.notification_item.new_notifications",
+                                    count: current_user.notifications_count) %>">
+                    </span>
+                    <span class="show-for-small-only">
+                      <%= t("layouts.header.notification_item.new_notifications",
+                          count: current_user.notifications_count) %>
+                    </span>
+                  <% else %>
+                    <span class="icon-no-notification" aria-hidden="true"
+                          title="<%= t("layouts.header.notification_item.no_notifications") %>">
+                    </span>
+                    <span class="show-for-small-only">
+                      <%= t("layouts.header.notification_item.no_notifications") %>
+                    </span>
+                  <% end %>
+                </div>
+              <% end %>
+            </li>
+            <li class="c-header__menu-element">
+              <a href="<%= account_path %>" class="c-header__menu-link" title="<%= t("layouts.header.my_account_link") %>">
+                <%= avatar_image(current_user, seed: current_user.id, size: 25) %>
+              </a>
+              <div class="c-header__submenu">
+                <div class="row c-header__submenu-row">
+                  <div class="column">
+                    <ul class="c-header__submenu-list">
+                      <li class="c-header__submenu-element">
+                        <a href="<%= user_path(current_user) %>" class="c-header__menu-link c-header__menu-link--submenu"> <%= t("layouts.header.my_activity_link") %> </a>
+                      </li>
+                      <li class="c-header__submenu-element">
+                        <a href="<%= account_path %>" class="c-header__menu-link c-header__menu-link--submenu"> <%= t("layouts.header.my_account_link") %> </a>
+                      </li>
+                      <li class="c-header__submenu-element">
+                        <a href="<%= destroy_user_session_path %>" class="c-header__menu-link c-header__menu-link--submenu" data-method="delete"> Log Out </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="navigation_bar" class="subnavigation expanded">
+    <div class="row">
+      <div class="hide-for-small-only">
+        <%= render "shared/subnavigation" %>
+      </div>
+      <div class="small-12 medium-3 column">
+        <%= yield :header_addon %>
+      </div>
+    </div>
+  </div>
+</header>
