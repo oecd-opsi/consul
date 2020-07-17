@@ -1,0 +1,20 @@
+<div class="c-header__notifications">
+  <span class="show-for-sr">
+    <%= t("layouts.header.notification_item.notifications") %>
+  </span>
+
+  <% if current_user.notifications.unread.count > 0 %>
+    <div class="c-header__notifications-circle" aria-hidden="true">
+      <%= current_user.notifications.unread.count > 9 ? '9+' : current_user.notifications.unread.count %>
+    </div>
+    <span class="icon-notification" aria-hidden="true"
+          title="<%= t("layouts.header.notification_item.new_notifications",
+                    count: current_user.notifications_count) %>">
+    </span>
+  <% else %>
+    <span class="icon-no-notification" aria-hidden="true"
+          title="<%= t("layouts.header.notification_item.no_notifications") %>">
+    </span>
+  <% end %>
+</div>
+

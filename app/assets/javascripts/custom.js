@@ -5,3 +5,17 @@
 //
 //
 
+//= require custom/header
+
+var initializeCustomModules = function () {
+  'use strict';
+
+  App.CustomHeader.initialize();
+};
+
+$(function () {
+  'use strict';
+
+  $(document).ready(initializeCustomModules);
+  $(document).on('page:load', initializeCustomModules);
+});

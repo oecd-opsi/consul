@@ -1,4 +1,31 @@
-<% menu_items = [
+<%
+menu_items = []
+
+if feature?(:debates)
+  menu_items.push({ title: t("layouts.header.debates"), href: debates_path, attrs: { accesskey: '1' }, mobileOnly: true })
+end
+
+if feature?(:proposals)
+  menu_items.push({ title: t("layouts.header.proposals"), href: proposals_path, attrs: { accesskey: '2' }, mobileOnly: true })
+end
+
+if feature?(:polls)
+  menu_items.push({ title: t("layouts.header.poll_questions"), href: polls_path, attrs: { accesskey: '3' }, mobileOnly: true })
+end
+
+if feature?(:legislation)
+  menu_items.push({ title: t("layouts.header.collaborative_legislation"), href: legislation_processes_path, attrs: { accesskey: '4' }, mobileOnly: true })
+end
+
+if feature?(:budgets)
+  menu_items.push({ title: t("layouts.header.budgets"), href: budgets_path, attrs: { accesskey: '5' }, mobileOnly: true })
+end
+
+if feature?(:help_page)
+  menu_items.push({ title: t("layouts.header.help"), href: help_path, attrs: { accesskey: '6' }, mobileOnly: true })
+end
+
+menu_items += [
   {
     "title": "Government After Shock Event",
     "href": "https://oecd-opsi.org/government-after-shock/"
@@ -55,22 +82,12 @@
       }
     ]
   },
-  # {
-  #   "title": "Log In",
-  #   "href": "https://oecd-opsi.org/login/?redirect_to=https%3A%2F%2Foecd-opsi.org%2F"
-  # },
-  # {
-  #   "title": "Join",
-  #   "href": "https://oecd-opsi.org/register/"
-  # }
 ]
 
-if user_signed_in?
-
-else
+if !user_signed_in?
   menu_items.push(
-    { "title": "Log In", "href": new_user_session_path },
-    { "title": "Join", "href": new_user_registration_path },
+    { "title": "Log In", "href": new_user_session_path, desktopOnly: true },
+    { "title": "Join", "href": new_user_registration_path, desktopOnly: true },
   )
 end
 
@@ -102,6 +119,26 @@ if show_admin_menu?(current_user)
   menu_items.push({ title: t("layouts.header.administration_menu"), children: menu_items_admin })
 end
 
+
+if user_signed_in?
+  menu_items_user = [
+    { title: t("layouts.header.my_activity_link"), href: user_path(current_user) },
+    { title: t("layouts.header.my_account_link"), href: account_path },
+    { title: "Log Out", href: destroy_user_session_path, attrs: { "data-method": "delete" } },
+  ]
+
+  menu_items.push(
+    { title: render('layouts/header-notifications'), href: notifications_path, desktopOnly: true },
+    {
+      title: avatar_image(current_user, seed: current_user.id, size: 25),
+      href: account_path,
+      attrs: { title: t("layouts.header.my_account_link") },
+      children: menu_items_user,
+      desktopOnly: true,
+    }
+  )
+end
+
 %>
 
 <header class="c-header">
@@ -126,6 +163,7 @@ end
           </div>
         <% end %>
       </div>
+
       <div class="column small-12 medium-6 large-4">
         <div class="c-header__logo-wrapper clearfix">
           <%= link_to root_path, accesskey: "0" do %>
@@ -133,15 +171,108 @@ end
           <% end %>
         </div>
       </div>
-      <div class="column small-12 medium-6 large-8 hide-for-small-only c-header__desktop-menu-column">
-        <ul class="c-header__menu-list float-right">
-          <% menu_items.each do |item| %>
-            <li class="c-header__menu-element">
-              <% if item[:href].blank? %>
-                <a href="#" tabindex="-1" aria-hidden="true" class="c-header__menu-link"> <%= item[:title] %> </a>
+
+      <div class="column hide-for-medium c-header__mobile-menu-column">
+        <div class="row c-header__mobile-menu-row-top">
+          <div class="column small-8">
+            <ul class="c-header__mobile-menu-right-list">
+              <% if user_signed_in? %>
+                <li class="c-header__mobile-menu-right-element">
+                  <a class="c-header__mobile-menu-right-link" href="<%= notifications_path %>">
+                    <%= render 'layouts/header-notifications' %>
+                  </a>
+                </li>
+                <li class="c-header__mobile-menu-right-element">
+                  <button
+                    class="c-header__mobile-menu-right-link js-custom-header-toggle"
+                    title="<%= t("layouts.header.my_account_link") %>"
+                    aria-controls="header-menu-mobile-user"
+                    aria-expanded="false"
+                  >
+                    <%= avatar_image(current_user, seed: current_user.id, size: 25) %>
+                  </button>
+                </li>
               <% else %>
-                <a href="<%= item[:href] %>" class="c-header__menu-link"> <%= item[:title] %> </a>
+                <li class="c-header__mobile-menu-right-element">
+                  <a class="c-header__mobile-menu-right-link" href="<%= new_user_session_path %>"> <%= "Log In" %> </a>
+                </li>
+                <li class="c-header__mobile-menu-right-element">
+                  <a class="c-header__mobile-menu-right-link" href="<%= new_user_registration_path %>"> <%= "Join" %> </a>
+                </li>
               <% end %>
+            </ul>
+          </div>
+
+          <div class="column small-4">
+            <div class="float-right">
+              <button
+                class="c-header__mobile-menu-button js-custom-header-toggle"
+                aria-controls="header-menu-mobile"
+                aria-expanded="false"
+              >
+                <span class="show-for-sr">Toggle navigation</span>
+                <div class="c-header__mobile-menu-button-bar"></div>
+                <div class="c-header__mobile-menu-button-bar"></div>
+                <div class="c-header__mobile-menu-button-bar"></div>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <% if user_signed_in? %>
+          <div class="row">
+            <div class="c-header__mobile-menu-wrapper" id="header-menu-mobile-user" style="display: none;">
+              <ul class="c-header__mobile-menu-list">
+                <% menu_items_user.each do |item| %>
+                  <li class="c-header__mobile-menu-element">
+                    <% a_attrs = item[:href].blank? ? { href: 'javascript:void(0)' } : { href: item[:href] } %>
+                    <%= content_tag :a, { class: 'c-header__mobile-menu-link' }.merge(a_attrs).merge(item[:attrs] || {}) do %>
+                      <%= item[:title] %>
+                    <% end %>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="row">
+          <div class="c-header__mobile-menu-wrapper" id="header-menu-mobile" style="display: none;">
+            <ul class="c-header__mobile-menu-list" data-accordion-menu data-submenu-toggle="true">
+              <% menu_items.reject{|v| v[:desktopOnly]}.each do |item| %>
+                <li class="c-header__mobile-menu-element">
+                  <% a_attrs = item[:href].blank? ? { href: 'javascript:void(0)' } : { href: item[:href] } %>
+                  <%= content_tag :a, { class: 'c-header__mobile-menu-link' }.merge(a_attrs).merge(item[:attrs] || {}) do %>
+                    <%= item[:title] %>
+                  <% end %>
+
+                  <% if item.has_key?(:children) %>
+                    <ul class="c-header__mobile-submenu">
+                      <% item[:children].each do |subitem| %>
+                        <li class="c-header__mobile-submenu-element">
+                          <%= content_tag :a, { href: subitem[:href], class: 'c-header__mobile-submenu-link'}.merge(subitem[:attrs] || {}) do %>
+                            <%= subitem[:title] %>
+                          <% end %>
+                        </li>
+                      <% end %>
+                    </ul>
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="column medium-6 large-8 hide-for-small-only c-header__desktop-menu-column">
+        <ul class="c-header__menu-list float-right">
+          <% menu_items.reject{|v| v[:mobileOnly]}.each do |item| %>
+            <li class="c-header__menu-element">
+              <% a_attrs = item[:href].blank? ? { href: '#', 'aria-hidden': 'true', tabindex: '-1' } : { href: item[:href] } %>
+              <%= content_tag :a, { class: 'c-header__menu-link' }.merge(a_attrs).merge(item[:attrs] || {}) do %>
+                <%= item[:title] %>
+              <% end %>
+
               <% if item.has_key?(:children) %>
                 <div class="c-header__submenu">
                   <div class="row c-header__submenu-row">
@@ -149,7 +280,9 @@ end
                       <ul class="c-header__submenu-list">
                         <% item[:children].each do |subitem| %>
                           <li class="c-header__submenu-element">
-                            <a href="<%= subitem[:href] %>" class="c-header__menu-link c-header__menu-link--submenu"> <%= subitem[:title] %> </a>
+                            <%= content_tag :a, { href: subitem[:href], class: 'c-header__menu-link c-header__menu-link--submenu'}.merge(subitem[:attrs] || {}) do %>
+                              <%= subitem[:title] %>
+                            <% end %>
                           </li>
                         <% end %>
                       </ul>
@@ -157,62 +290,6 @@ end
                   </div>
                 </div>
               <% end %>
-            </li>
-          <% end %>
-
-          <% if user_signed_in? %>
-            <li class="c-header__menu-element c-header__menu-element--notifications">
-              <%= link_to notifications_path, rel: "nofollow",
-                          class: "c-header__menu-link c-header__menu-link--notifications" do %>
-                <div class="c-header__notifications">
-                  <span class="show-for-sr">
-                    <%= t("layouts.header.notification_item.notifications") %>
-                  </span>
-
-                  <% if current_user.notifications.unread.count > 0 %>
-                    <div class="c-header__notifications-circle" aria-hidden="true">
-                      <%= current_user.notifications.unread.count > 9 ? '9+' : current_user.notifications.unread.count %>
-                    </div>
-                    <span class="icon-notification" aria-hidden="true"
-                          title="<%= t("layouts.header.notification_item.new_notifications",
-                                    count: current_user.notifications_count) %>">
-                    </span>
-                    <span class="show-for-small-only">
-                      <%= t("layouts.header.notification_item.new_notifications",
-                          count: current_user.notifications_count) %>
-                    </span>
-                  <% else %>
-                    <span class="icon-no-notification" aria-hidden="true"
-                          title="<%= t("layouts.header.notification_item.no_notifications") %>">
-                    </span>
-                    <span class="show-for-small-only">
-                      <%= t("layouts.header.notification_item.no_notifications") %>
-                    </span>
-                  <% end %>
-                </div>
-              <% end %>
-            </li>
-            <li class="c-header__menu-element">
-              <a href="<%= account_path %>" class="c-header__menu-link" title="<%= t("layouts.header.my_account_link") %>">
-                <%= avatar_image(current_user, seed: current_user.id, size: 25) %>
-              </a>
-              <div class="c-header__submenu">
-                <div class="row c-header__submenu-row">
-                  <div class="column">
-                    <ul class="c-header__submenu-list">
-                      <li class="c-header__submenu-element">
-                        <a href="<%= user_path(current_user) %>" class="c-header__menu-link c-header__menu-link--submenu"> <%= t("layouts.header.my_activity_link") %> </a>
-                      </li>
-                      <li class="c-header__submenu-element">
-                        <a href="<%= account_path %>" class="c-header__menu-link c-header__menu-link--submenu"> <%= t("layouts.header.my_account_link") %> </a>
-                      </li>
-                      <li class="c-header__submenu-element">
-                        <a href="<%= destroy_user_session_path %>" class="c-header__menu-link c-header__menu-link--submenu" data-method="delete"> Log Out </a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
             </li>
           <% end %>
         </ul>
