@@ -1,0 +1,17 @@
+<% if feature?(:auth0_login) %>
+  <div class="row">
+    <div class="small-12 column">
+      <div class="margin-bottom">
+        <strong><%= t("omniauth.info_sign_in") %></strong>
+      </div>
+    </div>
+
+    <div class="small-12 medium-6 large-4 column end">
+      <%= link_to t("omniauth.auth0.name"),
+                  omniauth_authorize_path(:user, :auth0),
+                  title: t("omniauth.auth0.sign_in"),
+                  class: "button-wordpress button expanded",
+                  method: :post %>
+    </div>
+  </div>
+<%  end %>

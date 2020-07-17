@@ -446,10 +446,8 @@ describe "Users" do
       scenario "Sign up when Oauth provider has a verified email" do
         OmniAuth.config.add_mock(:auth0, auth0_hash_with_verified_email)
 
-        visit "/"
-        click_link "Register"
-
-        click_link "Sign up with Auth0"
+        visit "/users/sessions/confirm_login"
+        click_link "Sign in with Auth0"
 
         expect_to_be_signed_in
 
@@ -463,21 +461,19 @@ describe "Users" do
       scenario "Sign up when Oauth provider has an unverified email" do
         OmniAuth.config.add_mock(:auth0, auth0_hash_with_email)
 
-        visit "/"
-        click_link "Register"
+        visit "/users/sessions/confirm_login"
+        click_link "Sign in with Auth0"
 
-        click_link "Sign up with Auth0"
-
-        expect(page).to have_current_path(new_user_session_path)
+        expect(page).to have_current_path(root_path)
         expect(page).to have_content "To continue, please click on the confirmation link that"\
                                       " we have sent you via email"
 
         confirm_email
         expect(page).to have_content "Your account has been confirmed"
 
-        visit "/"
-        click_link "Sign in"
+        visit "/users/sessions/confirm_login"
         click_link "Sign in with Auth0"
+
         expect_to_be_signed_in
 
         click_link "My account"
@@ -490,9 +486,8 @@ describe "Users" do
       scenario "Sign up, when no email was provided by OAuth provider" do
         OmniAuth.config.add_mock(:auth0, auth0_hash)
 
-        visit "/"
-        click_link "Register"
-        click_link "Sign up with Auth0"
+        visit "/users/sessions/confirm_login"
+        click_link "Sign in with Auth0"
 
         expect(page).to have_current_path(finish_signup_path)
         fill_in "user_email", with: "manueladelascarmenas@example.com"
@@ -504,8 +499,7 @@ describe "Users" do
         confirm_email
         expect(page).to have_content "Your account has been confirmed"
 
-        visit "/"
-        click_link "Sign in"
+        visit "/users/sessions/confirm_login"
         click_link "Sign in with Auth0"
         expect_to_be_signed_in
 
@@ -519,9 +513,8 @@ describe "Users" do
       scenario "Cancelling signup" do
         OmniAuth.config.add_mock(:auth0, auth0_hash)
 
-        visit "/"
-        click_link "Register"
-        click_link "Sign up with Auth0"
+        visit "/users/sessions/confirm_login"
+        click_link "Sign in with Auth0"
 
         expect(page).to have_current_path(finish_signup_path)
         click_link "Cancel login"
@@ -535,8 +528,7 @@ describe "Users" do
         create(:identity, uid: "12345", provider: "auth0", user: user)
         OmniAuth.config.add_mock(:auth0, auth0_hash)
 
-        visit "/"
-        click_link "Sign in"
+        visit "/users/sessions/confirm_login"
         click_link "Sign in with Auth0"
 
         expect_to_be_signed_in
@@ -552,9 +544,8 @@ describe "Users" do
         create(:user, username: "manuela", email: "manuela@consul.dev", password: "judgementday")
         OmniAuth.config.add_mock(:auth0, auth0_hash_with_verified_email)
 
-        visit "/"
-        click_link "Register"
-        click_link "Sign up with Auth0"
+        visit "/users/sessions/confirm_login"
+        click_link "Sign in with Auth0"
 
         expect(page).to have_current_path(finish_signup_path)
 
@@ -581,9 +572,8 @@ describe "Users" do
         create(:user, username: "peter", email: "manuela@example.com")
         OmniAuth.config.add_mock(:auth0, auth0_hash)
 
-        visit "/"
-        click_link "Register"
-        click_link "Sign up with Auth0"
+        visit "/users/sessions/confirm_login"
+        click_link "Sign in with Auth0"
 
         expect(page).to have_current_path(finish_signup_path)
 
@@ -601,8 +591,7 @@ describe "Users" do
         confirm_email
         expect(page).to have_content "Your account has been confirmed"
 
-        visit "/"
-        click_link "Sign in"
+        visit "/users/sessions/confirm_login"
         click_link "Sign in with Auth0"
         expect_to_be_signed_in
 
@@ -618,9 +607,8 @@ describe "Users" do
         create(:user, username: "peter", email: "manuelacarmena@example.com")
         OmniAuth.config.add_mock(:auth0, auth0_hash_with_email)
 
-        visit "/"
-        click_link "Register"
-        click_link "Sign up with Auth0"
+        visit "/users/sessions/confirm_login"
+        click_link "Sign in with Auth0"
 
         expect(page).to have_current_path(finish_signup_path)
 
@@ -634,8 +622,7 @@ describe "Users" do
         confirm_email
         expect(page).to have_content "Your account has been confirmed"
 
-        visit "/"
-        click_link "Sign in"
+        visit "/users/sessions/confirm_login"
         click_link "Sign in with Auth0"
         expect_to_be_signed_in
 

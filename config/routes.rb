@@ -43,4 +43,7 @@ Rails.application.routes.draw do
 
   # Static pages
   resources :pages, path: "/", only: [:show]
+
+  # Custom pages
+  get "users/sessions/confirm_login", to: "custom/users/auth0_pages#confirm_login", as: "confirm_login"
 end
