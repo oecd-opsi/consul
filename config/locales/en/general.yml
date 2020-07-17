@@ -2,7 +2,7 @@ en:
   account:
     show:
       change_credentials_link: Change my credentials
-      erase_account_link: Erase my account
+      erase_account_link: Erase my consultation platform account
       finish_verification: Complete verification
       notifications: Notifications
       organization_name_label: Name of organization
