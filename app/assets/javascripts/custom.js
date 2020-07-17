@@ -6,11 +6,13 @@
 //
 
 //= require custom/header
+//= require custom/redirect-click
 
 var initializeCustomModules = function () {
   'use strict';
 
   App.CustomHeader.initialize();
+  App.CustomRedirectClick.initialize();
 };
 
 $(function () {
