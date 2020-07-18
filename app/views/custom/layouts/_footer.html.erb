@@ -1,0 +1,141 @@
+<%
+# TODO: redirect terms, privacy
+
+footer_links = [
+  {
+    "title": "Submit a case study",
+    "href": "https://oecd-opsi.org/submit-a-case-study/"
+  },
+  {
+    "title": "Our partners",
+    "href": "https://oecd-opsi.org/about-observatory-of-public-sector-innovation/about-our-partners/"
+  },
+  {
+    "title": "Privacy Policy",
+    "href": "https://oecd-opsi.org/privacy-policy/"
+  },
+  {
+    "title": "Terms of Service",
+    "href": "https://oecd-opsi.org/terms-of-service/"
+  },
+  {
+    "title": t("layouts.footer.accessibility"),
+    "href": page_path("accessibility")
+  },
+  {
+    "title": "Contact us",
+    "href": "https://oecd-opsi.org/contact-us/"
+  },
+  {
+    "title": "Government After Shock Event",
+    "href": "https://oecd-opsi.org/government-after-shock/"
+  }
+]
+
+footer_social = [
+  {
+    href: 'https://twitter.com/OPSIgov',
+    attrs: { title: 'OPSI on Twitter', target: '_blank' },
+    icon: '<span class="icon-twitter"></span>',
+    title: '@OPSIgov',
+  },
+  {
+    href: 'https://www.facebook.com/theOECD/',
+    attrs: { target: '_blank' },
+    icon: '<span class="icon-facebook"></span>',
+    title: 'OPSI on Facebook',
+  },
+  {
+    href: 'https://www.linkedin.com/company/165285/',
+    attrs: { target: '_blank' },
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"></path></svg>',
+    title: 'OPSI on LinkedIn',
+  },
+]
+
+%>
+
+<footer class="c-footer">
+  <div class="row">
+    <div class="column large-4 large-push-4 c-footer__col-nav">
+      <div class="row">
+        <div class="column small-12 medium-6 hide-for-medium">
+          newsletter
+        </div>
+
+        <div class="column small-10 medium-6">
+          <ul class="c-footer__menu-list">
+            <% footer_links.each do |item| %>
+              <li>
+                <% a_attrs = item[:href].blank? ? { href: 'javascript:void(0)' } : { href: item[:href] } %>
+                <%= content_tag :a, { class: 'c-footer__menu-link' }.merge(a_attrs).merge(item[:attrs] || {}) do %>
+                  <%= item[:title] %>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+
+        <div class="column small-2  medium-6">
+          <ul class="c-footer__social-list">
+            <% footer_social.each do |item| %>
+              <li>
+                <%= content_tag :a, { class: 'c-footer__social-link', href: item[:href] }.merge(item[:attrs] || {}) do %>
+                  <div class="c-footer__social-icon-wrapper" aria-hidden="true">
+                    <%= raw item[:icon] %>
+                  </div>
+                  <div class="c-footer__social-title">
+                    <%= item[:title] %>
+                  </div>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+
+        <div class="hide-for-small-only column medium-6 large-12">
+          newsletter
+        </div>
+      </div>
+    </div>
+
+    <div class="column medium-6 large-4 large-pull-4 c-footer__col-logo-copy">
+      <div class="margin-bottom">
+        <a href="https://www.oecd.org/" title="OECD" class="blank" target="_blank">
+          <%= image_tag(image_path_for("oecd-logo.png"), class: nil, alt: "OECD", width: 238, height: 74) %>
+        </a>
+      </div>
+
+      <div class="margin-bottom">
+        <p class="c-footer__copy">© Organisation for Economic Cooperation and Development</p>
+        <address class="c-footer__address">
+          2 rue André Pascal, 75775 Paris CEDEX 16, France
+        </address>
+      </div>
+    </div>
+
+    <div class="column medium-6 large-4 c-footer__col-eu-license">
+      <a
+        href="https://ec.europa.eu/programmes/horizon2020/"
+        title="Horizon 2020 Framework Programme of the European Union"
+        class="clearfix margin-bottom c-footer__eu-link"
+        target="_blank"
+      >
+        <%= image_tag(image_path_for("eu-flag.png"), class: "c-footer__eu-flag", alt: "European Union flag", width: 80, height: 54) %>
+        <p class="c-footer__eu-paragraph">
+          Co-funded by the Horizon 2020 Framework Programme of the European Union
+        </p>
+      </a>
+      <div class="c-footer__cc-wrapper">
+        <a
+          href="https://creativecommons.org/licenses/by-sa/3.0/igo/"
+          title="Creative Commons Attribution"
+          target="_blank"
+          class="c-footer__cc-link"
+        >
+          This work is licensed under a Creative Commons Attribution - ShareAlike 3.0 IGO (CC BY-SA 3.0 IGO)
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
