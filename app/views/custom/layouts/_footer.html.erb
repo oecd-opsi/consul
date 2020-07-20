@@ -60,7 +60,9 @@ footer_social = [
     <div class="column large-4 large-push-4 c-footer__col-nav">
       <div class="row">
         <div class="column small-12 medium-6 hide-for-medium">
-          newsletter
+          <div class="margin-bottom">
+            <%= render 'layouts/footer-newsletter' %>
+          </div>
         </div>
 
         <div class="column small-10 medium-6">
@@ -94,7 +96,7 @@ footer_social = [
         </div>
 
         <div class="hide-for-small-only column medium-6 large-12">
-          newsletter
+          <%= render 'layouts/footer-newsletter' %>
         </div>
       </div>
     </div>

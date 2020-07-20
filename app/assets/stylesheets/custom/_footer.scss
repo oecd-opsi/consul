@@ -9,6 +9,50 @@
   }
 }
 
+.c-footer__form-row {
+  display: flex;
+  align-items: center;
+
+  font-size: rem-calc(14);
+
+  @include breakpoint(large) {
+    white-space: nowrap;
+  }
+}
+
+.c-footer__form-text {
+  font-weight: 700;
+}
+
+.c-footer.c-footer.c-footer.c-footer.c-footer.c-footer .c-footer__form-input {
+  margin-bottom: 0;
+  height: auto;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  font-size: rem-calc(14);
+  line-height: rem-calc(14);
+  padding: rem-calc(5);
+  width: 200px;
+}
+
+.c-footer__form-col-button {
+  display: flex;
+  align-self: stretch;
+}
+
+.c-footer__form-button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-bottom: 0;
+  padding: 0 rem-calc(5);
+  line-height: rem-calc(14);
+}
+
+.c-footer__form-info {
+  font-size: rem-calc(14);
+  margin-top: 0.5em;
+}
+
 .c-footer__menu-list,
 .c-footer__social-list {
   list-style: none;
