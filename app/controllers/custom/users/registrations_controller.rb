@@ -2,6 +2,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   prepend_before_action :authenticate_scope!,
                         only: [:edit, :update, :destroy, :finish_signup, :do_finish_signup]
   before_action :configure_permitted_parameters
+  before_action :authenticate_credentials_update, only: [:edit, :update]
 
   invisible_captcha only: [:create], honeypot: :address, scope: :user
 
@@ -64,6 +65,21 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
 
+  def update
+    self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
+    prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
+
+    self.resource = Auth0UserUpdater.new(resource, account_update_params).process
+
+    if resource.errors.empty?
+      set_flash_message_for_update(resource, prev_unconfirmed_email)
+      respond_with resource, location: after_update_path_for(resource)
+    else
+      clean_up_passwords resource
+      respond_with resource
+    end
+  end
+
   private
 
     def sign_up_params
@@ -85,5 +101,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     def after_inactive_sign_up_path_for(resource_or_scope)
       users_sign_up_success_path
+    end
+
+    def authenticate_credentials_update
+      return true unless Setting["feature.auth0_login"]
+
+      raise CanCan::AccessDenied unless current_user.logins_via_password?
     end
 end
