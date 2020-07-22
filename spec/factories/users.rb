@@ -88,6 +88,9 @@ FactoryBot.define do
     user { nil }
     provider { "Twitter" }
     uid { "MyString" }
+    trait :authenticated_by_password do
+      uid { "#{Identity::AUTH0_PASSWORD_PREFIX}MyString" }
+    end
   end
 
   factory :administrator do

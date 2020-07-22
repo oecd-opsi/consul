@@ -2,9 +2,18 @@ require "rails_helper"
 
 describe "Account" do
   let(:user) { create(:user, username: "Manuela Colau") }
+  let(:auth0_client_mock) { double(:auth0_client) }
 
   before do
+    Setting["feature.auth0_login"] = true
     login_as(user)
+    create(:identity, user: user, uid: "auth0|test-uid")
+
+    allow(Auth0Client).to receive(:new).and_return(auth0_client_mock)
+  end
+
+  after do
+    Setting["feature.auth0_login"] = false
   end
 
   scenario "Show" do
@@ -54,12 +63,12 @@ describe "Account" do
     visit account_path
 
     click_link "Change my credentials"
-    fill_in "user_email", with: "new_user_email@example.com"
-    fill_in "user_password", with: "new_password"
-    fill_in "user_password_confirmation", with: "new_password"
-    fill_in "user_current_password", with: "judgmentday"
 
-    click_button "Update"
+    fill_in "user_email", with: "new_user_email@example.com"
+
+    allow(auth0_client_mock).to receive(:users).and_return([])
+    allow(auth0_client_mock).to receive(:update_user).and_return(true)
+    click_button class: "button-update-email"
 
     notice = "Your account has been updated successfully;"\
              " however, we need to verify your new email address."\
@@ -67,17 +76,22 @@ describe "Account" do
              " complete the confirmation of your new email address."
     expect(page).to have_content notice
 
-    open_last_email
-    visit_in_email("Confirm my account")
+    # we need to confirm the user manually, because right now it is done via Auth0
+    user.reload && user.confirm
+
+    visit account_path
+
+    click_link "Change my credentials"
+    fill_in "user_password", with: "new_password"
+    fill_in "user_password_confirmation", with: "new_password"
+    click_button class: "button-update-password"
+
+    notice = "Your account has been updated successfully"
+    expect(page).to have_content notice
 
     logout
-    visit root_path
-    click_link "Sign in"
-    fill_in "user_login", with: "new_user_email@example.com"
-    fill_in "user_password", with: "new_password"
-    click_button "Enter"
 
-    expect(page).to have_content "You have been signed in successfully."
+    login_as(user)
 
     visit account_path
     click_link "Change my credentials"
@@ -140,7 +154,7 @@ describe "Account" do
     fill_in "account_username", with: ""
     click_button "Save changes"
 
-    expect(page).to have_content error_message
+    expect(page).to have_content "1 error prevented this Account from being saved."
   end
 
   scenario "Errors editing credentials" do
@@ -152,19 +166,21 @@ describe "Account" do
 
     expect(page).to have_link("Change my credentials")
     click_link "Change my credentials"
-    click_button "Update"
+    fill_in "user_password", with: "short"
+    click_button class: "button-update-password"
 
-    expect(page).to have_content error_message
+    expect(page).to have_content "2 errors prevented this Account from being saved."\
   end
 
   scenario "Erasing account" do
+    Setting["feature.auth0_login"] = false
     visit account_path
 
-    click_link "Erase my account"
+    click_link I18n.t("account.show.erase_account_link")
 
     fill_in "user_erase_reason", with: "a test"
 
-    click_button "Erase my account"
+    click_button I18n.t("devise_views.users.registrations.delete_form.submit")
 
     expect(page).to have_content "Goodbye! Your account has been cancelled. We hope to see you again soon."
 

@@ -15,6 +15,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     sign_in_with :wordpress_login, :wordpress_oauth2
   end
 
+  def auth0
+    sign_in_with :auth0_login, :auth0
+  end
+
   def after_sign_in_path_for(resource)
     if resource.registering_with_oauth
       finish_signup_path
@@ -30,7 +34,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
       auth = request.env["omniauth.auth"]
 
-      identity = Identity.first_or_create_from_oauth(auth)
+      identity = Identity.synchronize_or_create_from_oauth(auth)
       @user = current_user || identity.user || User.first_or_initialize_for_oauth(auth)
 
       if save_user

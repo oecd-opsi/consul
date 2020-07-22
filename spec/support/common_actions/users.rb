@@ -63,6 +63,11 @@ module Users
     expect(page).to have_content "Your account has been confirmed"
   end
 
+  def confirm_newly_created_user
+    user = User.last
+    user.reload && user.confirm
+  end
+
   def reset_password
     create(:user, email: "manuela@consul.dev")
 

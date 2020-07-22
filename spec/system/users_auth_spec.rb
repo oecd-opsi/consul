@@ -191,6 +191,7 @@ describe "Users" do
         click_link "Sign in with Twitter"
         expect_to_be_signed_in
 
+        visit "/"
         click_link "My account"
         expect(page).to have_field("account_username", with: "manuela")
 
@@ -232,6 +233,7 @@ describe "Users" do
 
       scenario "Try to register with the username of an already existing user" do
         create(:user, username: "manuela", email: "manuela@consul.dev", password: "judgementday")
+
         OmniAuth.config.add_mock(:twitter, twitter_hash_with_verified_email)
 
         visit "/"
@@ -351,7 +353,6 @@ describe "Users" do
         expect(page).to have_current_path(new_user_session_path)
         expect(page).to have_content "To continue, please click on the confirmation link"\
                                       " that we have sent you via email"
-
         confirm_email
         expect(page).to have_content "Your account has been confirmed"
 
@@ -360,6 +361,7 @@ describe "Users" do
         click_link "Sign in with Wordpress"
         expect_to_be_signed_in
 
+        visit "/"
         click_link "My account"
         expect(page).to have_field("account_username", with: "manuela")
 
@@ -435,6 +437,8 @@ describe "Users" do
         }
       end
 
+      let(:password_login_identity) { create(:identity, user: User.last, uid: "auth0|test-uid") }
+
       before do
         Setting["feature.auth0_login"] = true
       end
@@ -450,6 +454,8 @@ describe "Users" do
         click_link "Sign in with Auth0"
 
         expect_to_be_signed_in
+
+        password_login_identity
 
         click_link "My account"
         expect(page).to have_field("account_username", with: "manuela")
@@ -468,10 +474,10 @@ describe "Users" do
         expect(page).to have_content "To continue, please click on the confirmation link that"\
                                       " we have sent you via email"
 
-        confirm_email
-        expect(page).to have_content "Your account has been confirmed"
+        confirm_newly_created_user
+        password_login_identity
 
-        visit "/users/sessions/confirm_login"
+        visit confirm_login_path
         click_link "Sign in with Auth0"
 
         expect_to_be_signed_in
@@ -496,8 +502,8 @@ describe "Users" do
         expect(page).to have_content "To continue, please click on the confirmation link that we"\
                                       " have sent you via email"
 
-        confirm_email
-        expect(page).to have_content "Your account has been confirmed"
+        confirm_newly_created_user
+        password_login_identity
 
         visit "/users/sessions/confirm_login"
         click_link "Sign in with Auth0"
@@ -526,6 +532,7 @@ describe "Users" do
       scenario "Sign in, user was already signed up with OAuth" do
         user = create(:user, email: "manuela@consul.dev", password: "judgementday")
         create(:identity, uid: "12345", provider: "auth0", user: user)
+        password_login_identity
         OmniAuth.config.add_mock(:auth0, auth0_hash)
 
         visit "/users/sessions/confirm_login"
@@ -562,6 +569,7 @@ describe "Users" do
 
         click_link "My account"
         expect(page).to have_field("account_username", with: "manuela2")
+        password_login_identity
 
         visit edit_user_registration_path
         expect(page).to have_field("user_email", with: "manuelacarmena@example.com")
@@ -589,7 +597,6 @@ describe "Users" do
                                       " that we have sent you via email"
 
         confirm_email
-        expect(page).to have_content "Your account has been confirmed"
 
         visit "/users/sessions/confirm_login"
         click_link "Sign in with Auth0"
@@ -597,6 +604,7 @@ describe "Users" do
 
         click_link "My account"
         expect(page).to have_field("account_username", with: "manuela")
+        password_login_identity
 
         visit edit_user_registration_path
         expect(page).to have_field("user_email", with: "somethingelse@example.com")
@@ -619,8 +627,7 @@ describe "Users" do
         expect(page).to have_content "To continue, please click on the confirmation"\
                                       " link that we have sent you via email"
 
-        confirm_email
-        expect(page).to have_content "Your account has been confirmed"
+        confirm_newly_created_user
 
         visit "/users/sessions/confirm_login"
         click_link "Sign in with Auth0"
@@ -628,6 +635,7 @@ describe "Users" do
 
         click_link "My account"
         expect(page).to have_field("account_username", with: "manuela")
+        password_login_identity
 
         visit edit_user_registration_path
         expect(page).to have_field("user_email", with: "somethingelse@example.com")

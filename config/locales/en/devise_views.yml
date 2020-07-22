@@ -90,10 +90,12 @@ en:
       registrations:
         delete_form:
           erase_reason_label: Reason
-          info: This action can not be undone. Please make sure this is what you want.
+          info_html: Please note that this action will only delete your consultation platform account.
+            If you would like your account to also be deleted from OPSI's authentication provider (Auth0) and the
+            OPSI website (if applicable), please contact us at <a href="mailto:opsi@oecd.org">opsi@oecd.org</a>.
           info_reason: If you want, leave us a reason (optional)
-          submit: Erase my account
-          title: Erase account
+          submit: Erase my consultation platform account
+          title: Erase my consultation platform account
         edit:
           current_password_label: Current password
           edit: Edit
@@ -102,6 +104,8 @@ en:
           need_current: We need your current password to confirm the changes
           password_confirmation_label: Confirm new password
           password_label: New password
+          password_hint: "At least 8 characters including at least 3 of the following 4 types of characters: a
+            lower-case letter, an upper-case letter, a number, a special character (such as !@#$%^&*)"
           update_submit: Update
           waiting_for: "Awaiting confirmation of:"
         new:
