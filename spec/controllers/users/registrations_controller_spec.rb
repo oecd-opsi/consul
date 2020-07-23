@@ -13,7 +13,8 @@ describe Users::RegistrationsController do
 
     it "redirects user to WordPress Sign Up page with redirect_uri given" do
       get :new
-      expect(response).to redirect_to("#{ENV["WORDPRESS_SIGN_UP_URL"]}?redirect_uri=#{confirm_login_url}")
+      expected_redirect_url = "#{ENV["WORDPRESS_SIGN_UP_URL"]}?redirect_uri=%22#{confirm_login_url}%22"
+      expect(response).to redirect_to(expected_redirect_url)
     end
   end
 

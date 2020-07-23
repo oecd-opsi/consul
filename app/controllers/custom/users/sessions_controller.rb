@@ -1,7 +1,7 @@
 class Users::SessionsController < Devise::SessionsController
   def new
     if Setting["feature.auth0_login"]
-      redirect_to "#{ENV["WORDPRESS_SIGN_UP_URL"]}?redirect_uri=#{confirm_login_url}"
+      redirect_to "#{ENV["WORDPRESS_SIGN_IN_URL"]}?redirect_uri=%22#{confirm_login_url}%22"
     else
       super
     end

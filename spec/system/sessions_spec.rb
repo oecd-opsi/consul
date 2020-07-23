@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Sessions" do
+describe "Sessions", js: true do
   let(:debate) { create(:debate) }
 
   scenario "Staying in the same page after doing login/logout" do
@@ -13,7 +13,7 @@ describe "Sessions" do
     expect(page).to have_content("You have been signed in successfully")
     expect(page).to have_current_path(debate_path(debate))
 
-    click_link "Sign out"
+    sign_out
 
     expect(page).to have_content("You have been signed out successfully")
     expect(page).to have_current_path(debate_path(debate))
@@ -44,13 +44,12 @@ describe "Sessions" do
     scenario "Staying in the same page after doing login/logout" do
       visit debate_path(debate)
 
-      visit "/users/sessions/confirm_login"
-      click_link "Sign in with Auth0"
+      visit confirm_login_path
 
       expect_to_be_signed_in
       expect(page).to have_current_path(debate_path(debate))
 
-      click_link "Sign out"
+      sign_out
 
       expect(page).to have_content("You have been signed out successfully")
       expect(page).to have_current_path(debate_path(debate))
@@ -58,9 +57,10 @@ describe "Sessions" do
 
     scenario "Redirecting to WP Sign after clicking on Sign in button" do
       visit "/"
-      click_link "Sign in"
+      click_link I18n.t("devise_views.menu.login_items.login")
 
-      expect(page).to have_current_path("#{ENV["WORDPRESS_SIGN_UP_URL"]}?redirect_uri=#{confirm_login_url}")
+      redirect_uri = confirm_login_url(port: Capybara.current_session.server.port)
+      expect(page).to have_current_path("#{ENV["WORDPRESS_SIGN_IN_URL"]}?redirect_uri=%22#{redirect_uri}%22")
     end
   end
 end
