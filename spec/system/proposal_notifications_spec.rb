@@ -348,10 +348,11 @@ describe "Proposal Notifications" do
         login_as user.reload
         visit root_path
 
-        within("#notifications") { expect(page).to have_content :all, "You have 3 new notifications" }
+        expect(find("span.icon-notification")["title"]).to eq "You have 3 new notifications"
         find(".icon-notification").click
 
         expect(page).to have_css ".notification", count: 3
+
         expect(page).to have_content "There is one new notification on #{proposal.title}", count: 3
       end
     end

@@ -14,7 +14,7 @@ describe "Management" do
 
     expect(page).to have_content("My content")
     expect(page).to have_content("My account")
-    expect(page).to have_content("Sign out")
+    expect(page).to have_content(I18n.t("devise_views.menu.login_items.logout"))
   end
 
   scenario "Should not show admin menu if logged user is manager" do

@@ -33,7 +33,7 @@ describe "BudgetPolls", :with_frozen_time do
       expect(Poll::Voter.first.origin).to eq("booth")
 
       visit root_path
-      click_link "Sign out"
+      sign_out
       login_as(admin.user)
       visit admin_poll_recounts_path(poll)
 
@@ -41,7 +41,8 @@ describe "BudgetPolls", :with_frozen_time do
         expect(page).to have_content "1"
       end
 
-      within("#poll_booth_assignment_#{Poll::BoothAssignment.find_by(poll: poll, booth: booth).id}_recounts") do
+      poll_id = Poll::BoothAssignment.find_by(poll: poll, booth: booth).id
+      within("#poll_booth_assignment_#{poll_id}_recounts") do
         expect(page).to have_content "1"
       end
     end

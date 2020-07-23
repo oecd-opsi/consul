@@ -19,12 +19,13 @@ describe "Account" do
   scenario "Show" do
     visit root_path
 
-    click_link "My account"
+    first(:link, I18n.t("layouts.header.my_account_link")).click
 
     expect(page).to have_current_path(account_path, ignore_query: true)
 
     expect(page).to have_selector("input[value='Manuela Colau']")
-    expect(page).to have_selector(avatar("Manuela Colau"), count: 1)
+
+    expect(page).to have_selector(avatar("Manuela Colau"))
   end
 
   scenario "Show organization" do
@@ -35,7 +36,7 @@ describe "Account" do
     expect(page).to have_selector("input[value='Manuela Corp']")
     expect(page).not_to have_selector("input[value='Manuela Colau']")
 
-    expect(page).to have_selector(avatar("Manuela Corp"), count: 1)
+    expect(page).to have_selector(avatar("Manuela Corp"))
   end
 
   scenario "Edit" do
@@ -160,7 +161,7 @@ describe "Account" do
   scenario "Errors editing credentials" do
     visit root_path
 
-    click_link "My account"
+    first(:link, I18n.t("layouts.header.my_account_link")).click
 
     expect(page).to have_current_path(account_path, ignore_query: true)
 
