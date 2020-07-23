@@ -244,7 +244,7 @@ describe "Legislation Draft Versions" do
       visit legislation_process_draft_version_path(draft_version.process, draft_version)
 
       expect(page).to have_css ".annotator-hl"
-      first(:css, ".annotator-hl").click
+      first(:css, ".annotator-hl", wait: 3).click
       expect(page).to have_content "my annotation"
 
       click_link "Publish Comment"
@@ -258,7 +258,7 @@ describe "Legislation Draft Versions" do
 
       visit legislation_process_draft_version_path(draft_version.process, draft_version)
 
-      find(:css, ".annotator-hl", wait: 2).double_click
+      find(:css, ".annotator-hl", wait: 3).double_click
       find(:css, ".annotator-adder button").click
       click_button "Publish Comment"
 
@@ -293,7 +293,7 @@ describe "Legislation Draft Versions" do
       visit legislation_process_draft_version_path(draft_version.process, draft_version)
 
       expect(page).to have_css ".annotator-hl"
-      first(:css, ".annotator-hl").click
+      first(:css, ".annotator-hl", wait: 3).click
 
       within(".comment-box") do
         expect(page).to have_content "2 comment"

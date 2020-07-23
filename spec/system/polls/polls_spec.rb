@@ -390,7 +390,8 @@ describe "Polls" do
       expect(page).to have_content "Vote introduced!"
 
       visit new_officing_residence_path
-      sign_out
+
+      click_link I18n.t("devise_views.menu.login_items.logout")
       login_as user
       visit poll_path(poll)
 

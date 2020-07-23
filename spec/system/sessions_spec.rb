@@ -13,6 +13,7 @@ describe "Sessions", js: true do
     expect(page).to have_content("You have been signed in successfully")
     expect(page).to have_current_path(debate_path(debate))
 
+    find(:button, class: "close-button").click
     sign_out
 
     expect(page).to have_content("You have been signed out successfully")
@@ -49,6 +50,7 @@ describe "Sessions", js: true do
       expect_to_be_signed_in
       expect(page).to have_current_path(debate_path(debate))
 
+      find(:button, class: "close-button").click
       sign_out
 
       expect(page).to have_content("You have been signed out successfully")
