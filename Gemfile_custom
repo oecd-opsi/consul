@@ -9,3 +9,7 @@ end
 group :development do
   gem "lefthook"
 end
+
+group :production do
+  gem "sentry-raven"
+end
