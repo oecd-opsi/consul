@@ -86,8 +86,8 @@ menu_items += [
 
 if !user_signed_in?
   menu_items.push(
-    { "title": "Log In", "href": new_user_session_path, desktopOnly: true },
-    { "title": "Join", "href": new_user_registration_path, desktopOnly: true },
+    { "title": t("devise_views.menu.login_items.login"), "href": new_user_session_path, desktopOnly: true },
+    { "title": t("devise_views.menu.login_items.signup"), "href": new_user_registration_path, desktopOnly: true },
   )
 end
 
@@ -124,7 +124,7 @@ if user_signed_in?
   menu_items_user = [
     { title: t("layouts.header.my_activity_link"), href: user_path(current_user) },
     { title: t("layouts.header.my_account_link"), href: account_path },
-    { title: "Log Out", href: destroy_user_session_path, attrs: { "data-method": "delete" } },
+    { title: t("devise_views.menu.login_items.logout"), href: destroy_user_session_path, attrs: { "data-method": "delete" } },
   ]
 
   menu_items.push(
@@ -142,6 +142,10 @@ end
 %>
 
 <header class="c-header">
+  <% if display_remote_translation_info?(@remote_translations, I18n.locale) %>
+    <%= render "shared/remote_translations_button", remote_translations: @remote_translations %>
+  <% end %>
+
   <div class="c-header__top">
     <div class="row">
       <div class="column hide-for-small-only">
@@ -194,10 +198,10 @@ end
                 </li>
               <% else %>
                 <li class="c-header__mobile-menu-right-element">
-                  <a class="c-header__mobile-menu-right-link" href="<%= new_user_session_path %>"> <%= "Log In" %> </a>
+                  <a class="c-header__mobile-menu-right-link" href="<%= new_user_session_path %>"> <%= t("devise_views.menu.login_items.login") %> </a>
                 </li>
                 <li class="c-header__mobile-menu-right-element">
-                  <a class="c-header__mobile-menu-right-link" href="<%= new_user_registration_path %>"> <%= "Join" %> </a>
+                  <a class="c-header__mobile-menu-right-link" href="<%= new_user_registration_path %>"> <%= t("devise_views.menu.login_items.signup") %> </a>
                 </li>
               <% end %>
             </ul>
@@ -292,6 +296,7 @@ end
               <% end %>
             </li>
           <% end %>
+          <%= raw content_block("top_links", I18n.locale) %>
         </ul>
       </div>
     </div>
