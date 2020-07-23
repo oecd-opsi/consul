@@ -23,7 +23,7 @@ class Auth0UserUpdater
     updating_email? ? email_valid? : password_valid?
   end
 
-  def update
+  def update!
     return unless valid?
 
     update_user(updating_email? ? { email: @email } : { password: @password })
