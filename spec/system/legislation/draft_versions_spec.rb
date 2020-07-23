@@ -74,8 +74,12 @@ describe "Legislation Draft Versions" do
 
     context "for final versions" do
       it "does not show the comments panel" do
-        final_version = create(:legislation_draft_version, process: process, title: "Final version",
-                                                           body: "Final body", status: "published", final_version: true)
+        final_version = create(:legislation_draft_version,
+                               process: process,
+                               title: "Final version",
+                               body: "Final body",
+                               status: "published",
+                               final_version: true)
 
         visit legislation_process_draft_version_path(process, final_version)
 
@@ -165,7 +169,7 @@ describe "Legislation Draft Versions" do
 
       visit legislation_process_draft_version_path(draft_version.process, draft_version)
 
-      page.find(:css, ".legislation-annotatable").double_click
+      page.find(:css, ".legislation-annotatable", wait: 2).double_click
       page.find(:css, ".annotator-adder button").click
       expect(page).not_to have_css("#legislation_annotation_text")
       expect(page).to have_content "You must sign in or sign up to leave a comment."
@@ -189,15 +193,35 @@ describe "Legislation Draft Versions" do
       visit legislation_process_draft_version_path(draft_version.process, draft_version)
 
       expect(page).to have_css ".annotator-hl"
-      first(:css, ".annotator-hl").click
+      first(:css, ".annotator-hl", wait: 2).click
       expect(page).to have_content "this is my annotation"
     end
 
     scenario "View annotations and comments" do
-      annotation1 = create(:legislation_annotation, draft_version: draft_version, text: "my annotation",
-                                                    ranges: [{ "start" => "/p[1]", "startOffset" => 5, "end" => "/p[1]", "endOffset" => 10 }])
-      create(:legislation_annotation, draft_version: draft_version, text: "my other annotation",
-                                      ranges: [{ "start" => "/p[1]", "startOffset" => 12, "end" => "/p[1]", "endOffset" => 19 }])
+      annotation1 = create(:legislation_annotation,
+                           draft_version: draft_version,
+                           text: "my annotation",
+                           ranges: [
+                                      {
+                                        "start" => "/p[1]",
+                                        "startOffset" => 5,
+                                        "end" => "/p[1]",
+                                        "endOffset" => 10
+                                      }
+                                          ]
+      )
+      create(:legislation_annotation,
+             draft_version: draft_version,
+             text: "my other annotation",
+             ranges: [
+                              {
+                                "start" => "/p[1]",
+                                "startOffset" => 12,
+                                "end" => "/p[1]",
+                                "endOffset" => 19
+                              }
+                            ]
+      )
       comment = create(:comment, commentable: annotation1)
 
       visit legislation_process_draft_version_path(draft_version.process, draft_version)
@@ -207,13 +231,15 @@ describe "Legislation Draft Versions" do
       expect(page).to have_content "my annotation"
       expect(page).to have_content comment.body
 
-      all(".annotator-hl")[1].click
+      all(".annotator-hl", wait: 2)[1].click
       expect(page).to have_content "my other annotation"
     end
 
     scenario "Publish new comment for an annotation from comments box" do
-      create(:legislation_annotation, draft_version: draft_version, text: "my annotation",
-                                      ranges: [{ "start" => "/p[1]", "startOffset" => 6, "end" => "/p[1]", "endOffset" => 11 }])
+      create(:legislation_annotation,
+             draft_version: draft_version,
+             text: "my annotation",
+             ranges: [{ "start" => "/p[1]", "startOffset" => 6, "end" => "/p[1]", "endOffset" => 11 }])
 
       visit legislation_process_draft_version_path(draft_version.process, draft_version)
 
@@ -231,7 +257,8 @@ describe "Legislation Draft Versions" do
       create(:legislation_annotation, draft_version: draft_version)
 
       visit legislation_process_draft_version_path(draft_version.process, draft_version)
-      find(:css, ".annotator-hl").double_click
+
+      find(:css, ".annotator-hl", wait: 2).double_click
       find(:css, ".annotator-adder button").click
       click_button "Publish Comment"
 
@@ -246,10 +273,22 @@ describe "Legislation Draft Versions" do
     before { login_as user }
 
     scenario "View annotations and comments in an included range" do
-      create(:legislation_annotation, draft_version: draft_version, text: "my annotation",
-                                      ranges: [{ "start" => "/p[1]", "startOffset" => 1, "end" => "/p[1]", "endOffset" => 5 }])
-      create(:legislation_annotation, draft_version: draft_version, text: "my other annotation",
-                                      ranges: [{ "start" => "/p[1]", "startOffset" => 1, "end" => "/p[1]", "endOffset" => 10 }])
+      create(:legislation_annotation,
+             draft_version: draft_version,
+             text: "my annotation",
+             ranges: [
+                              {
+                                "start" => "/p[1]",
+                                "startOffset" => 1,
+                                "end" => "/p[1]",
+                                "endOffset" => 5
+                              }
+                            ]
+      )
+      create(:legislation_annotation,
+             draft_version: draft_version,
+             text: "my other annotation",
+             ranges: [{ "start" => "/p[1]", "startOffset" => 1, "end" => "/p[1]", "endOffset" => 10 }])
 
       visit legislation_process_draft_version_path(draft_version.process, draft_version)
 
@@ -268,10 +307,16 @@ describe "Legislation Draft Versions" do
     let(:draft_version) { create(:legislation_draft_version, :published) }
 
     before do
-      create(:legislation_annotation, draft_version: draft_version, text: "my annotation",       quote: "ipsum",
-                                      ranges: [{ "start" => "/p[1]", "startOffset" => 6, "end" => "/p[1]", "endOffset" => 11 }])
-      create(:legislation_annotation, draft_version: draft_version, text: "my other annotation", quote: "audiam",
-                                      ranges: [{ "start" => "/p[3]", "startOffset" => 6, "end" => "/p[3]", "endOffset" => 11 }])
+      create(:legislation_annotation,
+             draft_version: draft_version,
+             text: "my annotation",
+             quote: "ipsum",
+             ranges: [{ "start" => "/p[1]", "startOffset" => 6, "end" => "/p[1]", "endOffset" => 11 }])
+      create(:legislation_annotation,
+             draft_version: draft_version,
+             text: "my other annotation",
+             quote: "audiam",
+             ranges: [{ "start" => "/p[3]", "startOffset" => 6, "end" => "/p[3]", "endOffset" => 11 }])
     end
 
     scenario "See all annotations for a draft version" do
@@ -287,10 +332,30 @@ describe "Legislation Draft Versions" do
       let(:current)  { create(:legislation_draft_version, :published, process: process, title: "Current") }
 
       before do
-        create(:legislation_annotation, draft_version: original, quote: "quote for version 1",
-               ranges: [{ "start" => "/p[1]", "startOffset" => 11, "end" => "/p[1]", "endOffset" => 30 }])
-        create(:legislation_annotation, draft_version: current, quote: "quote for version 2",
-               ranges: [{ "start" => "/p[1]", "startOffset" => 11, "end" => "/p[1]", "endOffset" => 30 }])
+        create(:legislation_annotation,
+               draft_version: original,
+               quote: "quote for version 1",
+               ranges: [
+                                {
+                                  "start" => "/p[1]",
+                                  "startOffset" => 11,
+                                  "end" => "/p[1]",
+                                  "endOffset" => 30
+                                }
+                              ]
+        )
+        create(:legislation_annotation,
+               draft_version: current,
+               quote: "quote for version 2",
+               ranges: [
+                                {
+                                  "start" => "/p[1]",
+                                  "startOffset" => 11,
+                                  "end" => "/p[1]",
+                                  "endOffset" => 30
+                                }
+                              ]
+        )
       end
 
       scenario "without js" do
@@ -320,15 +385,39 @@ describe "Legislation Draft Versions" do
     let(:draft_version) { create(:legislation_draft_version, :published) }
 
     before do
-      create(:legislation_annotation, draft_version: draft_version, text: "my annotation", quote: "ipsum",
-                                      ranges: [{ "start" => "/p[1]", "startOffset" => 6, "end" => "/p[1]", "endOffset" => 11 }])
+      create(:legislation_annotation,
+             draft_version: draft_version,
+             text: "my annotation",
+             quote: "ipsum",
+             ranges: [
+                              {
+                                "start" => "/p[1]",
+                                "startOffset" => 6,
+                                "end" => "/p[1]",
+                                "endOffset" => 11
+                              }
+                            ]
+      )
     end
 
     scenario "See one annotation with replies for a draft version" do
-      annotation = create(:legislation_annotation, draft_version: draft_version, text: "my other annotation", quote: "audiam",
-                          ranges: [{ "start" => "/p[3]", "startOffset" => 6, "end" => "/p[3]", "endOffset" => 11 }])
+      annotation = create(:legislation_annotation,
+                          draft_version: draft_version,
+                          text: "my other annotation",
+                          quote: "audiam",
+                          ranges: [
+                                           {
+                                             "start" => "/p[3]",
+                                             "startOffset" => 6,
+                                             "end" => "/p[3]",
+                                             "endOffset" => 11
+                                           }
+                                         ]
+      )
 
-      visit legislation_process_draft_version_annotation_path(draft_version.process, draft_version, annotation)
+      visit legislation_process_draft_version_annotation_path(draft_version.process,
+                                                              draft_version,
+                                                              annotation)
 
       expect(page).not_to have_content "ipsum"
       expect(page).not_to have_content "my annotation"
