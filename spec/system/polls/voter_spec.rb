@@ -38,12 +38,20 @@ describe "Voter" do
       visit poll_path(poll)
 
       within("#poll_question_#{question.id}_answers") do
-        expect(page).not_to have_link(answer_yes.title, href: "/questions/#{question.id}/answer?answer=#{answer_yes.title}&token=")
-        expect(page).not_to have_link(answer_no.title, href: "/questions/#{question.id}/answer?answer=#{answer_no.title}&token=")
+        expect(page).not_to have_link(
+                              answer_yes.title,
+                              href: "/questions/#{question.id}/answer?answer=#{answer_yes.title}&token="
+                            )
+        expect(page).not_to have_link(
+                              answer_no.title,
+                              href: "/questions/#{question.id}/answer?answer=#{answer_no.title}&token="
+                            )
       end
 
       expect(page).to have_content("You must verify your account in order to answer")
-      expect(page).not_to have_content("You have already participated in this poll. If you vote again it will be overwritten")
+      unexpected_content = "You have already participated in this poll."\
+                           " If you vote again it will be overwritten"
+      expect(page).not_to have_content(unexpected_content)
     end
 
     scenario "Voting in booth", :js do
@@ -64,15 +72,15 @@ describe "Voter" do
       expect(Poll::Voter.first.origin).to eq("booth")
 
       visit root_path
-      click_link "Sign out"
+      sign_out
       login_as(admin.user)
       visit admin_poll_recounts_path(poll)
 
       within("#total_system") do
         expect(page).to have_content "1"
       end
-
-      within("#poll_booth_assignment_#{Poll::BoothAssignment.find_by(poll: poll, booth: booth).id}_recounts") do
+      poll_id = Poll::BoothAssignment.find_by(poll: poll, booth: booth).id
+      within("#poll_booth_assignment_#{poll_id}_recounts") do
         expect(page).to have_content "1"
       end
     end
@@ -120,8 +128,8 @@ describe "Voter" do
         login_as user
         vote_for_poll_via_web(poll, question, answer_yes.title)
         expect(Poll::Voter.count).to eq(1)
-
-        click_link "Sign out"
+        sleep 1
+        sign_out
 
         login_through_form_as_officer(officer.user)
 
@@ -139,7 +147,7 @@ describe "Voter" do
         vote_for_poll_via_booth
 
         visit root_path
-        click_link "Sign out"
+        sign_out
 
         login_as user
         visit poll_path(poll)
@@ -147,19 +155,20 @@ describe "Voter" do
         within("#poll_question_#{question.id}_answers") do
           expect(page).not_to have_link(answer_yes.title)
         end
-        expect(page).to have_content "You have already participated in a physical booth. You can not participate again."
+        expect(page).to have_content "You have already participated in a physical booth."\
+                                     " You can not participate again."
         expect(Poll::Voter.count).to eq(1)
 
         visit root_path
-        click_link "Sign out"
+        sign_out
         login_as(admin.user)
         visit admin_poll_recounts_path(poll)
 
         within("#total_system") do
           expect(page).to have_content "1"
         end
-
-        within("#poll_booth_assignment_#{Poll::BoothAssignment.find_by(poll: poll, booth: booth).id}_recounts") do
+        poll_id = Poll::BoothAssignment.find_by(poll: poll, booth: booth).id
+        within("#poll_booth_assignment_#{poll_id}_recounts") do
           expect(page).to have_content "1"
         end
       end
@@ -171,14 +180,15 @@ describe "Voter" do
 
         visit poll_path(poll)
 
-        expect(page).to have_content "You have already participated in this poll. If you vote again it will be overwritten."
+        expect(page).to have_content "You have already participated in this poll."\
+                                     " If you vote again it will be overwritten."
         within("#poll_question_#{question.id}_answers") do
           expect(page).not_to have_link(answer_yes.title)
         end
 
         travel_back
 
-        click_link "Sign out"
+        sign_out
 
         login_as user
         visit poll_path(poll)
@@ -197,7 +207,7 @@ describe "Voter" do
       vote_for_poll_via_booth
 
       visit root_path
-      click_link "Sign out"
+      sign_out
 
       login_as user
       visit account_path
@@ -212,19 +222,21 @@ describe "Voter" do
         expect(page).not_to have_link(answer_yes.title)
       end
 
-      expect(page).to have_content "You have already participated in a physical booth. You can not participate again."
+      expect(page).to have_content "You have already participated in a physical booth."\
+                                   " You can not participate again."
       expect(Poll::Voter.count).to eq(1)
 
       visit root_path
-      click_link "Sign out"
+      sign_out
       login_as(admin.user)
       visit admin_poll_recounts_path(poll)
 
       within("#total_system") do
         expect(page).to have_content "1"
       end
+      poll_id = Poll::BoothAssignment.find_by(poll: poll, booth: booth).id
 
-      within("#poll_booth_assignment_#{Poll::BoothAssignment.find_by(poll: poll, booth: booth).id}_recounts") do
+      within("#poll_booth_assignment_#{poll_id}_recounts") do
         expect(page).to have_content "1"
       end
     end

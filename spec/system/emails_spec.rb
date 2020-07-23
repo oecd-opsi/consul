@@ -205,7 +205,7 @@ describe "Emails" do
   scenario "Email depending on user's locale" do
     visit root_path(locale: :es)
 
-    click_link "Registrarse"
+    first(:link, I18n.t("devise_views.menu.login_items.signup")).click
     fill_in_signup_form
     click_button "Registrarse"
 
@@ -372,7 +372,8 @@ describe "Emails" do
       visit edit_valuation_budget_budget_investment_path(budget, investment)
 
       choose "budget_investment_feasibility_unfeasible"
-      fill_in "budget_investment_unfeasibility_explanation", with: "This is not legal as stated in Article 34.9"
+      fill_in "budget_investment_unfeasibility_explanation",
+              with: "This is not legal as stated in Article 34.9"
       find_field("budget_investment[valuation_finished]").click
       click_button "Save changes"
 
@@ -380,7 +381,8 @@ describe "Emails" do
       investment.reload
 
       email = open_last_email
-      expect(email).to have_subject("Your investment project '#{investment.code}' has been marked as unfeasible")
+      expected_subject = "Your investment project '#{investment.code}' has been marked as unfeasible"
+      expect(email).to have_subject(expected_subject)
       expect(email).to deliver_to(investment.author.email)
       expect(email).to have_body_text(investment.unfeasibility_explanation)
     end

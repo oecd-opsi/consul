@@ -36,11 +36,11 @@ describe "Moderate users" do
 
     expect(page).not_to have_content(comment3.body)
 
-    click_link("Sign out")
+    logout
 
     visit root_path
 
-    click_link "Sign in"
+    first(:link, I18n.t("devise_views.menu.login_items.login")).click
     fill_in "user_login",    with: citizen.email
     fill_in "user_password", with: citizen.password
     click_button "Enter"

@@ -1,13 +1,13 @@
 require "rails_helper"
 
-describe "Users" do
+describe "Users", js: true do
   context "Regular authentication" do
     context "Sign up" do
       scenario "Success" do
         message = "You have been sent a message containing a verification link. "\
                   "Please click on this link to activate your account."
         visit "/"
-        click_link "Register"
+        click_link I18n.t("devise_views.menu.login_items.signup")
 
         fill_in "user_username",              with: "Manuela Carmena"
         fill_in "user_email",                 with: "manuela@consul.dev"
@@ -15,7 +15,7 @@ describe "Users" do
         fill_in "user_password_confirmation", with: "judgementday"
         check "user_terms_of_service"
 
-        click_button "Register"
+        click_button I18n.t("devise_views.menu.login_items.signup")
 
         expect(page).to have_content message
 
@@ -26,19 +26,19 @@ describe "Users" do
 
       scenario "Errors on sign up" do
         visit "/"
-        click_link "Register"
-        click_button "Register"
+        click_link I18n.t("devise_views.menu.login_items.signup")
+        click_button I18n.t("devise_views.menu.login_items.signup")
 
         expect(page).to have_content error_message
       end
     end
 
-    context "Sign in" do
+    context I18n.t("devise_views.menu.login_items.login") do
       scenario "sign in with email" do
         create(:user, email: "manuela@consul.dev", password: "judgementday")
 
         visit "/"
-        click_link "Sign in"
+        click_link I18n.t("devise_views.menu.login_items.login")
         fill_in "user_login",    with: "manuela@consul.dev"
         fill_in "user_password", with: "judgementday"
         click_button "Enter"
@@ -47,11 +47,11 @@ describe "Users" do
       end
 
       scenario "Sign in with username" do
-        create(:user, username: "👻👽👾🤖", email: "ash@nostromo.dev", password: "xenomorph")
+        create(:user, username: "username", email: "ash@nostromo.dev", password: "xenomorph")
 
         visit "/"
-        click_link "Sign in"
-        fill_in "user_login",    with: "👻👽👾🤖"
+        click_link I18n.t("devise_views.menu.login_items.login")
+        fill_in "user_login",    with: "username"
         fill_in "user_password", with: "xenomorph"
         click_button "Enter"
 
@@ -63,7 +63,7 @@ describe "Users" do
         u2 = create(:user, username: "peter@nyc.dev", email: "venom@nyc.dev", password: "symbiote")
 
         visit "/"
-        click_link "Sign in"
+        click_link I18n.t("devise_views.menu.login_items.login")
         fill_in "user_login",    with: "peter@nyc.dev"
         fill_in "user_password", with: "greatpower"
         click_button "Enter"
@@ -75,11 +75,12 @@ describe "Users" do
         expect(page).to have_link "My content", href: user_path(u1)
 
         visit "/"
-        click_link "Sign out"
+        sign_out
 
         expect(page).to have_content "You have been signed out successfully."
 
-        click_link "Sign in"
+        visit "/"
+        click_link I18n.t("devise_views.menu.login_items.login")
         fill_in "user_login",    with: "peter@nyc.dev"
         fill_in "user_password", with: "symbiote"
         click_button "Enter"
@@ -129,12 +130,13 @@ describe "Users" do
         OmniAuth.config.add_mock(:twitter, twitter_hash_with_verified_email)
 
         visit "/"
-        click_link "Register"
+        click_link I18n.t("devise_views.menu.login_items.signup")
 
         click_link "Sign up with Twitter"
 
         expect_to_be_signed_in
 
+        visit "/"
         click_link "My account"
         expect(page).to have_field("account_username", with: "manuela")
 
@@ -146,7 +148,7 @@ describe "Users" do
         OmniAuth.config.add_mock(:twitter, twitter_hash_with_email)
 
         visit "/"
-        click_link "Register"
+        click_link I18n.t("devise_views.menu.login_items.signup")
 
         click_link "Sign up with Twitter"
 
@@ -158,10 +160,11 @@ describe "Users" do
         expect(page).to have_content "Your account has been confirmed"
 
         visit "/"
-        click_link "Sign in"
+        click_link I18n.t("devise_views.menu.login_items.login")
         click_link "Sign in with Twitter"
         expect_to_be_signed_in
 
+        visit "/"
         click_link "My account"
         expect(page).to have_field("account_username", with: "manuela")
 
@@ -173,12 +176,12 @@ describe "Users" do
         OmniAuth.config.add_mock(:twitter, twitter_hash)
 
         visit "/"
-        click_link "Register"
+        click_link I18n.t("devise_views.menu.login_items.signup")
         click_link "Sign up with Twitter"
 
         expect(page).to have_current_path(finish_signup_path)
         fill_in "user_email", with: "manueladelascarmenas@example.com"
-        click_button "Register"
+        click_button I18n.t("devise_views.menu.login_items.signup")
 
         expect(page).to have_content "To continue, please click on the confirmation link"\
                                       " that we have sent you via email"
@@ -187,7 +190,7 @@ describe "Users" do
         expect(page).to have_content "Your account has been confirmed"
 
         visit "/"
-        click_link "Sign in"
+        click_link I18n.t("devise_views.menu.login_items.login")
         click_link "Sign in with Twitter"
         expect_to_be_signed_in
 
@@ -203,7 +206,7 @@ describe "Users" do
         OmniAuth.config.add_mock(:twitter, twitter_hash)
 
         visit "/"
-        click_link "Register"
+        click_link I18n.t("devise_views.menu.login_items.signup")
         click_link "Sign up with Twitter"
 
         expect(page).to have_current_path(finish_signup_path)
@@ -219,11 +222,12 @@ describe "Users" do
         OmniAuth.config.add_mock(:twitter, twitter_hash)
 
         visit "/"
-        click_link "Sign in"
+        click_link I18n.t("devise_views.menu.login_items.login")
         click_link "Sign in with Twitter"
 
         expect_to_be_signed_in
 
+        visit "/"
         click_link "My account"
         expect(page).to have_field("account_username", with: user.username)
 
@@ -237,19 +241,19 @@ describe "Users" do
         OmniAuth.config.add_mock(:twitter, twitter_hash_with_verified_email)
 
         visit "/"
-        click_link "Register"
+        click_link I18n.t("devise_views.menu.login_items.signup")
         click_link "Sign up with Twitter"
 
         expect(page).to have_current_path(finish_signup_path)
 
         expect(page).to have_field("user_username", with: "manuela")
 
-        click_button "Register"
+        click_button I18n.t("devise_views.menu.login_items.signup")
 
         expect(page).to have_current_path(do_finish_signup_path)
 
         fill_in "user_username", with: "manuela2"
-        click_button "Register"
+        click_button I18n.t("devise_views.menu.login_items.signup")
 
         expect_to_be_signed_in
 
@@ -266,18 +270,18 @@ describe "Users" do
         OmniAuth.config.add_mock(:twitter, twitter_hash)
 
         visit "/"
-        click_link "Register"
+        click_link I18n.t("devise_views.menu.login_items.signup")
         click_link "Sign up with Twitter"
 
         expect(page).to have_current_path(finish_signup_path)
 
         fill_in "user_email", with: "manuela@example.com"
-        click_button "Register"
+        click_button I18n.t("devise_views.menu.login_items.signup")
 
         expect(page).to have_current_path(do_finish_signup_path)
 
         fill_in "user_email", with: "somethingelse@example.com"
-        click_button "Register"
+        click_button I18n.t("devise_views.menu.login_items.signup")
 
         expect(page).to have_content "To continue, please click on the confirmation link"\
                                      " that we have sent you via email"
@@ -286,10 +290,11 @@ describe "Users" do
         expect(page).to have_content "Your account has been confirmed"
 
         visit "/"
-        click_link "Sign in"
+        click_link I18n.t("devise_views.menu.login_items.login")
         click_link "Sign in with Twitter"
         expect_to_be_signed_in
 
+        visit "/"
         click_link "My account"
         expect(page).to have_field("account_username", with: "manuela")
 
@@ -303,14 +308,14 @@ describe "Users" do
         OmniAuth.config.add_mock(:twitter, twitter_hash_with_email)
 
         visit "/"
-        click_link "Register"
+        click_link I18n.t("devise_views.menu.login_items.signup")
         click_link "Sign up with Twitter"
 
         expect(page).to have_current_path(finish_signup_path)
 
         expect(page).to have_field("user_email", with: "manuelacarmena@example.com")
         fill_in "user_email", with: "somethingelse@example.com"
-        click_button "Register"
+        click_button I18n.t("devise_views.menu.login_items.signup")
 
         expect(page).to have_content "To continue, please click on the confirmation link"\
                                      " that we have sent you via email"
@@ -319,10 +324,11 @@ describe "Users" do
         expect(page).to have_content "Your account has been confirmed"
 
         visit "/"
-        click_link "Sign in"
+        click_link I18n.t("devise_views.menu.login_items.login")
         click_link "Sign in with Twitter"
         expect_to_be_signed_in
 
+        visit "/"
         click_link "My account"
         expect(page).to have_field("account_username", with: "manuela")
 
@@ -346,7 +352,7 @@ describe "Users" do
         OmniAuth.config.add_mock(:wordpress_oauth2, wordpress_hash)
 
         visit "/"
-        click_link "Register"
+        click_link I18n.t("devise_views.menu.login_items.signup")
 
         click_link "Sign up with Wordpress"
 
@@ -357,7 +363,7 @@ describe "Users" do
         expect(page).to have_content "Your account has been confirmed"
 
         visit "/"
-        click_link "Sign in"
+        click_link I18n.t("devise_views.menu.login_items.login")
         click_link "Sign in with Wordpress"
         expect_to_be_signed_in
 
@@ -377,20 +383,20 @@ describe "Users" do
         OmniAuth.config.add_mock(:wordpress_oauth2, wordpress_hash)
 
         visit "/"
-        click_link "Register"
+        click_link I18n.t("devise_views.menu.login_items.signup")
         click_link "Sign up with Wordpress"
 
         expect(page).to have_current_path(finish_signup_path)
 
         expect(page).to have_field("user_username", with: "manuela")
 
-        click_button "Register"
+        click_button I18n.t("devise_views.menu.login_items.signup")
 
         expect(page).to have_current_path(do_finish_signup_path)
 
         fill_in "Username", with: "manuela2"
         fill_in "Email", with: "manuela@consul.dev"
-        click_button "Register"
+        click_button I18n.t("devise_views.menu.login_items.signup")
 
         expect(page).to have_current_path(new_user_session_path)
         expect(page).to have_content "To continue, please click on the confirmation link"\
@@ -400,11 +406,12 @@ describe "Users" do
         expect(page).to have_content "Your account has been confirmed"
 
         visit "/"
-        click_link "Sign in"
+        click_link I18n.t("devise_views.menu.login_items.login")
         click_link "Sign in with Wordpress"
 
         expect_to_be_signed_in
 
+        visit "/"
         click_link "My account"
         expect(page).to have_field("account_username", with: "manuela2")
 
@@ -451,12 +458,12 @@ describe "Users" do
         OmniAuth.config.add_mock(:auth0, auth0_hash_with_verified_email)
 
         visit "/users/sessions/confirm_login"
-        click_link "Sign in with Auth0"
 
         expect_to_be_signed_in
 
         password_login_identity
 
+        visit "/"
         click_link "My account"
         expect(page).to have_field("account_username", with: "manuela")
 
@@ -468,7 +475,6 @@ describe "Users" do
         OmniAuth.config.add_mock(:auth0, auth0_hash_with_email)
 
         visit "/users/sessions/confirm_login"
-        click_link "Sign in with Auth0"
 
         expect(page).to have_current_path(root_path)
         expect(page).to have_content "To continue, please click on the confirmation link that"\
@@ -478,10 +484,10 @@ describe "Users" do
         password_login_identity
 
         visit confirm_login_path
-        click_link "Sign in with Auth0"
 
         expect_to_be_signed_in
 
+        visit "/"
         click_link "My account"
         expect(page).to have_field("account_username", with: "manuela")
 
@@ -492,12 +498,11 @@ describe "Users" do
       scenario "Sign up, when no email was provided by OAuth provider" do
         OmniAuth.config.add_mock(:auth0, auth0_hash)
 
-        visit "/users/sessions/confirm_login"
-        click_link "Sign in with Auth0"
+        visit confirm_login_path
 
         expect(page).to have_current_path(finish_signup_path)
         fill_in "user_email", with: "manueladelascarmenas@example.com"
-        click_button "Register"
+        click_button I18n.t("devise_views.menu.login_items.signup")
 
         expect(page).to have_content "To continue, please click on the confirmation link that we"\
                                       " have sent you via email"
@@ -505,10 +510,11 @@ describe "Users" do
         confirm_newly_created_user
         password_login_identity
 
-        visit "/users/sessions/confirm_login"
-        click_link "Sign in with Auth0"
+        visit confirm_login_path
+
         expect_to_be_signed_in
 
+        visit "/"
         click_link "My account"
         expect(page).to have_field("account_username", with: "manuela")
 
@@ -519,8 +525,7 @@ describe "Users" do
       scenario "Cancelling signup" do
         OmniAuth.config.add_mock(:auth0, auth0_hash)
 
-        visit "/users/sessions/confirm_login"
-        click_link "Sign in with Auth0"
+        visit confirm_login_path
 
         expect(page).to have_current_path(finish_signup_path)
         click_link "Cancel login"
@@ -535,11 +540,11 @@ describe "Users" do
         password_login_identity
         OmniAuth.config.add_mock(:auth0, auth0_hash)
 
-        visit "/users/sessions/confirm_login"
-        click_link "Sign in with Auth0"
+        visit confirm_login_path
 
         expect_to_be_signed_in
 
+        visit "/"
         click_link "My account"
         expect(page).to have_field("account_username", with: user.username)
 
@@ -551,19 +556,18 @@ describe "Users" do
         create(:user, username: "manuela", email: "manuela@consul.dev", password: "judgementday")
         OmniAuth.config.add_mock(:auth0, auth0_hash_with_verified_email)
 
-        visit "/users/sessions/confirm_login"
-        click_link "Sign in with Auth0"
+        visit confirm_login_path
 
         expect(page).to have_current_path(finish_signup_path)
 
         expect(page).to have_field("user_username", with: "manuela")
 
-        click_button "Register"
+        click_button I18n.t("devise_views.menu.login_items.signup")
 
         expect(page).to have_current_path(do_finish_signup_path)
 
         fill_in "user_username", with: "manuela2"
-        click_button "Register"
+        click_button I18n.t("devise_views.menu.login_items.signup")
 
         expect_to_be_signed_in
 
@@ -580,28 +584,28 @@ describe "Users" do
         create(:user, username: "peter", email: "manuela@example.com")
         OmniAuth.config.add_mock(:auth0, auth0_hash)
 
-        visit "/users/sessions/confirm_login"
-        click_link "Sign in with Auth0"
+        visit confirm_login_path
 
         expect(page).to have_current_path(finish_signup_path)
 
         fill_in "user_email", with: "manuela@example.com"
-        click_button "Register"
+        click_button I18n.t("devise_views.menu.login_items.signup")
 
         expect(page).to have_current_path(do_finish_signup_path)
 
         fill_in "user_email", with: "somethingelse@example.com"
-        click_button "Register"
+        click_button I18n.t("devise_views.menu.login_items.signup")
 
         expect(page).to have_content "To continue, please click on the confirmation link"\
                                       " that we have sent you via email"
 
         confirm_email
 
-        visit "/users/sessions/confirm_login"
-        click_link "Sign in with Auth0"
+        visit confirm_login_path
+
         expect_to_be_signed_in
 
+        visit "/"
         click_link "My account"
         expect(page).to have_field("account_username", with: "manuela")
         password_login_identity
@@ -615,24 +619,24 @@ describe "Users" do
         create(:user, username: "peter", email: "manuelacarmena@example.com")
         OmniAuth.config.add_mock(:auth0, auth0_hash_with_email)
 
-        visit "/users/sessions/confirm_login"
-        click_link "Sign in with Auth0"
+        visit confirm_login_path
 
         expect(page).to have_current_path(finish_signup_path)
 
         expect(page).to have_field("user_email", with: "manuelacarmena@example.com")
         fill_in "user_email", with: "somethingelse@example.com"
-        click_button "Register"
+        click_button I18n.t("devise_views.menu.login_items.signup")
 
         expect(page).to have_content "To continue, please click on the confirmation"\
                                       " link that we have sent you via email"
 
         confirm_newly_created_user
 
-        visit "/users/sessions/confirm_login"
-        click_link "Sign in with Auth0"
+        visit confirm_login_path
+
         expect_to_be_signed_in
 
+        visit "/"
         click_link "My account"
         expect(page).to have_field("account_username", with: "manuela")
         password_login_identity
@@ -648,7 +652,7 @@ describe "Users" do
     login_as(user)
 
     visit "/"
-    click_link "Sign out"
+    sign_out
 
     expect(page).to have_content "You have been signed out successfully."
   end
@@ -657,7 +661,7 @@ describe "Users" do
     create(:user, email: "manuela@consul.dev")
 
     visit "/"
-    click_link "Sign in"
+    click_link I18n.t("devise_views.menu.login_items.login")
     click_link "Forgotten your password?"
 
     fill_in "user_email", with: "manuela@consul.dev"
@@ -679,7 +683,7 @@ describe "Users" do
 
   scenario "Reset password with unexisting email" do
     visit "/"
-    click_link "Sign in"
+    click_link I18n.t("devise_views.menu.login_items.login")
     click_link "Forgotten your password?"
 
     fill_in "user_email", with: "fake@mail.dev"
@@ -693,7 +697,7 @@ describe "Users" do
     create(:user, email: "manuela@consul.dev")
 
     visit "/"
-    click_link "Sign in"
+    click_link I18n.t("devise_views.menu.login_items.login")
     click_link "Haven't received instructions to activate your account?"
 
     fill_in "user_email", with: "manuela@consul.dev"
@@ -706,7 +710,7 @@ describe "Users" do
 
   scenario "Re-send confirmation instructions with unexisting email" do
     visit "/"
-    click_link "Sign in"
+    click_link I18n.t("devise_views.menu.login_items.login")
     click_link "Haven't received instructions to activate your account?"
 
     fill_in "user_email", with: "fake@mail.dev"

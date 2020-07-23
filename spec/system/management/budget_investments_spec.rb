@@ -227,7 +227,8 @@ describe "Budget Investments" do
     expect(page).not_to have_content(finished.name)
   end
 
-  scenario "Listing - admins can see budgets in accepting, reviewing and selecting phases" do
+  scenario "Listing - admins can see budgets in accepting, reviewing and selecting phases",
+           js: true do
     accepting_budget = create(:budget, :accepting)
     reviewing_budget = create(:budget, :reviewing)
     selecting_budget = create(:budget, :selecting)
@@ -237,7 +238,7 @@ describe "Budget Investments" do
     finished = create(:budget, :finished)
 
     visit root_path
-    click_link "Sign out"
+    sign_out
 
     admin = create(:administrator)
     login_as(admin.user)

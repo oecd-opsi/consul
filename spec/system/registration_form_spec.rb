@@ -33,7 +33,7 @@ describe "Registration form" do
     fill_in "user_redeemable_code",       with: "            "
     check "user_terms_of_service"
 
-    click_button "Register"
+    click_button I18n.t("devise_views.users.registrations.new.submit")
 
     expect(page).to have_title "Confirm your email address"
     expect(page).to have_content "Thank you for registering"
@@ -53,7 +53,7 @@ describe "Registration form" do
     fill_in "user_password_confirmation", with: "destroyallhumans"
     check "user_terms_of_service"
 
-    click_button "Register"
+    click_button I18n.t("devise_views.users.registrations.new.submit")
 
     expect(page.status_code).to eq(200)
     expect(page.html).to be_empty
@@ -71,7 +71,7 @@ describe "Registration form" do
     fill_in "user_password_confirmation", with: "destroyallhumans"
     check "user_terms_of_service"
 
-    click_button "Register"
+    click_button I18n.t("devise_views.users.registrations.new.submit")
 
     expect(page).to have_content "Sorry, that was too quick! Please resubmit"
 
