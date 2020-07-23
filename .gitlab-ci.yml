@@ -17,7 +17,7 @@ staging_deploy:
     - chmod 644 ~/.ssh/known_hosts
     - git remote remove consul || true
     - git remote add consul dokku@15.188.246.27:consul || true
-    - git push consul origin/develop:master
+    - git push consul origin/develop:refs/heads/master
   only:
     - develop
   when: manual
