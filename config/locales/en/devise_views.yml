@@ -33,9 +33,9 @@ en:
         unlock_link: Unlock my account
     menu:
       login_items:
-        login: Sign in
-        logout: Sign out
-        signup: Register
+        login: Log In
+        logout: Log Out
+        signup: Join
     organizations:
       registrations:
         new:
@@ -116,7 +116,7 @@ en:
           password_confirmation_label: Confirm password
           password_label: Password
           redeemable_code: Verification code received via email (optional)
-          submit: Register
+          submit: Join
           terms: By registering you accept the %{terms}
           terms_link: terms and conditions of use
           terms_title: By registering you accept the terms and conditions of use
