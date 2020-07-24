@@ -13,10 +13,10 @@ staging_deploy:
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh-keyscan 15.188.246.27 >> ~/.ssh/known_hosts
+    - ssh-keyscan 52.47.76.149 >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
     - git remote remove consul || true
-    - git remote add consul dokku@15.188.246.27:consul || true
+    - git remote add consul dokku@52.47.76.149:consul || true
     - git push consul origin/develop:refs/heads/master
   only:
     - develop
@@ -28,7 +28,7 @@ production_deploy:
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh-keyscan 15.188.246.27 >> ~/.ssh/known_hosts
+    - ssh-keyscan 52.47.76.149 >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
     - git remote remove consul || true
     - git remote add consul dokku@10.24.0.2:consul || true
