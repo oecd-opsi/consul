@@ -3,13 +3,7 @@
 
 require File.expand_path("../config/application", __FILE__)
 
-if ENV['SENTRY_DSN']
-  # Sentry is adding their own rake task, so .empty? won't work when it is enabled
-
-  Rails.application.load_tasks if Rake::Task.tasks.size < 1
-else
-  Rails.application.load_tasks if Rake::Task.tasks.empty?
-end
+Rails.application.load_tasks
 
 KnapsackPro.load_tasks if defined?(KnapsackPro)
 
