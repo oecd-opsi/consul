@@ -16,7 +16,7 @@ staging_deploy:
     - ssh-keyscan 52.47.76.149 >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
     - git remote remove consul || true
-    - git remote add consul dokku@52.47.76.149:consul || true
+    - git remote add consul dokku@52.47.76.149:consul-staging || true
     - git push consul origin/develop:refs/heads/master
   only:
     - develop
