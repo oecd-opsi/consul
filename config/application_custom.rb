@@ -5,5 +5,7 @@ module Consul
         config.dsn = ENV["SENTRY_DSN"]
       end
     end
+
+    config.time_zone = "Paris"
   end
 end
