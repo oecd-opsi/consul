@@ -35,7 +35,7 @@ describe Auth0UserUpdater do
         update_params = {
           email:        new_email,
           verify_email: true,
-          connection:   "Username-Password-Authentication"
+          connection:  ENV["AUTH0_USERNAME_PASSWORD_CONNECTION"]
         }
         expect(auth0_mock).to have_received(:update_user).with(login_via_password_id,
                                                                update_params)
@@ -113,7 +113,7 @@ describe Auth0UserUpdater do
         update_params = {
           password:     password,
           verify_email: false,
-          connection:   "Username-Password-Authentication"
+          connection:  ENV["AUTH0_USERNAME_PASSWORD_CONNECTION"]
         }
         expect(auth0_mock).to have_received(:update_user).with(login_via_password_id,
                                                                update_params)

@@ -65,7 +65,7 @@ class Auth0UserUpdater
     def update_user(params)
       default_params = {
         verify_email: updating_email?,
-        connection:   "Username-Password-Authentication"
+        connection:   ENV["AUTH0_USERNAME_PASSWORD_CONNECTION"]
       }
       auth0_client.update_user(@user.login_via_password_id, params.merge(default_params))
       return unless updating_email?
