@@ -8,7 +8,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def new
     if Setting["feature.auth0_login"]
-      redirect_to "#{ENV["WORDPRESS_SIGN_UP_URL"]}?redirect_uri=%22#{confirm_login_url}%22"
+      redirect_to "#{ENV["WORDPRESS_SIGN_UP_URL"]}?redirect_uri=#{URI::encode(confirm_login_url)}"
     else
       super do |user|
         user.use_redeemable_code = true if params[:use_redeemable_code].present?

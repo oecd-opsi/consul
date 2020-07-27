@@ -24,10 +24,10 @@ describe "Sessions", js: true do
     let(:auth0_hash_with_verified_email) do
       {
         provider: "auth0",
-        uid: "12345",
-        info: {
-          name: "manuela",
-          email: "manuelacarmena@example.com",
+        uid:      "12345",
+        info:     {
+          name:     "manuela",
+          email:    "manuelacarmena@example.com",
           verified: "1"
         }
       }
@@ -62,7 +62,9 @@ describe "Sessions", js: true do
       click_link I18n.t("devise_views.menu.login_items.login")
 
       redirect_uri = confirm_login_url(port: Capybara.current_session.server.port)
-      expect(page).to have_current_path("#{ENV["WORDPRESS_SIGN_IN_URL"]}?redirect_uri=%22#{redirect_uri}%22")
+      expect(page).to have_current_path(
+                        "#{ENV["WORDPRESS_SIGN_IN_URL"]}?redirect_uri=#{URI::encode(redirect_uri)}"
+                      )
     end
   end
 end
