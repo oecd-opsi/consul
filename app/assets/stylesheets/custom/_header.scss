@@ -212,7 +212,13 @@
 
   a:hover + &,
   &:hover,
-  a:focus + &,
+  a:focus + & {
+    @include element-invisible-off;
+    position: absolute !important;
+    left: 0 !important;
+    width: 100% !important;
+  }
+
   :focus-within > & {
     @include element-invisible-off;
     position: absolute !important;
