@@ -35,6 +35,10 @@
   width: 200px;
 }
 
+.c-footer__form-hidden {
+  @include element-invisible;
+}
+
 .c-footer__form-col-button {
   display: flex;
   align-self: stretch;
