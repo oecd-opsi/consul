@@ -5,6 +5,9 @@ module MailerHelper
     return proposal_url(commentable) if commentable.is_a?(Proposal)
     return community_topic_url(commentable.community_id, commentable) if commentable.is_a?(Topic)
     return budget_investment_url(commentable.budget_id, commentable) if commentable.is_a?(Budget::Investment)
+
+    return legislation_process_proposal_url(commentable.legislation_process_id,
+                                            commentable.id) if commentable.is_a?(Legislation::Proposal)
   end
 
   def valuation_comments_url(commentable)
