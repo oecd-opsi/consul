@@ -8,8 +8,11 @@ class User < ApplicationRecord
     oauth_email_confirmed = oauth_email.present? && oauth_email_verified
     oauth_user            = User.find_by(email: oauth_email) if oauth_email_confirmed
 
+    oauth_username = auth.dig(:extra, :raw_info, "#{ENV["AUTH0_METADATA_NAMESPACE"]}app_metadata",
+                              "username") || auth.info.name || auth.uid
+
     user = oauth_user || User.new(
-      username:         auth.info.name || auth.uid,
+      username:         oauth_username,
       email:            oauth_email,
       oauth_email:      oauth_email,
       password:         Devise.friendly_token[0, 20],

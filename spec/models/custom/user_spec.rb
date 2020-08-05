@@ -110,6 +110,31 @@ describe User do
         expect(user.instance_variable_get("@skip_confirmation_notification")).to be_truthy
       end
 
+      context "with username not available in Auth0 app_metadata" do
+        it "uses Name as a username" do
+          user = User.first_or_initialize_for_oauth(auth)
+          expect(user.username).to eq name
+        end
+      end
+
+      context "with username is available in Auth0 app_metadata" do
+        let(:auth_extra) do
+          OpenStruct.new(raw_info:
+                           {
+                             "#{ENV["AUTH0_METADATA_NAMESPACE"]}app_metadata" => {
+                               username: username
+                             }.stringify_keys
+                           }
+          )
+        end
+        let(:username) { "auth0_username" }
+
+        it "uses username from Auth0" do
+          user = User.first_or_initialize_for_oauth(auth)
+          expect(user.username).to eq username
+        end
+      end
+
       context "when user has already been confirmed via Auth0" do
         let(:auth_extra) { OpenStruct.new(raw_info: { email_verified: 1 }) }
 
@@ -131,9 +156,9 @@ describe User do
       before { Setting["feature.auth0_login"] = false }
 
       it "does not skip the email confirmation message" do
-      user = User.first_or_initialize_for_oauth(auth)
-      expect(user.instance_variable_get("@skip_confirmation_notification")).to be_falsey
-    end
+        user = User.first_or_initialize_for_oauth(auth)
+        expect(user.instance_variable_get("@skip_confirmation_notification")).to be_falsey
+      end
     end
   end
 end

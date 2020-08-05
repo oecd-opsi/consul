@@ -247,7 +247,7 @@ Devise.setup do |config|
                   Rails.application.secrets.auth0_secret,
                   Rails.application.secrets.auth0_login_domain,
                   callback_path: "/users/auth/auth0/callback",
-                  scope: "openid email profile"
+                  scope: "openid email profile user_metadata app_metadata"
   config.omniauth :twitter,
                   Rails.application.secrets.twitter_key,
                   Rails.application.secrets.twitter_secret
