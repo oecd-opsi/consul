@@ -1,0 +1,39 @@
+@font-face {
+  font-family: 'OPSI-Lato';
+  src: font-url('opsi-lato.woff2') format('woff2'),
+    font-url('opsi-lato.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: font-url('PublicSans-Regular.woff2') format('woff2'),
+    font-url('PublicSans-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Public Sans';
+  font-style: italic;
+  font-weight: 400;
+  src: font-url('PublicSans-Italic.woff2') format('woff2'),
+    font-url('PublicSans-Italic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: font-url('PublicSans-Light.woff2') format('woff2'),
+    font-url('PublicSans-Light.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: font-url('PublicSans-Bold.woff2') format('woff2'),
+    font-url('PublicSans-Bold.woff') format('woff');
+}
