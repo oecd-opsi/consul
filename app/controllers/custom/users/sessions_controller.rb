@@ -1,7 +1,7 @@
 class Users::SessionsController < Devise::SessionsController
   def new
     if Setting["feature.auth0_login"]
-      redirect_to "#{ENV["WORDPRESS_SIGN_IN_URL"]}?redirect_uri=#{URI::encode(confirm_login_url)}"
+      redirect_to "#{ENV["WORDPRESS_SIGN_IN_URL"]}?redirect_uri=#{CGI.escape(confirm_login_url)}"
     else
       super
     end
@@ -31,7 +31,7 @@ class Users::SessionsController < Devise::SessionsController
       # if the logout was triggered from Consul, ensure that at the end
       # the user will be redirected back to Consul
       if !request.referer.present? || request.referer.starts_with?(root_url)
-        redirect_url += "?redirect_uri=#{URI::encode(root_url)}"
+        redirect_url += "?redirect_uri=#{CGI.escape(root_url)}"
       end
       redirect_url
     end

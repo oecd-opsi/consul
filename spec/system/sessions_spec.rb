@@ -57,7 +57,7 @@ describe "Sessions", js: true do
       sign_out
 
       expect(page).to have_current_path(
-                        "#{ENV["WORDPRESS_SIGN_OUT_URL"]}?redirect_uri=#{URI::encode(root_redirect_uri)}"
+                        "#{ENV["WORDPRESS_SIGN_OUT_URL"]}?redirect_uri=#{CGI.escape(root_redirect_uri)}"
                       )
     end
 
@@ -73,7 +73,7 @@ describe "Sessions", js: true do
       visit "/"
       click_link I18n.t("devise_views.menu.login_items.login")
       expected_path = "#{ENV["WORDPRESS_SIGN_IN_URL"]}?redirect_uri="\
-                      "#{URI::encode(confirm_login_redirect_uri)}"
+                      "#{CGI.escape(confirm_login_redirect_uri)}"
       expect(page).to have_current_path(expected_path)
     end
   end
