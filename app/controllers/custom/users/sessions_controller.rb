@@ -18,7 +18,22 @@ class Users::SessionsController < Devise::SessionsController
     end
 
     def after_sign_out_path_for(resource)
-      request.referer.present? && !request.referer.match("management") ? request.referer : super
+      if Setting["feature.auth0_login"]
+        auth0_after_sign_out_path
+      else
+        request.referer.present? && !request.referer.match("management") ? request.referer : super
+      end
+    end
+
+    def auth0_after_sign_out_path
+      redirect_url = "#{ENV["WORDPRESS_SIGN_OUT_URL"]}"
+
+      # if the logout was triggered from Consul, ensure that at the end
+      # the user will be redirected back to Consul
+      if !request.referer.present? || request.referer.starts_with?(root_url)
+        redirect_url += "?redirect_uri=#{URI::encode(root_url)}"
+      end
+      redirect_url
     end
 
     def verifying_via_email?

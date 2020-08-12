@@ -89,8 +89,12 @@ module Users
     expect { find("a[href='#{account_path}']") }.to raise_error(Capybara::ElementNotFound)
   end
 
-  def sign_out
+  def sign_out(close_notification: true)
     find("a[href='#{account_path}'][title='#{I18n.t("layouts.header.my_account_link")}']").hover
     click_link I18n.t("devise_views.menu.login_items.logout")
+
+    if close_notification && page.has_css?("button.close-button")
+      first("div.callout").find("button.close-button").click
+    end
   end
 end

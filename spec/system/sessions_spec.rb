@@ -14,7 +14,7 @@ describe "Sessions", js: true do
     expect(page).to have_current_path(debate_path(debate))
 
     find(:button, class: "close-button").click
-    sign_out
+    sign_out(close_notification: false)
 
     expect(page).to have_content("You have been signed out successfully")
     expect(page).to have_current_path(debate_path(debate))
@@ -33,6 +33,9 @@ describe "Sessions", js: true do
       }
     end
 
+    let(:confirm_login_redirect_uri) { confirm_login_url(port: Capybara.current_session.server.port) }
+    let(:root_redirect_uri) { root_url(port: Capybara.current_session.server.port) }
+
     before do
       Setting["feature.auth0_login"] = true
       OmniAuth.config.add_mock(:auth0, auth0_hash_with_verified_email)
@@ -42,7 +45,7 @@ describe "Sessions", js: true do
       Setting["feature.auth0_login"] = false
     end
 
-    scenario "Staying in the same page after doing login/logout" do
+    scenario "Redirecting to WP when logout triggered from Consul" do
       visit debate_path(debate)
 
       visit confirm_login_path
@@ -53,18 +56,25 @@ describe "Sessions", js: true do
       find(:button, class: "close-button").click
       sign_out
 
-      expect(page).to have_content("You have been signed out successfully")
-      expect(page).to have_current_path(debate_path(debate))
+      expect(page).to have_current_path(
+                        "#{ENV["WORDPRESS_SIGN_OUT_URL"]}?redirect_uri=#{URI::encode(root_redirect_uri)}"
+                      )
+    end
+
+    scenario "Redirecting to WP when logout triggered not in Consul", js: false do
+      Capybara.current_session.driver.header "Referer", ENV["WORDPRESS_SIGN_IN_URL"]
+
+      visit destroy_user_session_path
+
+      expect(page).to have_current_path("#{ENV["WORDPRESS_SIGN_OUT_URL"]}")
     end
 
     scenario "Redirecting to WP Sign after clicking on Sign in button" do
       visit "/"
       click_link I18n.t("devise_views.menu.login_items.login")
-
-      redirect_uri = confirm_login_url(port: Capybara.current_session.server.port)
-      expect(page).to have_current_path(
-                        "#{ENV["WORDPRESS_SIGN_IN_URL"]}?redirect_uri=#{URI::encode(redirect_uri)}"
-                      )
+      expected_path = "#{ENV["WORDPRESS_SIGN_IN_URL"]}?redirect_uri="\
+                      "#{URI::encode(confirm_login_redirect_uri)}"
+      expect(page).to have_current_path(expected_path)
     end
   end
 end

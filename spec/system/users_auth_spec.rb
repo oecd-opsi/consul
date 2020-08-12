@@ -75,7 +75,7 @@ describe "Users", js: true do
         expect(page).to have_link "My content", href: user_path(u1)
 
         visit "/"
-        sign_out
+        sign_out(close_notification: false)
 
         expect(page).to have_content "You have been signed out successfully."
 
@@ -652,7 +652,7 @@ describe "Users", js: true do
     login_as(user)
 
     visit "/"
-    sign_out
+    sign_out(close_notification: false)
 
     expect(page).to have_content "You have been signed out successfully."
   end

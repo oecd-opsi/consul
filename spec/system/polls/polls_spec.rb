@@ -392,6 +392,10 @@ describe "Polls" do
       visit new_officing_residence_path
 
       click_link I18n.t("devise_views.menu.login_items.logout")
+      if page.has_css?("button.close-button")
+        first("div.callout").find("button.close-button").click
+      end
+
       login_as user
       visit poll_path(poll)
 

@@ -124,7 +124,7 @@ if user_signed_in?
   menu_items_user = [
     { title: t("layouts.header.my_activity_link"), href: user_path(current_user) },
     { title: t("layouts.header.my_account_link"), href: account_path },
-    { title: t("devise_views.menu.login_items.logout"), href: destroy_user_session_path, attrs: { "data-method": "delete" } },
+    { title: t("devise_views.menu.login_items.logout"), href: destroy_user_session_path },
   ]
 
   menu_items.push(
