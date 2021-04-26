@@ -65,7 +65,7 @@ describe "Admin collaborative legislation" do
       visit admin_root_path
 
       within("#side_menu") do
-        click_link "Collaborative Legislation"
+        click_link I18n.t("layouts.header.collaborative_legislation")
       end
 
       expect(page).not_to have_content "An example legislation process"
@@ -119,7 +119,7 @@ describe "Admin collaborative legislation" do
       visit admin_root_path
 
       within("#side_menu") do
-        click_link "Collaborative Legislation"
+        click_link I18n.t("layouts.header.collaborative_legislation")
       end
 
       expect(page).not_to have_content "An example legislation process"
@@ -198,7 +198,7 @@ describe "Admin collaborative legislation" do
       visit admin_root_path
 
       within("#side_menu") do
-        click_link "Collaborative Legislation"
+        click_link I18n.t("layouts.header.collaborative_legislation")
       end
 
       click_link "An example legislation process"
@@ -221,7 +221,7 @@ describe "Admin collaborative legislation" do
       visit admin_root_path
 
       within("#side_menu") do
-        click_link "Collaborative Legislation"
+        click_link I18n.t("layouts.header.collaborative_legislation")
       end
 
       click_link "An example legislation process"

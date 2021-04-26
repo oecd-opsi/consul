@@ -13,7 +13,7 @@ describe "Admin custom information texts" do
     expect(page).to have_content "Help about debates"
     expect(page).to have_content "Help about proposals"
     expect(page).to have_content "Help about voting"
-    expect(page).to have_content "Help about collaborative legislation"
+    expect(page).to have_content "Help about public engagement"
     expect(page).to have_content "Help with participatory budgets"
 
     within("#information-texts-tabs") { click_link "Debates" }
