@@ -500,6 +500,79 @@ en:
           additional_info_placeholder: Add an additional information you consider useful
           homepage_description: Here you can explain the content of the process
           banner_title: Header colors
+          descriptive_texts:
+            process: 'Please enter the start date and end dates for your engagement process.'
+            debate:
+              heading: 'For engagement processes that involve open preliminary discussion.'
+              points:
+                - >
+                  It is common to use this phase when the process begins and no initial text is yet available. It is
+                  useful for making decisions around the main issues to be addressed, and thus steering the process in
+                  the most appropriate direction.
+                - >
+                  You will be able to ask some specific questions about the main issues of the topic to be addressed.
+                  Users can answer in an open way, build dialogue among themselves, and vote on all the answers to identify
+                  the most interesting ones.
+                - >
+                  This can be useful in the early stages of develop new policies and other efforts, but can also be
+                  used independently to deal directly and in a concrete way with any problem or issue that is of special
+                  importance.
+            proposals:
+              heading: 'For engagement processes that involve gauging support for specific ideas and proposals.'
+              points:
+                - >
+                  This phase involves thinking through and selecting the best ideas or proposals to include (e.g. in
+                  the text of a future draft policy, law, or recommendation). You can publish the ideas that have been
+                  worked on from your organisation. Users will also be able to submit their own proposals. Users can
+                  up-vote and down-vote ideas to help you determine which ones have the greatest support, which may
+                  assist you in determining priority items for inclusion.
+                - >
+                  This phase can be useful when done sequentially after the Debates phase. However, it can also be used
+                  independently if you already have specific ideas and proposals for which you would like feedback.
+            draft:
+              heading: >
+                For engagement processes that involve obtaining comments, suggested edits, and other feedback on draft
+                text, such as a draft policy, law, or other document.
+              points:
+                - >
+                  This phase is useful at a time when there is already a text proposal to open to public participation.
+                  The platform allows you to publish the text and for users to select any part of the text and add a
+                  comment to that part. In addition, comments can be up-voted and down-voted, allowing you to detect if
+                  they have public support and which are the most interesting.
+                - >
+                  This phase is perhaps the most open and useful when used sequentially after previous phases. However,
+                  it can also be used independently if you already have a draft document for which you would like
+                  feedback.
+            draft_publication_date: >
+              To keep an open, public record of your process steps and milestones, you may enter the date on which a
+              draft document was provided for feedback. This often coincides with the start of the Comments phase. This
+              date will appear on your engagement process page.
+            final_result_publication_date:
+              points:
+                - >
+                  To keep an open, public record of your process steps and milestones, you may enter the date on which
+                  a final document was published.
+                - >
+                  It is also recommended that you provide a copy of the final version. You can do this in one of two
+                  ways: 1) by adding it as the Final version (see “Drafting” tab above), or 2) by uploading a copy of
+                  the final document below. This information will appear on your engagement process page.
+            summary_html: >
+              Please add a brief summary that appears on the list of all open processes. You may use “Markdown” to
+              format the text. See <a href="%{markdown_guide_link}" target="_blank">here</a> for a guide on how to use
+              Markdown, and <a href="%{markdown_editor_link}" target="_blank">here</a> for a simple Markdown editor to
+              help you format your text.
+            description_html: >
+              Please add a description of your engagement process, including details on what you hope to achieve. This
+              will appear on your individual engagement process page. You may use “Markdown” to format the text. See
+              <a href="%{markdown_guide_link}" target="_blank">here</a> for a guide on how to use Markdown, and
+              <a href="%{markdown_editor_link}" target="_blank">here</a> for a simple Markdown editor to help you format
+               your text.
+            additional_info_html: >
+              Do you have anything else you would like to say? Please add it below. This will appear on your individual
+              engagement process page when the “Additional information” button is clicked. You may use “Markdown” to
+              format the text. See <a href="%{markdown_guide_link}" target="_blank">here</a> for a guide on how to use
+              Markdown, and <a href="%{markdown_editor_link}" target="_blank">here</a> for a simple Markdown editor to
+              help you format your text.
         index:
           create: New process
           delete: Delete
