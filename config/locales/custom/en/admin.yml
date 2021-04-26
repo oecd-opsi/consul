@@ -478,6 +478,13 @@ en:
         edit:
           back: Back
           submit_button: Save changes
+          status_indicator_html: 'Your engagement process is currently <strong>%{status}</strong>. You may view the process at %{link}.'
+          draft_additional_info: 'Anyone with the URL may access the process; however, only active processes appear on the home page or in the processes index.'
+        statuses:
+          planned: 'planned'
+          closed: 'closed or finished'
+          open: 'active'
+          draft: 'in draft form'
         form:
           enabled: Enabled
           process: Process
