@@ -367,4 +367,86 @@ describe Legislation::Process do
       end
     end
   end
+
+  context ".total_comments" do
+    let(:process) { create(:legislation_process) }
+
+    before do
+      create(:comment, commentable: create(:legislation_question, process: process))
+      create(:comment, commentable: create(:legislation_proposal, process: process))
+      create(:comment, commentable: create(:legislation_annotation,
+                                           draft_version: create(:legislation_draft_version, process: process)))
+      create(:legislation_question_comment)
+      create(:proposal_comment)
+      create(:legislation_annotation_comment)
+    end
+
+    it "returns sum of the comments for questions, proposals, and annotations of the specific process" do
+      expect(process.total_comments).to eq 4
+    end
+
+    it "returns 0 if there are no comments yet" do
+      expect(create(:legislation_process).total_comments).to be_zero
+    end
+  end
+
+  context ".comments" do
+    let(:process) { create(:legislation_process) }
+    let(:question_comment) { create(:comment, commentable: create(:legislation_question, process: process)) }
+    let(:proposal_comment) { create(:comment, commentable: create(:legislation_proposal, process: process)) }
+    let(:annotation) do
+      create(:legislation_annotation,
+                              draft_version: create(:legislation_draft_version, process: process)) end
+    let(:initial_annotation_comment) { annotation.comments.first }
+    let(:annotation_comment) { create(:comment, commentable: annotation) }
+
+    before do
+      question_comment
+      proposal_comment
+      annotation_comment
+      create(:legislation_question_comment)
+      create(:proposal_comment)
+      create(:legislation_annotation_comment)
+    end
+
+    it "returns all comments of the specific process" do
+      expect(process.comments.size).to eq 4
+    end
+
+    it "returns correct comment types" do
+      expected_types = ["Legislation::Annotation", "Legislation::Proposal", "Legislation::Question"]
+      expect(process.comments.pluck(:commentable_type).uniq.sort).to eq(expected_types)
+    end
+
+    it "returns question comments" do
+      expect(process.comments.include?(question_comment)).to be_truthy
+    end
+
+    it "returns proposal comments" do
+      expect(process.comments.include?(proposal_comment)).to be_truthy
+    end
+
+    it "returns annotation comments" do
+      expect(process.comments.include?(initial_annotation_comment)).to be_truthy
+      expect(process.comments.include?(annotation_comment)).to be_truthy
+    end
+  end
+
+  context ".comments_sql_for_csv" do
+    let(:expected_sql) do
+      "SELECT DISTINCT \"comments\".\"id\", comment_translations.body, \"users\".\"username\", "\
+      "REPLACE(commentable_type, 'Legislation::', '') AS type FROM \"comments\" INNER JOIN \"users\" ON \"users\"."\
+      "\"id\" = \"comments\".\"user_id\" INNER JOIN \"comment_translations\" ON \"comment_translations\"."\
+      "\"comment_id\" = \"comments\".\"id\" AND \"comment_translations\".\"hidden_at\" IS NULL WHERE ((\"comments\".\""\
+      "hidden_at\" IS NULL AND \"comments\".\"commentable_type\" = 'Legislation::Question' AND 1=0 OR \"comments\".\""\
+      "hidden_at\" IS NULL AND \"comments\".\"commentable_type\" = 'Legislation::Proposal' AND 1=0) OR \"comments\"."\
+      "\"hidden_at\" IS NULL AND \"comments\".\"commentable_type\" = 'Legislation::Annotation' AND 1=0) AND "\
+      "\"comment_translations\".\"hidden_at\" IS NULL AND \"comment_translations\".\"locale\" IN ('en', 'de', 'es',"\
+      " 'fr', 'nl', 'pt-BR', 'zh-CN')"
+    end
+
+    it "returns the correct SQL" do
+      expect(process.comments_sql_for_csv).to eq expected_sql
+    end
+  end
 end
