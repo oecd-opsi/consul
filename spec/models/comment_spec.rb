@@ -280,8 +280,8 @@ describe Comment do
     let(:comment) { create(:legislation_question_comment) }
 
     it "returns the url to comment" do
-      expect(comment.url_to_comment).to eq("http://#{ENV["SERVER_NAME"]}/engagement/processes/#{comment.process.id}"\
-      "/questions/#{comment.commentable.id}")
+      expect(comment.url_to_comment).to eq("http://#{ENV["SERVER_NAME"]}/engagement/processes/"\
+      "#{comment.commentable_process.id}/questions/#{comment.commentable.id}")
     end
   end
 
@@ -375,8 +375,20 @@ describe Comment do
     context "when the comment is an annotation" do
       let(:comment) { create(:legislation_annotation_comment) }
 
-      it "returns nil" do
-        expect(comment.highlighted_text).to eq(comment.commentable.quote)
+      context "when quotation is short" do
+        it "returns the highlighted quote" do
+          expect(comment.highlighted_text).to eq(comment.commentable.quote)
+        end
+      end
+
+      context "when quotation is longer than 1000 chars is short" do
+        let(:quote) { Faker::Lorem.characters(1010) }
+        let(:annotation) { create(:legislation_annotation, quote: quote) }
+        let(:comment) { create(:legislation_annotation_comment, commentable: annotation) }
+
+        it "returns the highlighted quote shortened to first 1000 chars" do
+          expect(comment.highlighted_text).to eq(quote.truncate(described_class::MAX_QUOTE_LENGTH))
+        end
       end
     end
   end

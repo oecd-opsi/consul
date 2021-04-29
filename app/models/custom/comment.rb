@@ -21,6 +21,8 @@ class Comment < ApplicationRecord
     "Highlighted Text"
   ].freeze
 
+  MAX_QUOTE_LENGTH = 1000
+
   delegate :process, to: :commentable, prefix: true
   delegate :process_title, to: :commentable, prefix: true
   delegate :name, to: :user, prefix: true
@@ -88,7 +90,7 @@ class Comment < ApplicationRecord
   def highlighted_text
     return unless commentable_annotation?
 
-    commentable.quote
+    commentable.quote.truncate(MAX_QUOTE_LENGTH)
   end
 
   def commentable_annotation?
