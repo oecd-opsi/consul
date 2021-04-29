@@ -60,7 +60,7 @@ class Comment < ApplicationRecord
   end
 
   def url_to_comment
-    build_url_for(:polymorphic_url, self)
+    build_url_for(:polymorphic_url, self.commentable)
   end
 
   def url_to_process

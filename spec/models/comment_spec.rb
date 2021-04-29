@@ -277,10 +277,11 @@ describe Comment do
   end
 
   describe ".url_to_comment" do
-    let(:comment) { create(:comment) }
+    let(:comment) { create(:legislation_question_comment) }
 
     it "returns the url to comment" do
-      expect(comment.url_to_comment).to eq("http://#{ENV["SERVER_NAME"]}/comments/#{comment.id}")
+      expect(comment.url_to_comment).to eq("http://#{ENV["SERVER_NAME"]}/engagement/processes/#{comment.process.id}"\
+      "/questions/#{comment.commentable.id}")
     end
   end
 
