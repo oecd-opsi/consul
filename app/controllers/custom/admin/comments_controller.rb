@@ -19,13 +19,10 @@ class Admin::CommentsController < Admin::BaseController
   private
 
     def stream_csv_report
-      query         = @process.comments_sql_for_csv
-      query_options = "WITH CSV"
-
       stream_file("#{@process.title} Comments", "csv") do |stream|
-        stream.write "ID, Content, Author, Type\n"
-        Comment.stream_query_rows(query, query_options) do |row_from_db|
-          stream.write row_from_db
+        stream.write Comment.csv_headers
+        @process.comments.find_each do |comment|
+          stream.write comment.for_csv
         end
       end
     end

@@ -23,12 +23,7 @@ class Legislation::Process < ApplicationRecord
     Comment.where(commentable_type: "Legislation::Question", commentable_id: question_ids)
       .or(Comment.where(commentable_type: "Legislation::Proposal", commentable_id: proposal_ids))
       .or(Comment.where(commentable_type: "Legislation::Annotation", commentable_id: annotation_ids))
-  end
-
-  def comments_sql_for_csv
-    comments.joins(:user)
-      .select(:id, :body, :"users.username AS author")
-      .select("REPLACE(commentable_type, 'Legislation::', '') AS type").to_sql
+      .includes(:user, :translations, commentable: :process)
   end
 
   def total_comments

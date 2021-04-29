@@ -415,7 +415,7 @@ describe Legislation::Process do
 
     it "returns correct comment types" do
       expected_types = ["Legislation::Annotation", "Legislation::Proposal", "Legislation::Question"]
-      expect(process.comments.pluck(:commentable_type).uniq.sort).to eq(expected_types)
+      expect(process.comments.map(&:commentable_type).uniq.sort).to eq(expected_types)
     end
 
     it "returns question comments" do
@@ -429,24 +429,6 @@ describe Legislation::Process do
     it "returns annotation comments" do
       expect(process.comments.include?(initial_annotation_comment)).to be_truthy
       expect(process.comments.include?(annotation_comment)).to be_truthy
-    end
-  end
-
-  context ".comments_sql_for_csv" do
-    let(:expected_sql) do
-      "SELECT DISTINCT \"comments\".\"id\", comment_translations.body, \"users\".\"username\", "\
-      "REPLACE(commentable_type, 'Legislation::', '') AS type FROM \"comments\" INNER JOIN \"users\" ON \"users\"."\
-      "\"id\" = \"comments\".\"user_id\" INNER JOIN \"comment_translations\" ON \"comment_translations\"."\
-      "\"comment_id\" = \"comments\".\"id\" AND \"comment_translations\".\"hidden_at\" IS NULL WHERE ((\"comments\".\""\
-      "hidden_at\" IS NULL AND \"comments\".\"commentable_type\" = 'Legislation::Question' AND 1=0 OR \"comments\".\""\
-      "hidden_at\" IS NULL AND \"comments\".\"commentable_type\" = 'Legislation::Proposal' AND 1=0) OR \"comments\"."\
-      "\"hidden_at\" IS NULL AND \"comments\".\"commentable_type\" = 'Legislation::Annotation' AND 1=0) AND "\
-      "\"comment_translations\".\"hidden_at\" IS NULL AND \"comment_translations\".\"locale\" IN ('en', 'de', 'es',"\
-      " 'fr', 'nl', 'pt-BR', 'zh-CN')"
-    end
-
-    it "returns the correct SQL" do
-      expect(process.comments_sql_for_csv).to eq expected_sql
     end
   end
 end
