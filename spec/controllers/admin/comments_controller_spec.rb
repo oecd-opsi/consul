@@ -47,7 +47,7 @@ describe Admin::CommentsController, type: :controller do
       end
 
       it "sets correct error notification" do
-        expect(flash[:alert]).to eq I18n.t("admin.comments.export.error")
+        expect(flash[:alert]).to eq I18n.t("admin.comments.export.process_missing")
       end
     end
   end

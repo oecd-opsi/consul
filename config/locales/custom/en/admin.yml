@@ -349,7 +349,7 @@ en:
         table_link_title: "Export all comments"
         actions: "Actions"
       export:
-        error: "Public Engagement not found"
+        process_missing: "Public Engagement not found"
     hidden_comments:
       index:
         filter: Filter

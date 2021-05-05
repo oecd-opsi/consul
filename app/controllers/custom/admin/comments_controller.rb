@@ -22,7 +22,7 @@ class Admin::CommentsController < Admin::BaseController
       @process = ::Legislation::Process.find_by(id: params[:process_id])
       return unless @process.nil?
 
-      redirect_to to_export_admin_comments_path, alert: t("admin.comments.export.error")
+      redirect_to to_export_admin_comments_path, alert: t("admin.comments.export.process_missing")
     end
 
     def stream_csv_report
