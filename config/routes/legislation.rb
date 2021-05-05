@@ -1,4 +1,4 @@
-namespace :legislation do
+namespace :legislation, path: :engagement do
   resources :processes, only: [:index, :show] do
     member do
       get :debate

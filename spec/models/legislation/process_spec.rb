@@ -25,14 +25,14 @@ describe Legislation::Process do
 
     it "is invalid if allegations_start_date is present but debate_end_date is not" do
       process = build(:legislation_process, allegations_start_date: Date.current,
-                                            allegations_end_date: "")
+                      allegations_end_date:                         "")
       expect(process).to be_invalid
       expect(process.errors.messages[:allegations_end_date]).to include("can't be blank")
     end
 
     it "is invalid if debate_end_date is present but allegations_start_date is not" do
       process = build(:legislation_process, allegations_start_date: nil,
-                                            allegations_end_date: Date.current)
+                      allegations_end_date:                         Date.current)
       expect(process).to be_invalid
       expect(process.errors.messages[:allegations_start_date]).to include("can't be blank")
     end
@@ -41,56 +41,56 @@ describe Legislation::Process do
   describe "date ranges validations" do
     it "is invalid if end_date is before start_date" do
       process = build(:legislation_process, start_date: Date.current,
-                                            end_date: Date.current - 1.day)
+                      end_date:                         Date.current - 1.day)
       expect(process).to be_invalid
       expect(process.errors.messages[:end_date]).to include("must be on or after the start date")
     end
 
     it "is valid if end_date is the same as start_date" do
       process = build(:legislation_process, start_date: Date.current - 1.day,
-                                            end_date: Date.current - 1.day)
+                      end_date:                         Date.current - 1.day)
       expect(process).to be_valid
     end
 
     it "is valid if debate_end_date is the same as debate_start_date" do
       process = build(:legislation_process, debate_start_date: Date.current - 1.day,
-                                            debate_end_date: Date.current - 1.day)
+                      debate_end_date:                         Date.current - 1.day)
       expect(process).to be_valid
     end
 
     it "is invalid if debate_end_date is before debate_start_date" do
       process = build(:legislation_process, debate_start_date: Date.current,
-                                            debate_end_date: Date.current - 1.day)
+                      debate_end_date:                         Date.current - 1.day)
       expect(process).to be_invalid
       expect(process.errors.messages[:debate_end_date])
-      .to include("must be on or after the debate start date")
+        .to include("must be on or after the debate start date")
     end
 
     it "is valid if draft_end_date is the same as draft_start_date" do
       process = build(:legislation_process, draft_start_date: Date.current - 1.day,
-                                            draft_end_date: Date.current - 1.day)
+                      draft_end_date:                         Date.current - 1.day)
       expect(process).to be_valid
     end
 
     it "is invalid if draft_end_date is before draft_start_date" do
       process = build(:legislation_process, draft_start_date: Date.current,
-                                            draft_end_date: Date.current - 1.day)
+                      draft_end_date:                         Date.current - 1.day)
       expect(process).to be_invalid
       expect(process.errors.messages[:draft_end_date])
-      .to include("must be on or after the draft start date")
+        .to include("must be on or after the draft start date")
     end
 
     it "is invalid if allegations_end_date is before allegations_start_date" do
       process = build(:legislation_process, allegations_start_date: Date.current,
-                                            allegations_end_date: Date.current - 1.day)
+                      allegations_end_date:                         Date.current - 1.day)
       expect(process).to be_invalid
       expect(process.errors.messages[:allegations_end_date])
-      .to include("must be on or after the comments start date")
+        .to include("must be on or after the comments start date")
     end
 
     it "is valid if allegations_end_date is the same as allegations_start_date" do
       process = build(:legislation_process, allegations_start_date: Date.current - 1.day,
-                                              allegations_end_date: Date.current - 1.day)
+                      allegations_end_date:                         Date.current - 1.day)
       expect(process).to be_valid
     end
   end
@@ -127,27 +127,27 @@ describe Legislation::Process do
       process_before_draft = create(
         :legislation_process,
         draft_start_date: Date.current - 3.days,
-        draft_end_date: Date.current - 2.days
+        draft_end_date:   Date.current - 2.days
       )
 
       process_with_draft_disabled = create(
         :legislation_process,
-        draft_start_date: Date.current - 2.days,
-        draft_end_date: Date.current + 2.days,
+        draft_start_date:    Date.current - 2.days,
+        draft_end_date:      Date.current + 2.days,
         draft_phase_enabled: false
       )
 
       process_with_draft_enabled = create(
         :legislation_process,
-        draft_start_date: Date.current - 2.days,
-        draft_end_date: Date.current + 2.days,
+        draft_start_date:    Date.current - 2.days,
+        draft_end_date:      Date.current + 2.days,
         draft_phase_enabled: true
       )
 
       process_with_draft_only_today = create(
         :legislation_process,
-        draft_start_date: Date.current,
-        draft_end_date: Date.current,
+        draft_start_date:    Date.current,
+        draft_end_date:      Date.current,
         draft_phase_enabled: true
       )
 
@@ -219,6 +219,151 @@ describe Legislation::Process do
 
       it "has milestone_tags" do
         expect(process.reload.milestone_tag_list.count).to eq(1)
+      end
+    end
+  end
+
+  describe "status_indicator_key" do
+    context "when is before start and without draft phase" do
+      let(:process) do
+        create(:legislation_process,
+                             start_date:          2.days.from_now,
+                             end_date:            10.days.from_now,
+                             draft_phase_enabled: false)
+      end
+
+      it "returns :planned" do
+        expect(process.status_indicator_key).to eq(:planned)
+      end
+    end
+
+    context "when is in the draft phase" do
+      let(:process) { create(:legislation_process, :in_draft_phase) }
+
+      it "returns :draft" do
+        expect(process.status_indicator_key).to eq(:draft)
+      end
+    end
+
+    context "when it is active" do
+      let(:process) { create(:legislation_process, :open) }
+
+      it "returns :open" do
+        expect(process.status_indicator_key).to eq(:open)
+      end
+    end
+
+    context "when it is closed" do
+      let(:process) { create(:legislation_process, :past) }
+
+      it "returns :closed" do
+        expect(process.status_indicator_key).to eq(:closed)
+      end
+    end
+  end
+
+  describe "not_started_yet?" do
+    context "when is before start and without draft phase" do
+      let(:process) do
+        create(:legislation_process,
+                             start_date:          2.days.from_now,
+                             end_date:            10.days.from_now,
+                             draft_phase_enabled: false)
+      end
+
+      it "returns true" do
+        expect(process.not_started_yet?).to be_truthy
+      end
+    end
+
+    context "when is before start and with draft phase" do
+      let(:process) do
+        create(:legislation_process,
+               start_date:          2.days.from_now,
+               end_date:            10.days.from_now,
+               draft_phase_enabled: true)
+      end
+
+      it "returns true" do
+        expect(process.not_started_yet?).to be_truthy
+      end
+    end
+
+    context "when is in the draft phase" do
+      let(:process) { create(:legislation_process, :in_draft_phase) }
+
+      it "returns false" do
+        expect(process.not_started_yet?).to be_falsey
+      end
+    end
+
+    context "when it is active" do
+      let(:process) { create(:legislation_process, :open) }
+
+      it "returns false" do
+        expect(process.not_started_yet?).to be_falsey
+      end
+    end
+
+    context "when it is closed" do
+      let(:process) { create(:legislation_process, :past) }
+
+      it "returns false" do
+        expect(process.not_started_yet?).to be_falsey
+      end
+    end
+  end
+
+  describe "in_draft_phase?" do
+    context "when is before start and without draft phase" do
+      let(:process) do
+        create(:legislation_process,
+                             start_date:          2.days.from_now,
+                             end_date:            10.days.from_now,
+                             draft_phase_enabled: false)
+      end
+
+      it "returns false" do
+        expect(process.in_draft_phase?).to be_falsey
+      end
+    end
+
+    context "when is before start and with draft phase" do
+      let(:process) do
+        create(:legislation_process,
+               start_date:          4.days.from_now,
+               end_date:            10.days.from_now,
+               draft_start_date:    1.day.from_now,
+               draft_end_date:      2.days.from_now,
+               draft_phase_enabled: true)
+      end
+
+      it "returns false" do
+        expect(process.in_draft_phase?).to be_falsey
+      end
+    end
+
+    context "when is in the draft phase" do
+      let(:process) { create(:legislation_process, :in_draft_phase) }
+
+      it "returns true" do
+        expect(process.in_draft_phase?).to be_truthy
+      end
+    end
+
+    context "when it is active" do
+      let(:process) { create(:legislation_process, :open) }
+
+      it "returns false" do
+        expect(process.in_draft_phase?).to be_falsey
+      end
+    end
+
+    context "when it is closed" do
+      let(:process) { create(:legislation_process, :past) }
+
+      it "returns false" do
+        expect(process.in_draft_phase?).to be_falsey
       end
     end
   end
