@@ -339,6 +339,17 @@ en:
         title: Comments
         no_comments: There are no comments.
         table_link: "Link"
+      to_export:
+        id: "ID"
+        process: "Process"
+        comments: "Comments"
+        title: "Public Engagement Comments Export"
+        no_processes: "There are no processes to show."
+        table_link: "Export"
+        table_link_title: "Export all comments"
+        actions: "Actions"
+      export:
+        error: "Public Engagement not found"
     hidden_comments:
       index:
         filter: Filter
@@ -776,6 +787,8 @@ en:
       debates: "Debates"
       comments: "Comments"
       local_census_records: Manage local census
+      comments_all: "All Comments"
+      comments_to_export: "Public Engagement Export"
     administrators:
       index:
         title: Administrators

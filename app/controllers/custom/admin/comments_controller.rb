@@ -1,5 +1,6 @@
 class Admin::CommentsController < Admin::BaseController
   include Custom::StreamFile
+  before_action :fetch_process, only: :export
 
   def index
     @comments = Comment.sort_by_newest.page(params[:page])
@@ -10,13 +11,19 @@ class Admin::CommentsController < Admin::BaseController
   end
 
   def export
-    @process = ::Legislation::Process.find(params[:process_id])
     respond_to do |format|
       format.csv { stream_csv_report }
     end
   end
 
   private
+
+    def fetch_process
+      @process = ::Legislation::Process.find_by(id: params[:process_id])
+      return unless @process.nil?
+
+      redirect_to to_export_admin_comments_path, alert: t("admin.comments.export.error")
+    end
 
     def stream_csv_report
       stream_file("#{@process.title} Comments", "csv") do |stream|
