@@ -161,4 +161,18 @@ describe User do
       end
     end
   end
+
+  describe "oecd_representative?" do
+    let(:user) { build(:user) }
+
+    it "is false when the user is not an OECD representative" do
+      expect(user.oecd_representative?).to be_falsey
+    end
+
+    it "is true when the user is an admin" do
+      user.save!
+      create(:oecd_representative, user: user)
+      expect(user.oecd_representative?).to be_truthy
+    end
+  end
 end

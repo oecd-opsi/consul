@@ -1,6 +1,8 @@
 require_dependency Rails.root.join("app", "models", "user").to_s
 
 class User < ApplicationRecord
+  has_one :oecd_representative, dependent: :destroy
+
   def self.first_or_initialize_for_oauth(auth)
     oauth_email           = auth.info.email
     oauth_email_verified  = auth.info.verified || auth.info.verified_email ||
@@ -45,5 +47,9 @@ class User < ApplicationRecord
     self.email = oauth_email
     self.skip_reconfirmation!
     save!
+  end
+
+  def oecd_representative?
+    oecd_representative.present?
   end
 end

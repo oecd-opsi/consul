@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191108173350) do
+ActiveRecord::Schema.define(version: 20210506110051) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -942,6 +942,11 @@ ActiveRecord::Schema.define(version: 20191108173350) do
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
+  create_table "oecd_representatives", force: :cascade do |t|
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_oecd_representatives_on_user_id"
+  end
+
   create_table "organizations", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.string "name", limit: 60
@@ -1633,6 +1638,7 @@ ActiveRecord::Schema.define(version: 20191108173350) do
   add_foreign_key "managers", "users"
   add_foreign_key "moderators", "users"
   add_foreign_key "notifications", "users"
+  add_foreign_key "oecd_representatives", "users"
   add_foreign_key "organizations", "users"
   add_foreign_key "poll_answers", "poll_questions", column: "question_id"
   add_foreign_key "poll_booth_assignments", "polls"
