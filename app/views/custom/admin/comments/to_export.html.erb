@@ -1,0 +1,41 @@
+<% provide(:title) do %>
+  <%= t("admin.header.title") %> - <%= t("admin.comments.index.title") %>
+<% end %>
+
+<h2><%= t("admin.comments.to_export.title") %></h2>
+
+<% if @processes.any? %>
+  <h3 class="inline-block"><%= page_entries_info @processes %></h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th class="text-center"><%= t("admin.comments.to_export.id") %></th>
+        <th><%= t("admin.comments.to_export.process") %></th>
+        <th><%= t("admin.comments.to_export.comments") %></th>
+        <th><%= t("admin.comments.to_export.actions") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @processes.each do |process| %>
+        <tr id="<%= dom_id(process) %>" class="debates">
+          <td class="text-center"><%= process.id %></td>
+          <td><%= process.title %></td>
+          <td><%= process.total_comments %></td>
+          <td>
+            <%= link_to export_admin_comments_path(process_id: process.id), title: t("admin.comments.to_export.table_link_title"), class: "button hollow big expanded" do %>
+              <span class="icon-file-text-o"></span>&nbsp; <%= t("admin.comments.to_export.table_link") %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @processes %>
+
+<% else %>
+  <div class="callout primary margin">
+    <%= t("admin.comments.to_export.no_processes") %>
+  </div>
+<% end %>

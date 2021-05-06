@@ -86,7 +86,11 @@ namespace :admin do
     end
   end
 
-  resources :comments, only: :index
+  resources :comments, only: :index do
+    get :to_export, on: :collection
+    get "export/:process_id", on: :collection, to: "comments#export", as: :export,
+         defaults: { format: :csv }
+  end
 
   resources :tags, only: [:index, :create, :update, :destroy]
 
