@@ -1537,12 +1537,17 @@ en:
         document_number: Document number
         roles: Roles
         verification_level: Verification level
+        actions: Actions
+      actions:
+        promote_admin: Promote to Admin
       index:
         title: User
         no_users: There are no users.
       search:
         placeholder: Search user by email, name or document number
         search: Search
+      promote:
+        success: "User successfully promoted to Admin"
     verifications:
       index:
         phone_not_given: Phone not given

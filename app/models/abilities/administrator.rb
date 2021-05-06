@@ -45,11 +45,16 @@ module Abilities
       can :confirm_hide, User
       cannot :confirm_hide, User, hidden_at: nil
 
+      can :promote_to_admin, User do |resource|
+        !resource.administrator?
+      end
+
       can :mark_featured, Debate
       can :unmark_featured, Debate
 
       can :comment_as_administrator, [Debate, Comment, Proposal, Poll::Question, Budget::Investment,
-                                      Legislation::Question, Legislation::Proposal, Legislation::Annotation, Topic]
+                                      Legislation::Question, Legislation::Proposal,
+                                      Legislation::Annotation, Topic]
 
       can [:search, :create, :index, :destroy, :edit, :update], ::Administrator
       can [:search, :create, :index, :destroy], ::Moderator
@@ -75,7 +80,8 @@ module Abilities
 
       can [:index, :create, :edit, :update, :destroy], Geozone
 
-      can [:read, :create, :update, :destroy, :add_question, :search_booths, :search_officers, :booth_assignments], Poll
+      can [:read, :create, :update, :destroy, :add_question,
+           :search_booths, :search_officers, :booth_assignments], Poll
       can [:read, :create, :update, :destroy, :available], Poll::Booth
       can [:search, :create, :index, :destroy], ::Poll::Officer
       can [:create, :destroy, :manage], ::Poll::BoothAssignment
@@ -94,7 +100,8 @@ module Abilities
       can [:manage], ::Legislation::DraftVersion
       can [:manage], ::Legislation::Question
       can [:manage], ::Legislation::Proposal
-      cannot :comment_as_moderator, [::Legislation::Question, Legislation::Annotation, ::Legislation::Proposal]
+      cannot :comment_as_moderator, [::Legislation::Question, Legislation::Annotation,
+                                     ::Legislation::Proposal]
 
       can [:create], Document
       can [:destroy], Document, documentable_type: "Poll::Question::Answer"

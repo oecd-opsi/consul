@@ -121,7 +121,11 @@ namespace :admin do
     get :search, on: :collection
   end
 
-  resources :users, only: [:index, :show]
+  resources :users, only: [:index, :show] do
+    member do
+      get :promote_to_admin
+    end
+  end
 
   scope module: :poll do
     resources :polls do
