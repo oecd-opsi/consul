@@ -502,6 +502,8 @@ en:
           debate_phase: Debate phase
           draft_phase: Draft phase
           draft_phase_description: If this phase is active, the process won't be listed on processes index. Allow to preview the process and create content before the start.
+          draft_publication_date: Draft publication date
+          result_publication_date: Result publication date
           allegations_phase: Comments phase
           proposals_phase: Proposals phase
           use_markdown: Use Markdown to format the text
@@ -1540,6 +1542,7 @@ en:
         actions: Actions
       actions:
         promote_admin: Promote to Admin
+        promote_oecd_representative: Promote to OECD Representative
       index:
         title: User
         no_users: There are no users.
