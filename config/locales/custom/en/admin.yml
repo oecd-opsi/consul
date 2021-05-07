@@ -1549,8 +1549,10 @@ en:
       search:
         placeholder: Search user by email, name or document number
         search: Search
-      promote:
+      promote_to_admin:
         success: "User successfully promoted to Admin"
+      promote_to_oecd_representative:
+        success: "User successfully promoted to OECD Representative"
     verifications:
       index:
         phone_not_given: Phone not given

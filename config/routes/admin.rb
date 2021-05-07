@@ -124,6 +124,7 @@ namespace :admin do
   resources :users, only: [:index, :show] do
     member do
       get :promote_to_admin
+      get :promote_to_oecd_representative
     end
   end
 

@@ -49,6 +49,10 @@ module Abilities
         !resource.administrator?
       end
 
+      can :promote_to_oecd_representative, User do |resource|
+        !resource.administrator? && !resource.oecd_representative?
+      end
+
       can :mark_featured, Debate
       can :unmark_featured, Debate
 

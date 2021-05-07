@@ -10,6 +10,7 @@ describe Abilities::Administrator do
   let(:other_user) { create(:user) }
   let(:hidden_user) { create(:user, :hidden) }
   let(:other_administrator) { create(:administrator).user }
+  let(:oecd_representative) { create(:oecd_representative).user }
 
   let(:debate) { create(:debate) }
   let(:comment) { create(:comment) }
@@ -61,6 +62,10 @@ describe Abilities::Administrator do
 
   it { should be_able_to(:promote_to_admin, other_user) }
   it { should_not be_able_to(:promote_to_admin, other_administrator) }
+
+  it { should be_able_to(:promote_to_oecd_representative, other_user) }
+  it { should_not be_able_to(:promote_to_oecd_representative, oecd_representative) }
+  it { should_not be_able_to(:promote_to_oecd_representative, other_administrator) }
 
   it { should be_able_to(:comment_as_administrator, debate) }
   it { should_not be_able_to(:comment_as_moderator, debate) }
