@@ -13,6 +13,9 @@ namespace :management do
       delete :logout
       delete :erase
     end
+    member do
+      get :promote_to_oecd_representative
+    end
   end
 
   resource :account, controller: "account", only: [:show] do

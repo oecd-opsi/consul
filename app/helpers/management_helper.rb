@@ -41,4 +41,8 @@ module ManagementHelper
   def menu_user_invites?
     controller_name == "user_invites"
   end
+
+  def manager_for_ability
+    manager_logged_in
+  end
 end

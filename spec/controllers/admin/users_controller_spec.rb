@@ -41,7 +41,7 @@ describe Admin::UsersController do
   end
 
   describe "GET promote_to_oecd_representative" do
-    context "when user can be promoted to Admin" do
+    context "when user can be promoted to OECD Representative" do
       let(:user) { create(:user) }
 
       before { get :promote_to_oecd_representative, params: { id: user.id } }

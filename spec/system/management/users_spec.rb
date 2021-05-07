@@ -94,4 +94,21 @@ describe "Users" do
 
     expect(page).to have_content "no user account associated to it"
   end
+
+  scenario "Make user the OECD Representative", :js do
+    login_as_manager
+    user = create(:user, :level_three)
+
+    visit management_document_verifications_path
+    fill_in "document_verification_document_number", with: user.document_number
+    click_button "Check document"
+
+    expect(page).to have_content "This user account is already verified."
+    expect(page).to have_content "This user can participate in the website with the following permissions"
+
+    click_link I18n.t("management.users.promote_oecd_representative")
+    accept_alert "Are you sure?"
+
+    expect(page).to have_content I18n.t("management.users.promote_to_oecd_representative.success")
+  end
 end
