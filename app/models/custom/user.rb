@@ -52,4 +52,8 @@ class User < ApplicationRecord
   def oecd_representative?
     oecd_representative.present?
   end
+
+  def standard_user?
+    !(administrator? || moderator? || valuator? || manager? || poll_officer? || organization? || oecd_representative?)
+  end
 end
