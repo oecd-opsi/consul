@@ -8,7 +8,7 @@ module Abilities
       can :suggest, Budget::Investment
 
       can :promote_to_oecd_representative, User do |resource|
-        resource.persisted? && !resource.administrator? && !resource.oecd_representative?
+        resource.persisted? && resource.standard_user?
       end
     end
   end

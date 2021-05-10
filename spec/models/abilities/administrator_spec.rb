@@ -63,9 +63,20 @@ describe Abilities::Administrator do
   it { should be_able_to(:promote_to_admin, other_user) }
   it { should_not be_able_to(:promote_to_admin, other_administrator) }
 
-  it { should be_able_to(:promote_to_oecd_representative, other_user) }
-  it { should_not be_able_to(:promote_to_oecd_representative, oecd_representative) }
-  it { should_not be_able_to(:promote_to_oecd_representative, other_administrator) }
+  describe "promote_to_oecd_representative" do
+    context "when non-standard user" do
+      before { allow(other_user).to receive(:standard_user?).and_return(false) }
+
+      it { should_not be_able_to(:promote_to_oecd_representative, other_user) }
+      it { should_not be_able_to(:promote_to_oecd_representative, oecd_representative) }
+      it { should_not be_able_to(:promote_to_oecd_representative, other_administrator) }
+    end
+
+    context "when standard user" do
+      before { allow(other_user).to receive(:standard_user?).and_return(true) }
+      it { should be_able_to(:promote_to_oecd_representative, other_user) }
+    end
+  end
 
   it { should be_able_to(:comment_as_administrator, debate) }
   it { should_not be_able_to(:comment_as_moderator, debate) }
