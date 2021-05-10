@@ -121,6 +121,10 @@ namespace :admin do
     get :search, on: :collection
   end
 
+  resources :oecd_representatives, only: [:index, :create, :destroy] do
+    get :search, on: :collection
+  end
+
   resources :users, only: [:index, :show] do
     member do
       get :promote_to_admin

@@ -737,6 +737,7 @@ en:
       hidden_proposal_notifications: Hidden proposal notifications
       hidden_users: Hidden users
       administrators: Administrators
+      oecd_representatives: OECD Representatives
       managers: Managers
       moderators: Moderators
       messaging_users: Messages to users
@@ -808,6 +809,18 @@ en:
       form:
         edit_title: "Edit administrator"
         updated: "Administrator updated successfully"
+    oecd_representatives:
+      index:
+        title: OECD Representatives
+        name: Name
+        email: Email
+        id: OECD Representative ID
+        no_oecd_representatives: There are no OECD Representatives.
+      oecd_representative:
+        add: Add
+        delete: Delete
+      search:
+        title: "OECD Representatives: User search"
     moderators:
       index:
         title: Moderators

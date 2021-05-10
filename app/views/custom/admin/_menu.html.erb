@@ -207,6 +207,10 @@
           <%= link_to t("admin.menu.administrators"), admin_administrators_path %>
         </li>
 
+        <li <%= "class=is-active" if controller_name == "oecd_representatives" %>>
+          <%= link_to t("admin.menu.oecd_representatives"), admin_oecd_representatives_path %>
+        </li>
+
         <li <%= "class=is-active" if controller_name == "organizations" %>>
           <%= link_to t("admin.menu.organizations"), admin_organizations_path %>
         </li>

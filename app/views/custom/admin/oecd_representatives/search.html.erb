@@ -1,0 +1,46 @@
+<h2><%= t("admin.oecd_representatives.search.title") %></h2>
+
+<%= render "admin/shared/user_search", url: search_admin_oecd_representatives_path %>
+
+<div id="oecd_representatives">
+  <% if @users.any? %>
+    <h3 class="margin"><%= page_entries_info @users %></h3>
+
+    <table>
+      <thead>
+        <th scope="col"><%= t("admin.oecd_representatives.index.name") %></th>
+        <th scope="col"><%= t("admin.oecd_representatives.index.email") %></th>
+        <th scope="col" class="small-3"><%= t("admin.shared.actions") %></th>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.name %></td>
+            <td><%= user.email %></td>
+            <td class="text-right">
+              <% if user.oecd_representative? && user.oecd_representative.persisted? %>
+                <%= link_to t("admin.oecd_representatives.oecd_representative.delete"),
+                            admin_oecd_representative_path(user.oecd_representative),
+                            method: :delete,
+                            class: "button hollow alert expanded" %>
+              <% elsif can?(:promote_to_oecd_representative, user) %>
+                <%= link_to t("admin.oecd_representatives.oecd_representative.add"),
+                            { controller: "admin/oecd_representatives",
+                              action: :create,
+                              user_id: user },
+                            method: :post,
+                            class: "button success expanded" %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= paginate @users %>
+  <% else %>
+    <div class="callout alert margin">
+      <%= t("admin.shared.no_search_results") %>
+    </div>
+  <% end %>
+</div>

@@ -20,5 +20,30 @@ describe AdminHelper do
         end
       end
     end
+
+    describe "#menu_profiles?" do
+      let(:profiles_controllers) do
+        %w[
+          administrators organizations officials moderators
+          valuators managers users oecd_representatives
+        ]
+      end
+
+      context "when profiles controller" do
+        it "returns true" do
+          profiles_controllers.each do |controller|
+            allow(helper).to receive(:controller_name).and_return(controller)
+            expect(helper.menu_profiles?).to be_truthy
+          end
+        end
+      end
+
+      context "when other controller" do
+        it "returns flase" do
+          allow(helper).to receive(:controller_name).and_return(:collaborative_legislation)
+          expect(helper.menu_profiles?).to be_falsey
+        end
+      end
+    end
   end
 end

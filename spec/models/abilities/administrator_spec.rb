@@ -118,4 +118,9 @@ describe Abilities::Administrator do
   it { should be_able_to(:manage, LocalCensusRecord) }
   it { should be_able_to(:create, LocalCensusRecords::Import) }
   it { should be_able_to(:show, LocalCensusRecords::Import) }
+
+  it { should be_able_to(:search, OecdRepresentative) }
+  it { should be_able_to(:create, OecdRepresentative) }
+  it { should be_able_to(:index, OecdRepresentative) }
+  it { should be_able_to(:destroy, OecdRepresentative) }
 end
