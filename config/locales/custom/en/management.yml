@@ -71,6 +71,8 @@ en:
       debates: Engage in debates
       support_proposals: Support proposals
       vote_proposals: Vote proposals
+      collaborative_legislation: Create and manage own Public Engagement processes
+      moderation: Moderate own Public Engagement processes
     print:
       proposals_info: Create your proposal on http://url.consul
       proposals_title: "Proposals:"

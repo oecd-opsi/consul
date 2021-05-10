@@ -1,4 +1,6 @@
 module ManagementHelper
+  DEFAULT_PERMISSIONS = [:debates, :create_proposals, :support_proposals, :vote_proposals].freeze
+  OECD_REPRESENTATIVE_PERMISSIONS = [:collaborative_legislation, :moderation].freeze
   def menu_users?
     ["users", "email_verifications", "document_verifications"].include?(controller_name)
   end
@@ -44,5 +46,11 @@ module ManagementHelper
 
   def manager_for_ability
     manager_logged_in
+  end
+
+  def permissions_for(user)
+    permissions = DEFAULT_PERMISSIONS
+    permissions += OECD_REPRESENTATIVE_PERMISSIONS if user.oecd_representative?
+    permissions
   end
 end
