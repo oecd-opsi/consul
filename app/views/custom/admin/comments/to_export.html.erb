@@ -23,7 +23,7 @@
           <td><%= process.title %></td>
           <td><%= process.total_comments %></td>
           <td>
-            <%= link_to export_admin_comments_path(process_id: process.id), title: t("admin.comments.to_export.table_link_title"), class: "button hollow big expanded" do %>
+            <%= link_to export_admin_comments_path(process_id: process.id), title: t("admin.comments.to_export.table_link_title"), class: "button hollow big expanded", target: '_blank' do %>
               <span class="icon-file-text-o"></span>&nbsp; <%= t("admin.comments.to_export.table_link") %>
             <% end %>
           </td>
