@@ -119,6 +119,10 @@ module Abilities
       can [:update, :destroy], Topic, author_id: user.id
 
       can :disable_recommendations, [Debate, Proposal]
+
+      if user.standard_user?
+        can [:create, :new], OecdRepresentativeRequest
+      end
     end
   end
 end

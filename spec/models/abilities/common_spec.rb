@@ -35,7 +35,9 @@ describe Abilities::Common do
   let(:current_poll) { create(:poll) }
   let(:expired_poll) { create(:poll, :expired) }
   let(:expired_poll_from_own_geozone) { create(:poll, :expired, geozone_restricted: true, geozones: [geozone]) }
-  let(:expired_poll_from_other_geozone) { create(:poll, :expired, geozone_restricted: true, geozones: [create(:geozone)]) }
+  let(:expired_poll_from_other_geozone) do
+    create(:poll, :expired, geozone_restricted: true, geozones: [create(:geozone)])
+  end
   let(:poll) { create(:poll, geozone_restricted: false) }
   let(:poll_from_own_geozone) { create(:poll, geozone_restricted: true, geozones: [geozone]) }
   let(:poll_from_other_geozone) { create(:poll, geozone_restricted: true, geozones: [create(:geozone)]) }
@@ -303,5 +305,19 @@ describe Abilities::Common do
   describe "#disable_recommendations" do
     it { should be_able_to(:disable_recommendations, Debate) }
     it { should be_able_to(:disable_recommendations, Proposal) }
+  end
+
+  describe "when standard user" do
+    before { allow(user).to receive(:standard_user?).and_return(true) }
+
+    it { should be_able_to(:new, OecdRepresentativeRequest) }
+    it { should be_able_to(:create, OecdRepresentativeRequest) }
+  end
+
+  describe "when not standard user" do
+    before { allow(user).to receive(:standard_user?).and_return(false) }
+
+    it { should_not be_able_to(:new, OecdRepresentativeRequest) }
+    it { should_not be_able_to(:create, OecdRepresentativeRequest) }
   end
 end
