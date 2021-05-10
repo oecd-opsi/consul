@@ -1,6 +1,7 @@
 gem 'auth0'
 gem 'aws-sdk-rails'
 gem 'omniauth-auth0', '~> 2.2'
+gem 'enumerize'
 
 group :development, :test do
   gem 'dotenv-rails'
