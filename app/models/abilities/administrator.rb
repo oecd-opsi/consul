@@ -115,6 +115,11 @@ module Abilities
 
       can :manage, LocalCensusRecord
       can [:create, :read], LocalCensusRecords::Import
+
+      can [:read], OecdRepresentativeRequest
+      can [:accept, :reject], OecdRepresentativeRequest do |request|
+        request.status.pending? && !request.user_oecd_representative?
+      end
     end
   end
 end
