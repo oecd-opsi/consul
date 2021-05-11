@@ -4,6 +4,7 @@ gem 'omniauth-auth0', '~> 2.2'
 gem 'enumerize'
 
 group :development, :test do
+  gem 'rails-controller-testing'
   gem 'dotenv-rails'
   gem 'pry-rails', '~> 0.3.4'
 end
