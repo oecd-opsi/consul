@@ -25,6 +25,7 @@ en:
       username_label: Username
       verified_account: Account verified
       verify_my_account: Verify my account
+      request_upgrade: Request upgrade to OECD Representative
   application:
     close: Close
     menu: Menu
@@ -820,6 +821,13 @@ en:
         verified_only: To send a private message %{verify_account}
       show:
         receiver: Message sent to %{receiver}
+    oecd_represetative_requests:
+      new:
+        submit_button: Send message
+        title: Request upgrade to OECD Representative
+      flash:
+        create: Request sent. We will get back to you shortly.
+        already_sent: You have already sent a request and its status is pending. We will get back to you shortly.
     show:
       deleted: Deleted
       deleted_debate: This debate has been deleted

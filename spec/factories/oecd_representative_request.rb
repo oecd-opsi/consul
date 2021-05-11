@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :oecd_representative_request do
     user
-    message { Faker::Lorem.sentences(3) }
+    message { Faker::Lorem.sentence }
   end
 end
