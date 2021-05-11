@@ -8,4 +8,14 @@ class OecdRepresentativeRequest < ApplicationRecord
   enumerize :status, in: [:pending, :accepted, :rejected], default: :pending, scope: true
 
   scope :with_user, -> { includes(:user) }
+  delegate :oecd_representative?, to: :user, prefix: true
+
+  def accept!
+    user.create_oecd_representative
+    update!(status: :accepted)
+  end
+
+  def reject!
+    update(status: :rejected)
+  end
 end
