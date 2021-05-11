@@ -9,6 +9,7 @@ class OecdRepresentativeRequest < ApplicationRecord
 
   scope :with_user, -> { includes(:user) }
   delegate :oecd_representative?, to: :user, prefix: true
+  delegate :email_on_direct_message?, to: :user, prefix: true
 
   def accept!
     user.create_oecd_representative

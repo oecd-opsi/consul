@@ -22,12 +22,14 @@
                 <%= link_to t("admin.oecd_representatives.oecd_representative.delete"),
                             admin_oecd_representative_path(user.oecd_representative),
                             method: :delete,
+                            "data-confirm": "Are you sure?",
                             class: "button hollow alert expanded" %>
               <% elsif can?(:promote_to_oecd_representative, user) %>
                 <%= link_to t("admin.oecd_representatives.oecd_representative.add"),
                             { controller: "admin/oecd_representatives",
                               action: :create,
                               user_id: user },
+                            "data-confirm": "Are you sure?",
                             method: :post,
                             class: "button success expanded" %>
               <% end %>

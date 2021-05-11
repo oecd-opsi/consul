@@ -1,0 +1,57 @@
+<h2><%= t("admin.oecd_representative_requests.show.title") %></h2>
+
+<div class="small-12 column callout">
+  <div class="small-12 medium-3 column">
+    <strong><%= t("admin.oecd_representative_requests.show.email") %></strong><br>
+    <%= @oecd_representative_request.email %>
+  </div>
+
+  <div class="small-12 medium-3 column">
+    <strong><%= t("admin.oecd_representative_requests.show.name") %></strong><br>
+    <%= @oecd_representative_request.name %>
+  </div>
+
+  <div class="small-12 medium-3 column">
+    <strong><%= t("admin.oecd_representative_requests.show.status") %></strong><br>
+    <%= @oecd_representative_request.status %>
+  </div>
+
+  <div class="small-12 medium-3 column">
+    <strong><%= t("admin.oecd_representative_requests.show.sent_at") %></strong><br>
+    <%= l @oecd_representative_request.created_at %>
+  </div>
+</div>
+
+<div class="small-12 column callout highlight">
+  <div class="small-12 column">
+    <strong><%= t("admin.oecd_representative_requests.show.message") %></strong><br>
+    <%= @oecd_representative_request.message %>
+  </div>
+
+</div>
+<div>
+  <% if can?(:accept, @oecd_representative_request) %>
+    <%= link_to t("admin.oecd_representative_requests.show.accept"),
+                accept_admin_oecd_representative_request_path(@oecd_representative_request),
+                "data-confirm": "Are you sure?",
+                class: "button hollow" %>
+  <% end %>
+
+  <% if can?(:reject, @oecd_representative_request) %>
+    <%= link_to t("admin.oecd_representative_requests.show.reject"),
+                reject_admin_oecd_representative_request_path(@oecd_representative_request),
+                "data-confirm": "Are you sure?",
+                class: "button alert hollow" %>
+  <% end %>
+</div>
+<div>
+  <%= mail_to @oecd_representative_request.email,
+              t("admin.oecd_representative_requests.show.send_email"),
+              class: "button hollow" %>
+
+  <%- if @oecd_representative_request.user_email_on_direct_message? %>
+    <%= link_to t("admin.oecd_representative_requests.show.send_private_message"),
+                new_user_direct_message_path(@oecd_representative_request.user),
+                class: "button" %>
+  <% end %>
+</div>

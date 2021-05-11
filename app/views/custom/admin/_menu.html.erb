@@ -237,6 +237,18 @@
       </ul>
     </li>
 
+    <li class="section-title">
+      <a href="#">
+        <span class="icon-letter"></span>
+        <strong><%= t("admin.menu.title_requests") %></strong>
+      </a>
+      <ul <%= "class=is-active" if controller_name == "oecd_representative_requests" %>>
+        <li <%= "class=is-active" if controller_name == "oecd_representative_requests" %>>
+          <%= link_to t("admin.menu.oecd_representative_requests"), admin_oecd_representative_requests_path %>
+        </li>
+      </ul>
+    </li>
+
     <li class="section-title" <%= "class=is-active" if controller_name == "stats" %>>
       <%= link_to admin_stats_path do %>
         <span class="icon-stats"></span><%= t("admin.menu.stats") %>
