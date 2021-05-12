@@ -71,10 +71,17 @@ describe OecdRepresentativeRequestsController do
     let(:user) { create(:user) }
     let(:subject) { post :create, params: { oecd_representative_request: resource_params } }
     let(:resource_params) { { message: Faker::Lorem.sentence } }
+    let(:admin) { create(:administrator) }
+    let(:manager) { create(:manager) }
+    let(:mailer_mock) { double }
 
     context "without any pending requests" do
       before do
         sign_in user
+        allow(Custom::NotificationsMailer).to receive(:new_oecd_representative_request).and_return(mailer_mock)
+        allow(mailer_mock).to receive(:deliver_later)
+        admin
+        manager
         subject
       end
 
@@ -92,6 +99,26 @@ describe OecdRepresentativeRequestsController do
         it "creates new request for user" do
           expect(user.oecd_representative_requests.with_status(:pending)).not_to be_empty
         end
+
+        it "sends notifications to admins and managers" do
+          expect(Custom::NotificationsMailer).to have_received(:new_oecd_representative_request).twice
+        end
+
+        it "sends notification to admins" do
+          expect(Custom::NotificationsMailer)
+            .to have_received(:new_oecd_representative_request).with(
+              admin.id,
+              assigns[:oecd_representative_request].id
+            )
+        end
+
+        it "sends notificationsto manager" do
+          expect(Custom::NotificationsMailer)
+            .to have_received(:new_oecd_representative_request).with(
+              manager.id,
+              assigns[:oecd_representative_request].id
+            )
+        end
       end
 
       context "with invalid resource" do
@@ -103,6 +130,10 @@ describe OecdRepresentativeRequestsController do
 
         it "does not create new request for user" do
           expect(user.oecd_representative_requests.with_status(:pending)).to be_empty
+        end
+
+        it "does not send any notifications" do
+          expect(Custom::NotificationsMailer).not_to have_received(:new_oecd_representative_request)
         end
       end
     end
