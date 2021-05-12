@@ -46,4 +46,9 @@ namespace :management do
       get :print, on: :collection
     end
   end
+
+  resources :oecd_representative_requests, only: [:index, :show] do
+    get :accept, on: :member
+    get :reject, on: :member
+  end
 end

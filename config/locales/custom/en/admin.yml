@@ -827,7 +827,7 @@ en:
       index:
         title: OECD Representative Requests
         status: Status
-        name: Reject
+        name: Name
         email: Email
         id: User ID
         no_oecd_representative_requests: There are no OECD Representative Requests.

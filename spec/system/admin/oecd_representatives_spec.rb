@@ -21,6 +21,7 @@ describe "Admin OECD representatives" do
 
     expect(page).to have_content user.name
     click_link "Add"
+    accept_alert "Are you sure?"
     within("#oecd_representatives") do
       expect(page).to have_content user.name
     end

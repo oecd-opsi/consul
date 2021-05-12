@@ -1,0 +1,55 @@
+<h2><%= t("management.oecd_representative_requests.index.title") %></h2>
+
+<div id="oecd_representatives">
+  <% if @oecd_representative_requests.any? %>
+    <h3 class="margin"><%= page_entries_info @oecd_representative_requests %></h3>
+
+    <table>
+      <thead>
+        <th scope="col" class="text-center"><%= t("management.oecd_representative_requests.index.id") %></th>
+        <th scope="col"><%= t("management.oecd_representative_requests.index.status") %></th>
+        <th scope="col"><%= t("management.oecd_representative_requests.index.name") %></th>
+        <th scope="col"><%= t("management.oecd_representative_requests.index.email") %></th>
+        <th scope="col" class="small-3"><%= t("management.shared.actions") %></th>
+      </thead>
+      <% @oecd_representative_requests.each do |oecd_representative_request| %>
+        <tr id="<%= dom_id(oecd_representative_request) %>">
+          <td class="text-center">
+            <%= oecd_representative_request.id %>
+          </td>
+          <td>
+            <%= oecd_representative_request.status %>
+          </td>
+          <td>
+            <%= oecd_representative_request.name %>
+          </td>
+          <td>
+            <%= oecd_representative_request.email %>
+          </td>
+          <td>
+            <%= link_to t("management.oecd_representative_requests.oecd_representative_request.view"),
+                        management_oecd_representative_request_path(oecd_representative_request),
+                        class: "button" %>
+
+            <%= link_to t("management.oecd_representative_requests.oecd_representative_request.accept"),
+                        accept_management_oecd_representative_request_path(oecd_representative_request),
+                        "data-confirm": "Are you sure?",
+                        class: "button hollow" %>
+
+            <%= link_to t("management.oecd_representative_requests.oecd_representative_request.reject"),
+                        reject_management_oecd_representative_request_path(oecd_representative_request),
+                        "data-confirm": "Are you sure?",
+                        class: "button hollow alert" %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+
+    <%= paginate @oecd_representative_requests %>
+
+  <% else %>
+    <div class="callout primary margin">
+      <%= t("management.oecd_representative_requests.index.no_oecd_representative_requests") %>
+    </div>
+  <% end %>
+</div>

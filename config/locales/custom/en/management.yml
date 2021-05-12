@@ -66,6 +66,8 @@ en:
       users: Users management
       user_invites: Send invitations
       select_user: Select user
+      title_requests: Requests
+      oecd_representative_requests: OECD Representative Requests
     permissions:
       create_proposals: Create proposals
       debates: Engage in debates
@@ -136,3 +138,31 @@ en:
       create:
         success: <strong>%{count} invitations</strong> have been sent.
         title: Send invitations
+    oecd_representative_requests:
+      index:
+        title: OECD Representative Requests
+        status: Status
+        name: Name
+        email: Email
+        id: User ID
+        no_oecd_representative_requests: There are no OECD Representative Requests.
+      oecd_representative_request:
+        accept: Accept
+        reject: Reject
+        view: View
+      show:
+        title: "OECD Representative Request"
+        sent_at: Sent at
+        name: Name
+        email: Email
+        status: Status
+        message: Message
+        accept: Accept
+        reject: Reject
+        send_email: Contact user via email
+        send_private_message: Send private message
+      actions:
+        accepted: The request has been accepted and the user is now an OECD Representative.
+        rejected: The request has been rejected.
+    shared:
+      actions: Actions
