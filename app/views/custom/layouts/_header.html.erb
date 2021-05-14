@@ -99,6 +99,10 @@ if show_admin_menu?(current_user)
     menu_items_admin.push({ title: t("layouts.header.administration"), href: admin_root_path })
   end
 
+  if current_user.oecd_representative?
+    menu_items_admin.push({ title: t("layouts.header.oecd_representative"), href: oecd_representative_root_path })
+  end
+
   if current_user.administrator? || current_user.moderator?
     menu_items_admin.push({ title: t("layouts.header.moderation"), href: moderation_root_path })
   end

@@ -1,0 +1,11 @@
+<% provide :title do %>
+  <%= t("oecd_representative.header.title") %> - <%= t("oecd_representative.menu.legislation") %> - <%= t("oecd_representative.legislation.processes.new.title") %>
+<% end %>
+
+<div class="legislation-process-new">
+  <%= back_link_to oecd_representative_legislation_processes_path, t("oecd_representative.legislation.processes.new.back") %>
+
+  <h2><%= t("oecd_representative.legislation.processes.new.title") %></h2>
+
+  <%= render "form" %>
+</div>

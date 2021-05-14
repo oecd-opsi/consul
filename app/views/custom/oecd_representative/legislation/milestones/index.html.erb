@@ -1,0 +1,12 @@
+<% provide :title do %>
+  <%= "#{t("oecd_representative.header.title")} - #{t("oecd_representative.menu.legislation")}" %> -
+  <%= "#{@process.title} - #{t("oecd_representative.legislation.milestones.index.title")}" %>
+<% end %>
+
+<%= back_link_to oecd_representative_legislation_processes_path, t("oecd_representative.legislation.processes.edit.back") %>
+
+<h2><%= @process.title %></h2>
+
+<%= render "oecd_representative/legislation/processes/subnav", process: @process, active: "milestones" %>
+<%= render "summary_form", process: @process %>
+<%= render "oecd_representative/milestones/milestones", milestoneable: @process %>

@@ -1,0 +1,18 @@
+<% provide :title do %>
+  <%= t("oecd_representative.header.title") %> - <%= t("oecd_representative.menu.legislation") %> - <%= @process.title %> - <%= t("oecd_representative.legislation.draft_versions.index.title") %> - <%= t("oecd_representative.legislation.draft_versions.new.title") %>
+<% end %>
+
+<div class="legislation-draft-versions-new legislation-draft-versions-form">
+  <div class="small-12 column">
+    <%= back_link_to oecd_representative_legislation_process_draft_versions_path(@process),
+                     t("oecd_representative.legislation.draft_versions.new.back") %>
+
+    <h2><%= @process.title %></h2>
+
+    <%= render "oecd_representative/legislation/processes/subnav", process: @process, active: "draft_versions" %>
+
+    <h3><%= t("oecd_representative.legislation.draft_versions.new.title") %></h3>
+
+    <%= render "form", url: oecd_representative_legislation_process_draft_versions_path(@process) %>
+  </div>
+</div>

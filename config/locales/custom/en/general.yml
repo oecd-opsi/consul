@@ -230,6 +230,7 @@ en:
     header:
       administration_menu: Menu
       administration: Administration
+      oecd_representative: OECD Representation Interface
       available_locales: Available languages
       collaborative_legislation: Public Engagement
       debates: Debates
@@ -253,6 +254,8 @@ en:
           other: You have %{count} new notifications
         notifications: Notifications
         no_notifications: "You don't have new notifications"
+    oecd_representative:
+      watch_form_message: "You have unsaved changes. Do you confirm to leave the page?"
     admin:
       watch_form_message: "You have unsaved changes. Do you confirm to leave the page?"
   notifications:
