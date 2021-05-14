@@ -1,14 +1,16 @@
 require "rails_helper"
 
 describe "OECD Representative collaborative legislation" do
+  let(:oecd_representative) { create(:oecd_representative).user }
+
   before do
-    oecd_representative = create(:oecd_representative)
-    login_as(oecd_representative.user)
+    login_as(oecd_representative)
   end
 
   context "Index" do
+    let(:process) { create(:legislation_process, author: oecd_representative) }
     scenario "Displaying legislation proposals" do
-      proposal = create(:legislation_proposal, cached_votes_score: 10)
+      proposal = create(:legislation_proposal, cached_votes_score: 10, process: process)
 
       visit oecd_representative_legislation_process_proposals_path(proposal.legislation_process_id)
 
@@ -21,7 +23,7 @@ describe "OECD Representative collaborative legislation" do
     end
 
     scenario "Selecting legislation proposals", :js do
-      proposal = create(:legislation_proposal, cached_votes_score: 10)
+      proposal = create(:legislation_proposal, cached_votes_score: 10, process: process)
 
       visit oecd_representative_legislation_process_proposals_path(proposal.legislation_process_id)
       click_link "Select"
@@ -32,7 +34,7 @@ describe "OECD Representative collaborative legislation" do
     end
 
     scenario "Sorting legislation proposals by title", js: true do
-      process = create(:legislation_process)
+      process = create(:legislation_process, author: oecd_representative)
       create(:legislation_proposal, title: "bbbb", legislation_process_id: process.id)
       create(:legislation_proposal, title: "aaaa", legislation_process_id: process.id)
       create(:legislation_proposal, title: "cccc", legislation_process_id: process.id)
@@ -48,7 +50,7 @@ describe "OECD Representative collaborative legislation" do
     end
 
     scenario "Sorting legislation proposals by supports", js: true do
-      process = create(:legislation_process)
+      process = create(:legislation_process, author: oecd_representative)
       create(:legislation_proposal, cached_votes_score: 10, legislation_process_id: process.id)
       create(:legislation_proposal, cached_votes_score: 30, legislation_process_id: process.id)
       create(:legislation_proposal, cached_votes_score: 20, legislation_process_id: process.id)
@@ -64,7 +66,7 @@ describe "OECD Representative collaborative legislation" do
     end
 
     scenario "Sorting legislation proposals by Id", js: true do
-      process = create(:legislation_process)
+      process = create(:legislation_process, author: oecd_representative)
       proposal1 = create(:legislation_proposal, title: "bbbb", legislation_process_id: process.id)
       proposal2 = create(:legislation_proposal, title: "aaaa", legislation_process_id: process.id)
       proposal3 = create(:legislation_proposal, title: "cccc", legislation_process_id: process.id)

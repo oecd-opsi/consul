@@ -1,15 +1,15 @@
 require "rails_helper"
 
 describe "Oecd Representative legislation draft versions" do
+  let(:oecd_representative) { create(:oecd_representative).user }
   before do
-    oecd_representative = create(:oecd_representative)
-    login_as(oecd_representative.user)
+    login_as(oecd_representative)
   end
 
   context "Feature flag" do
     scenario "Disabled with a feature flag" do
       Setting["process.legislation"] = nil
-      process = create(:legislation_process)
+      process = create(:legislation_process, author: oecd_representative)
       expect { visit oecd_representative_legislation_process_draft_versions_path(process) }
         .to raise_exception(FeatureFlags::FeatureDisabled)
     end
@@ -17,7 +17,7 @@ describe "Oecd Representative legislation draft versions" do
 
   context "Index" do
     scenario "Displaying legislation process draft versions" do
-      process = create(:legislation_process, title: "An example legislation process")
+      process = create(:legislation_process, title: "An example legislation process", author: oecd_representative)
       draft_version = create(:legislation_draft_version, process: process, title: "Version 1")
 
       visit oecd_representative_legislation_processes_path(filter: "all")
@@ -33,7 +33,7 @@ describe "Oecd Representative legislation draft versions" do
 
   context "Create" do
     scenario "Valid legislation draft version" do
-      create(:legislation_process, title: "An example legislation process")
+      create(:legislation_process, title: "An example legislation process", author: oecd_representative)
 
       visit oecd_representative_root_path
 
@@ -65,7 +65,7 @@ describe "Oecd Representative legislation draft versions" do
 
   context "Update" do
     scenario "Valid legislation draft version", :js do
-      process = create(:legislation_process, title: "An example legislation process")
+      process = create(:legislation_process, title: "An example legislation process", author: oecd_representative)
       create(:legislation_draft_version, title: "Version 1", process: process)
 
       visit oecd_representative_root_path

@@ -1,12 +1,12 @@
 require "rails_helper"
 
 describe "OECD Representative legislation questions" do
-  before do
-    oecd_representative = create(:oecd_representative)
-    login_as(oecd_representative.user)
-  end
+  let(:oecd_representative) { create(:oecd_representative).user }
+  let!(:process) { create(:legislation_process, title: "An example legislation process", author: oecd_representative) }
 
-  let!(:process) { create(:legislation_process, title: "An example legislation process") }
+  before do
+    login_as(oecd_representative)
+  end
 
   context "Feature flag" do
     before do
@@ -102,7 +102,8 @@ describe "OECD Representative legislation questions" do
   end
 
   context "Legislation options" do
-    let!(:question) { create(:legislation_question) }
+    let(:legislation_process) { create(:legislation_process, author: oecd_representative) }
+    let!(:question) { create(:legislation_question, process: process) }
 
     let(:edit_question_url) do
       edit_oecd_representative_legislation_process_question_path(question.process, question)

@@ -1,9 +1,10 @@
 require "rails_helper"
 
 describe "OECD Representative collaborative legislation" do
-  let(:oecd_representative) { create(:oecd_representative) }
+  let(:oecd_representative) { create(:oecd_representative).user }
+
   before do
-    login_as(oecd_representative.user)
+    login_as(oecd_representative)
   end
 
   it_behaves_like "oecd_representative_milestoneable",
@@ -20,12 +21,14 @@ describe "OECD Representative collaborative legislation" do
 
   context "Index" do
     scenario "Displaying collaborative legislation" do
-      process_1 = create(:legislation_process, title: "Process open")
+      process_1 = create(:legislation_process, title: "Process open", author: oecd_representative)
       process_2 = create(:legislation_process, title: "Process for the future",
-                                               start_date: Date.current + 5.days)
+                                               start_date: Date.current + 5.days,
+                         author: oecd_representative)
       process_3 = create(:legislation_process, title: "Process closed",
                                                start_date: Date.current - 10.days,
-                                               end_date: Date.current - 6.days)
+                         end_date: Date.current - 6.days,
+                         author: oecd_representative)
 
       visit oecd_representative_legislation_processes_path(filter: "active")
 
@@ -41,9 +44,18 @@ describe "OECD Representative collaborative legislation" do
     end
 
     scenario "Processes are sorted by descending start date" do
-      process_1 = create(:legislation_process, title: "Process 1", start_date: Date.yesterday)
-      process_2 = create(:legislation_process, title: "Process 2", start_date: Date.current)
-      process_3 = create(:legislation_process, title: "Process 3", start_date: Date.tomorrow)
+      process_1 = create(:legislation_process,
+                         title: "Process 1",
+                         start_date: Date.yesterday,
+                         author: oecd_representative)
+      process_2 = create(:legislation_process,
+                         title: "Process 2",
+                         start_date: Date.current,
+                         author: oecd_representative)
+      process_3 = create(:legislation_process,
+                         title: "Process 3",
+                         start_date: Date.tomorrow,
+                         author: oecd_representative)
 
       visit oecd_representative_legislation_processes_path(filter: "all")
 
@@ -101,7 +113,7 @@ describe "OECD Representative collaborative legislation" do
 
       expect(page).to have_content "An example legislation process"
       expect(page).to have_content "Process created successfully"
-      expect(Legislation::Process.last.author).to eq(oecd_representative.user)
+      expect(Legislation::Process.last.author).to eq(oecd_representative)
 
       click_link "Click to visit"
 
@@ -192,7 +204,8 @@ describe "OECD Representative collaborative legislation" do
       create(:legislation_process,
              title: "An example legislation process",
              summary: "Summarizing the process",
-             description: "Description of the process")
+             description: "Description of the process",
+             author: oecd_representative)
     end
 
     scenario "Remove summary text" do
@@ -296,7 +309,7 @@ describe "OECD Representative collaborative legislation" do
   end
 
   context "Special interface translation behaviour" do
-    let!(:process) { create(:legislation_process) }
+    let!(:process) { create(:legislation_process, author: oecd_representative) }
 
     before { Setting["feature.translation_interface"] = true }
 
