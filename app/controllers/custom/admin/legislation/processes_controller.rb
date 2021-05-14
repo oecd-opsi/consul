@@ -1,4 +1,4 @@
-class OecdRepresentative::Legislation::ProcessesController < OecdRepresentative::Legislation::BaseController
+class Admin::Legislation::ProcessesController < Admin::Legislation::BaseController
   include Translatable
   include ImageAttributes
 
@@ -16,7 +16,7 @@ class OecdRepresentative::Legislation::ProcessesController < OecdRepresentative:
     if @process.save
       link = legislation_process_path(@process)
       notice = t("admin.legislation.processes.create.notice", link: link)
-      redirect_to edit_oecd_representative_legislation_process_path(@process), notice: notice
+      redirect_to edit_admin_legislation_process_path(@process), notice: notice
     else
       flash.now[:error] = t("admin.legislation.processes.create.error")
       render :new
@@ -37,7 +37,7 @@ class OecdRepresentative::Legislation::ProcessesController < OecdRepresentative:
   def destroy
     @process.destroy!
     notice = t("admin.legislation.processes.destroy.notice")
-    redirect_to oecd_representative_legislation_processes_path, notice: notice
+    redirect_to admin_legislation_processes_path, notice: notice
   end
 
   private

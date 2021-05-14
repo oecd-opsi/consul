@@ -3,6 +3,11 @@ require_dependency Rails.root.join("app", "models", "user").to_s
 class User < ApplicationRecord
   has_one :oecd_representative, dependent: :destroy
   has_many :oecd_representative_requests, dependent: :destroy
+  has_many :legislation_processes,
+           class_name:  "Legislation::Process",
+           foreign_key: :author_id,
+           inverse_of:  :author,
+           dependent: :nullify
 
   def self.first_or_initialize_for_oauth(auth)
     oauth_email           = auth.info.email

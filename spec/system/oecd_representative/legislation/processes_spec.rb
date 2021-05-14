@@ -1,8 +1,8 @@
 require "rails_helper"
 
 describe "OECD Representative collaborative legislation" do
+  let(:oecd_representative) { create(:oecd_representative) }
   before do
-    oecd_representative = create(:oecd_representative)
     login_as(oecd_representative.user)
   end
 
@@ -101,6 +101,7 @@ describe "OECD Representative collaborative legislation" do
 
       expect(page).to have_content "An example legislation process"
       expect(page).to have_content "Process created successfully"
+      expect(Legislation::Process.last.author).to eq(oecd_representative.user)
 
       click_link "Click to visit"
 
