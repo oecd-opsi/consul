@@ -7,14 +7,16 @@ class OecdRepresentative::Legislation::ProcessesController < OecdRepresentative:
   load_and_authorize_resource :process, class: "Legislation::Process"
 
   def index
-    @processes = ::Legislation::Process.send(@current_filter).order(start_date: :desc)
-                 .page(params[:page])
+    @processes = current_user.legislation_processes
+                   .send(@current_filter)
+                   .order(start_date: :desc)
+                   .page(params[:page])
   end
 
   def create
     assign_author
     if @process.save
-      link = legislation_process_path(@process)
+      link   = legislation_process_path(@process)
       notice = t("admin.legislation.processes.create.notice", link: link)
       redirect_to edit_oecd_representative_legislation_process_path(@process), notice: notice
     else
@@ -27,7 +29,7 @@ class OecdRepresentative::Legislation::ProcessesController < OecdRepresentative:
     if @process.update(process_params)
       link = legislation_process_path(@process)
       redirect_back(fallback_location: (request.referer || root_path),
-                    notice: t("admin.legislation.processes.update.notice", link: link))
+                    notice:            t("admin.legislation.processes.update.notice", link: link))
     else
       flash.now[:error] = t("admin.legislation.processes.update.error")
       render :edit
@@ -72,7 +74,7 @@ class OecdRepresentative::Legislation::ProcessesController < OecdRepresentative:
         :font_color,
         translation_params(::Legislation::Process),
         documents_attributes: [:id, :title, :attachment, :cached_attachment, :user_id, :_destroy],
-        image_attributes: image_attributes
+        image_attributes:     image_attributes
       ]
     end
 
