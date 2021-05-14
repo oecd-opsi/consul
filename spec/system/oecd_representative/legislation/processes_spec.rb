@@ -29,12 +29,14 @@ describe "OECD Representative collaborative legislation" do
                                                start_date: Date.current - 10.days,
                          end_date: Date.current - 6.days,
                          author: oecd_representative)
+      other_user_process = create(:legislation_process, title: "Process open from other user")
 
       visit oecd_representative_legislation_processes_path(filter: "active")
 
       expect(page).to have_content(process_1.title)
       expect(page).to have_content(process_2.title)
       expect(page).not_to have_content(process_3.title)
+      expect(page).not_to have_content(other_user_process.title)
 
       visit oecd_representative_legislation_processes_path(filter: "all")
 
