@@ -55,10 +55,14 @@ module UsersHelper
     current_user&.poll_officer?
   end
 
+  def current_oecd_representative?
+    current_user&.oecd_representative?
+  end
+
   def show_admin_menu?(user = nil)
     unless namespace == "officing"
       current_administrator? || current_moderator? || current_valuator? || current_manager? ||
-        (user&.administrator?) || current_poll_officer?
+        (user&.administrator?) || current_poll_officer? || current_oecd_representative?
     end
   end
 

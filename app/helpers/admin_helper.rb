@@ -115,6 +115,9 @@ module AdminHelper
   private
 
     def namespace
-      controller.class.name.downcase.split("::").first
+      name = controller.class.name.downcase.split("::").first
+      return name unless name == "oecdrepresentative"
+
+      "oecd_representative"
     end
 end

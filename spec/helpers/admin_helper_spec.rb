@@ -46,4 +46,22 @@ describe AdminHelper do
       end
     end
   end
+
+  describe "namespace" do
+    context "when one of OecdRepresentative controllers" do
+      it "returns oecd_representative" do
+        allow(controller).to receive(:class).and_return(OecdRepresentative::BaseController)
+
+        expect(helper.send(:namespace)).to eq("oecd_representative")
+      end
+    end
+
+    context "when controller other than OecdRepresentative " do
+      it "returns namespace name" do
+        allow(controller).to receive(:class).and_return(Admin::BaseController)
+
+        expect(helper.send(:namespace)).to eq("admin")
+      end
+    end
+  end
 end

@@ -39,4 +39,27 @@ describe ProposalsHelper do
       expect(supports_percentage(proposal)).to eq "100%"
     end
   end
+
+  describe "toggle_proposal_path" do
+    context "when Admin Panel" do
+      it "returns correct path for proposal" do
+        proposal = create(:proposal)
+        expect(helper.toggle_proposal_path(proposal, :admin)).to eq(toggle_selection_admin_proposal_path(proposal))
+      end
+
+      it "returns correct path for legislation proposal" do
+        proposal = create(:legislation_proposal)
+        expect(helper.toggle_proposal_path(proposal, :admin))
+          .to eq(toggle_selection_admin_legislation_process_proposal_path(proposal.process, proposal))
+      end
+    end
+
+    context "when OECD Representative Panel" do
+      it "returns correct path for legislation proposal" do
+        proposal = create(:legislation_proposal)
+        expect(helper.toggle_proposal_path(proposal, :oecd_representative))
+          .to eq(toggle_selection_oecd_representative_legislation_process_proposal_path(proposal.process, proposal))
+      end
+    end
+  end
 end
