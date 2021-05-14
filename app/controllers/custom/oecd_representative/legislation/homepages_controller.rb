@@ -10,9 +10,9 @@ class OecdRepresentative::Legislation::HomepagesController < OecdRepresentative:
     if @process.update(process_params)
       link = legislation_process_path(@process)
       redirect_back(fallback_location: (request.referer || root_path),
-                    notice: t("oecd_representative.legislation.processes.update.notice", link: link))
+                    notice: t("admin.legislation.processes.update.notice", link: link))
     else
-      flash.now[:error] = t("oecd_representative.legislation.processes.update.error")
+      flash.now[:error] = t("admin.legislation.processes.update.error")
       render :edit
     end
   end

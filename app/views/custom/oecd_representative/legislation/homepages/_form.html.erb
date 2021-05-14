@@ -18,14 +18,14 @@
         <%= translations_form.text_area :homepage,
                                         language: I18n.locale,
                                         class: "html-area admin",
-                                        hint: t("oecd_representative.legislation.processes.form.homepage_description") %>
+                                        hint: t("admin.legislation.processes.form.homepage_description") %>
       </div>
     <% end %>
   </div>
 
   <div class="row">
     <div class="small-12 medium-3 column end margin-top">
-      <%= f.submit(class: "button success expanded", value: t("oecd_representative.legislation.processes.#{admin_submit_action(@process)}.submit_button")) %>
+      <%= f.submit(class: "button success expanded", value: t("admin.legislation.processes.#{admin_submit_action(@process)}.submit_button")) %>
     </div>
   </div>
 <% end %>

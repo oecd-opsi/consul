@@ -14,27 +14,27 @@ class OecdRepresentative::Legislation::QuestionsController < OecdRepresentative:
   def create
     @question.author = current_user
     if @question.save
-      notice = t("oecd_representative.legislation.questions.create.notice", link: question_path)
+      notice = t("admin.legislation.questions.create.notice", link: question_path)
       redirect_to oecd_representative_legislation_process_questions_path, notice: notice
     else
-      flash.now[:error] = t("oecd_representative.legislation.questions.create.error")
+      flash.now[:error] = t("admin.legislation.questions.create.error")
       render :new
     end
   end
 
   def update
     if @question.update(question_params)
-      notice = t("oecd_representative.legislation.questions.update.notice", link: question_path)
+      notice = t("admin.legislation.questions.update.notice", link: question_path)
       redirect_to edit_oecd_representative_legislation_process_question_path(@process, @question), notice: notice
     else
-      flash.now[:error] = t("oecd_representative.legislation.questions.update.error")
+      flash.now[:error] = t("admin.legislation.questions.update.error")
       render :edit
     end
   end
 
   def destroy
     @question.destroy!
-    notice = t("oecd_representative.legislation.questions.destroy.notice")
+    notice = t("admin.legislation.questions.destroy.notice")
     redirect_to oecd_representative_legislation_process_questions_path, notice: notice
   end
 

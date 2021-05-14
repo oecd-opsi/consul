@@ -23,7 +23,7 @@ class OecdRepresentative::CommentsController < OecdRepresentative::BaseControlle
       return unless @process.nil?
 
       redirect_to to_export_oecd_representative_comments_path,
-                  alert: t("oecd_representative.comments.export.process_missing")
+                  alert: t("admin.comments.export.process_missing")
     end
 
     def stream_csv_report

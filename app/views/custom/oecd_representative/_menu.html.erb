@@ -4,17 +4,17 @@
     <li class="section-title">
       <a href="#">
         <span class="icon-comments"></span>
-        <strong><%= t("oecd_representative.menu.comments") %></strong>
+        <strong><%= t("admin.menu.comments") %></strong>
       </a>
       <ul id="booths_menu" <%= "class=is-active" if controller_name == "comments" %>>
         <li <%= "class=is-active"  if controller_name == "comments" &&
           action_name == "index" %>>
-          <%= link_to t("oecd_representative.menu.comments_all"), oecd_representative_comments_path %>
+          <%= link_to t("admin.menu.comments_all"), oecd_representative_comments_path %>
         </li>
 
         <li <%= "class=is-active" if controller_name == "comments" &&
           action_name == "to_export" %>>
-          <%= link_to t("oecd_representative.menu.comments_to_export"), to_export_oecd_representative_comments_path %>
+          <%= link_to t("admin.menu.comments_to_export"), to_export_oecd_representative_comments_path %>
         </li>
       </ul>
     </li>
@@ -23,7 +23,7 @@
       <li class="section-title <%= "is-active" if controller.class.parent == OecdRepresentative::Legislation %>">
         <%= link_to oecd_representative_legislation_processes_path do %>
           <span class="icon-file-text"></span>
-          <strong><%= t("oecd_representative.menu.legislation") %></strong>
+          <strong><%= t("admin.menu.legislation") %></strong>
         <% end %>
       </li>
     <% end %>
@@ -31,23 +31,23 @@
 <!--    <li class="section-title">-->
 <!--      <a href="#">-->
 <!--        <span class="icon-eye"></span>-->
-<!--        <strong><%#= t("oecd_representative.menu.title_moderated_content") %></strong>-->
+<!--        <strong><%#= t("admin.menu.title_moderated_content") %></strong>-->
 <!--      </a>-->
 <!--      <ul <%#= "class=is-active" if menu_moderated_content? %>>-->
 <!--        <li <%#= "class=is-active" if controller_name == "hidden_comments" %>>-->
-          <%#= link_to t("oecd_representative.menu.hidden_comments"), oecd_representative_hidden_comments_path %>
+          <%#= link_to t("admin.menu.hidden_comments"), oecd_representative_hidden_comments_path %>
 <!--        </li>-->
 
 <!--        <li <%#= "class=is-active" if controller_name == "hidden_proposal_notifications" %>>-->
-          <%#= link_to t("oecd_representative.menu.hidden_proposal_notifications"), oecd_representative_hidden_proposal_notifications_path %>
+          <%#= link_to t("admin.menu.hidden_proposal_notifications"), oecd_representative_hidden_proposal_notifications_path %>
 <!--        </li>-->
 
 <!--        <li <%#= "class=is-active" if controller_name == "hidden_users" %>>-->
-          <%#= link_to t("oecd_representative.menu.hidden_users"), oecd_representative_hidden_users_path %>
+          <%#= link_to t("admin.menu.hidden_users"), oecd_representative_hidden_users_path %>
 <!--        </li>-->
 
 <!--        <li <%#= "class=is-active" if controller_name == "activity" %>>-->
-          <%#= link_to t("oecd_representative.menu.activity"), oecd_representative_activity_path %>
+          <%#= link_to t("admin.menu.activity"), oecd_representative_activity_path %>
 <!--        </li>-->
 <!--      </ul>-->
 <!--    </li>-->

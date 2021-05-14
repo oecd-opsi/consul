@@ -1,10 +1,10 @@
 <% provide :title do %>
-  <%= t("oecd_representative.header.title") %> - <%= t("oecd_representative.menu.legislation") %> - <%= t("oecd_representative.legislation.processes.index.filters.#{@current_filter}") %>
+  <%= t("oecd_representative.header.title") %> - <%= t("admin.menu.legislation") %> - <%= t("admin.legislation.processes.index.filters.#{@current_filter}") %>
 <% end %>
 
-<h2 class="inline-block"><%= t("oecd_representative.legislation.processes.index.title") %></h2>
+<h2 class="inline-block"><%= t("admin.legislation.processes.index.title") %></h2>
 
-<%= link_to t("oecd_representative.legislation.processes.index.create"), new_oecd_representative_legislation_process_path,
+<%= link_to t("admin.legislation.processes.index.create"), new_oecd_representative_legislation_process_path,
             class: "button float-right" %>
 
 <%= render "shared/filter_subnav", i18n_namespace: "oecd_representative.legislation.processes.index" %>
@@ -15,12 +15,12 @@
   <table class="stack">
     <thead>
       <tr>
-        <th><%= t("oecd_representative.legislation.processes.process.title") %></th>
-        <th><%= t("oecd_representative.legislation.processes.process.status") %></th>
-        <th class="text-center"><%= t("oecd_representative.legislation.processes.process.start_date") %></th>
-        <th class="text-center"><%= t("oecd_representative.legislation.processes.process.end_date") %></th>
-        <th class="text-center"><%= t("oecd_representative.legislation.processes.process.comments") %></th>
-        <th><%= t("oecd_representative.actions.actions") %></th>
+        <th><%= t("admin.legislation.processes.process.title") %></th>
+        <th><%= t("admin.legislation.processes.process.status") %></th>
+        <th class="text-center"><%= t("admin.legislation.processes.process.start_date") %></th>
+        <th class="text-center"><%= t("admin.legislation.processes.process.end_date") %></th>
+        <th class="text-center"><%= t("admin.legislation.processes.process.comments") %></th>
+        <th><%= t("admin.actions.actions") %></th>
       </tr>
     </thead>
 
@@ -30,12 +30,12 @@
           <td class="small-12 medium-6 large-4">
             <%= link_to process.title, edit_oecd_representative_legislation_process_path(process) %>
           </td>
-          <td><%= t("oecd_representative.legislation.processes.process.status_#{process.status}") %></td>
+          <td><%= t("admin.legislation.processes.process.status_#{process.status}") %></td>
           <td class="text-center"><%= I18n.l process.start_date %></td>
           <td class="text-center"><%= I18n.l process.end_date %></td>
           <td class="text-center"><%= process.total_comments %></td>
           <td>
-            <%= link_to t("oecd_representative.legislation.processes.index.delete"), oecd_representative_legislation_process_path(process),
+            <%= link_to t("admin.legislation.processes.index.delete"), oecd_representative_legislation_process_path(process),
                         method: :delete,
                         class: "button hollow alert expanded" %>
           </td>

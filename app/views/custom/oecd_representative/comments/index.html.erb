@@ -1,8 +1,8 @@
 <% provide(:title) do %>
-  <%= t("oecd_representative.header.title") %> - <%= t("oecd_representative.comments.index.title") %>
+  <%= t("oecd_representative.header.title") %> - <%= t("admin.comments.index.title") %>
 <% end %>
 
-<h2><%= t("oecd_representative.comments.index.title") %></h2>
+<h2><%= t("admin.comments.index.title") %></h2>
 
 <% if @comments.any? %>
 
@@ -11,11 +11,11 @@
   <table>
     <thead>
       <tr>
-        <th class="text-center"><%= t("oecd_representative.comments.index.id") %></th>
-        <th><%= t("oecd_representative.comments.index.content") %></th>
-        <th><%= t("oecd_representative.comments.index.author") %></th>
-        <th><%= t("oecd_representative.comments.index.commentable_type") %></th>
-        <th><%= t("oecd_representative.comments.index.table_link") %></th>
+        <th class="text-center"><%= t("admin.comments.index.id") %></th>
+        <th><%= t("admin.comments.index.content") %></th>
+        <th><%= t("admin.comments.index.author") %></th>
+        <th><%= t("admin.comments.index.commentable_type") %></th>
+        <th><%= t("admin.comments.index.table_link") %></th>
       </tr>
     </thead>
     <tbody>
@@ -27,7 +27,7 @@
           <td><%= comment.commentable_type.constantize.model_name.human %></td>
           <td>
             <% if comment.commentable.hidden? %>
-              (<%= t("oecd_representative.comments.index.hidden_#{comment.commentable_type.downcase}") %>: <%= comment.commentable.title %>)
+              (<%= t("admin.comments.index.hidden_#{comment.commentable_type.downcase}") %>: <%= comment.commentable.title %>)
             <% else %>
               <%= link_to comment.commentable.title, commentable_path(comment) %>
             <% end %>
@@ -40,6 +40,6 @@
   <%= paginate @comments %>
 <% else %>
   <div class="callout primary margin">
-    <%= t("oecd_representative.comments.index.no_comments") %>
+    <%= t("admin.comments.index.no_comments") %>
   </div>
 <% end %>

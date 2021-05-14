@@ -1,29 +1,29 @@
 <% provide :title do %>
-  <%= t("oecd_representative.header.title") %> - <%= t("oecd_representative.menu.legislation") %> - <%= @process.title %> - <%= t("oecd_representative.legislation.questions.index.title") %>
+  <%= t("oecd_representative.header.title") %> - <%= t("admin.menu.legislation") %> - <%= @process.title %> - <%= t("admin.legislation.questions.index.title") %>
 <% end %>
 
 <div class="legislation-draft-versions-index">
-  <%= back_link_to oecd_representative_legislation_processes_path, t("oecd_representative.legislation.questions.index.back") %>
+  <%= back_link_to oecd_representative_legislation_processes_path, t("admin.legislation.questions.index.back") %>
 
   <h2><%= @process.title %></h2>
 
   <%= render "oecd_representative/legislation/processes/subnav", process: @process, active: "questions" %>
 
   <div class="small-12 column">
-    <h4 class="inline-block"><%= t("oecd_representative.legislation.questions.index.title") %></h4>
+    <h4 class="inline-block"><%= t("admin.legislation.questions.index.title") %></h4>
 
     <div class="float-right">
-      <%= link_to t("oecd_representative.legislation.questions.index.create"), new_oecd_representative_legislation_process_question_path, class: "button" %>
+      <%= link_to t("admin.legislation.questions.index.create"), new_oecd_representative_legislation_process_question_path, class: "button" %>
     </div>
 
     <% if @process.questions.any? %>
       <table class="stack">
        <thead>
           <tr>
-            <th><%= t("oecd_representative.legislation.questions.table.title") %></th>
-            <th><%= t("oecd_representative.legislation.questions.table.question_options") %></th>
-            <th class="text-center"><%= t("oecd_representative.legislation.questions.table.answers_count") %></th>
-            <th class="text-center"><%= t("oecd_representative.legislation.questions.table.comments_count") %></th>
+            <th><%= t("admin.legislation.questions.table.title") %></th>
+            <th><%= t("admin.legislation.questions.table.question_options") %></th>
+            <th class="text-center"><%= t("admin.legislation.questions.table.answers_count") %></th>
+            <th class="text-center"><%= t("admin.legislation.questions.table.comments_count") %></th>
           </tr>
         </thead>
         <tbody>

@@ -17,7 +17,7 @@ class OecdRepresentative::MilestonesController < OecdRepresentative::BaseControl
   def create
     @milestone = @milestoneable.milestones.new(milestone_params)
     if @milestone.save
-      redirect_to milestoneable_path, notice: t("oecd_representative.milestones.create.notice")
+      redirect_to milestoneable_path, notice: t("admin.milestones.create.notice")
     else
       render :new
     end
@@ -28,7 +28,7 @@ class OecdRepresentative::MilestonesController < OecdRepresentative::BaseControl
 
   def update
     if @milestone.update(milestone_params)
-      redirect_to milestoneable_path, notice: t("oecd_representative.milestones.update.notice")
+      redirect_to milestoneable_path, notice: t("admin.milestones.update.notice")
     else
       render :edit
     end
@@ -36,7 +36,7 @@ class OecdRepresentative::MilestonesController < OecdRepresentative::BaseControl
 
   def destroy
     @milestone.destroy!
-    redirect_to milestoneable_path, notice: t("oecd_representative.milestones.delete.notice")
+    redirect_to milestoneable_path, notice: t("admin.milestones.delete.notice")
   end
 
   private

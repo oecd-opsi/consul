@@ -6,11 +6,11 @@
 
   <div class="row">
     <div class="small-12 medium-4 column">
-      <label><%= t("oecd_representative.legislation.processes.form.draft_phase") %></label>
-      <p class="help-text"><%= t("oecd_representative.legislation.processes.form.draft_phase_description") %></p>
-      <p class="help-text"><%= t("oecd_representative.legislation.processes.form.descriptive_texts.draft.heading") %></p>
+      <label><%= t("admin.legislation.processes.form.draft_phase") %></label>
+      <p class="help-text"><%= t("admin.legislation.processes.form.draft_phase_description") %></p>
+      <p class="help-text"><%= t("admin.legislation.processes.form.descriptive_texts.draft.heading") %></p>
       <ul>
-        <%- t("oecd_representative.legislation.processes.form.descriptive_texts.draft.points").each do |point| %>
+        <%- t("admin.legislation.processes.form.descriptive_texts.draft.points").each do |point| %>
           <li><%= point %></li>
         <% end %>
       </ul>
@@ -31,7 +31,7 @@
     </div>
 
     <div class="small-12 medium-2 column margin-top">
-      <%= f.check_box :draft_phase_enabled, checked: @process.draft_phase.enabled?, label: t("oecd_representative.legislation.processes.form.enabled") %>
+      <%= f.check_box :draft_phase_enabled, checked: @process.draft_phase.enabled?, label: t("admin.legislation.processes.form.enabled") %>
     </div>
 
     <div class="small-12 column">
@@ -39,8 +39,8 @@
     </div>
 
     <div class="small-12 medium-4 column">
-      <label><%= t("oecd_representative.legislation.processes.form.process") %></label>
-      <p class="help-text"><%= t("oecd_representative.legislation.processes.form.descriptive_texts.process") %></p>
+      <label><%= t("admin.legislation.processes.form.process") %></label>
+      <p class="help-text"><%= t("admin.legislation.processes.form.descriptive_texts.process") %></p>
     </div>
 
     <div class="small-12 medium-3 column">
@@ -57,7 +57,7 @@
                         id: "end_date" %>
     </div>
     <div class="small-12 medium-2 column margin-top">
-      <%= f.check_box :published, checked: @process.published?, label: t("oecd_representative.legislation.processes.form.enabled") %>
+      <%= f.check_box :published, checked: @process.published?, label: t("admin.legislation.processes.form.enabled") %>
     </div>
 
     <div class="small-12 column">
@@ -65,10 +65,10 @@
     </div>
 
     <div class="small-12 medium-4 column">
-      <label><%= t("oecd_representative.legislation.processes.form.debate_phase") %></label>
-      <p class="help-text"><%= t("oecd_representative.legislation.processes.form.descriptive_texts.debate.heading") %></p>
+      <label><%= t("admin.legislation.processes.form.debate_phase") %></label>
+      <p class="help-text"><%= t("admin.legislation.processes.form.descriptive_texts.debate.heading") %></p>
       <ul>
-        <%- t("oecd_representative.legislation.processes.form.descriptive_texts.debate.points").each do |point| %>
+        <%- t("admin.legislation.processes.form.descriptive_texts.debate.points").each do |point| %>
          <li><%= point %></li>
         <% end %>
       </ul>
@@ -88,7 +88,7 @@
                         id: "debate_end_date" %>
     </div>
     <div class="small-12 medium-2 column margin-top">
-      <%= f.check_box :debate_phase_enabled, checked: @process.debate_phase.enabled?, label: t("oecd_representative.legislation.processes.form.enabled") %>
+      <%= f.check_box :debate_phase_enabled, checked: @process.debate_phase.enabled?, label: t("admin.legislation.processes.form.enabled") %>
     </div>
 
     <div class="small-12 column">
@@ -96,10 +96,10 @@
     </div>
 
     <div class="small-12 medium-4 column">
-      <label><%= t("oecd_representative.legislation.processes.form.proposals_phase") %></label>
-      <p class="help-text"><%= t("oecd_representative.legislation.processes.form.descriptive_texts.proposals.heading") %></p>
+      <label><%= t("admin.legislation.processes.form.proposals_phase") %></label>
+      <p class="help-text"><%= t("admin.legislation.processes.form.descriptive_texts.proposals.heading") %></p>
       <ul>
-        <%- t("oecd_representative.legislation.processes.form.descriptive_texts.proposals.points").each do |point| %>
+        <%- t("admin.legislation.processes.form.descriptive_texts.proposals.points").each do |point| %>
           <li><%= point %></li>
         <% end %>
       </ul>
@@ -119,7 +119,7 @@
                         id: "proposals_phase_end_date" %>
     </div>
     <div class="small-12 medium-2 column margin-top">
-      <%= f.check_box :proposals_phase_enabled, checked: @process.proposals_phase.enabled?, label: t("oecd_representative.legislation.processes.form.enabled") %>
+      <%= f.check_box :proposals_phase_enabled, checked: @process.proposals_phase.enabled?, label: t("admin.legislation.processes.form.enabled") %>
     </div>
 
     <div class="small-12 column">
@@ -127,7 +127,7 @@
     </div>
 
     <div class="small-12 medium-4 column">
-      <label><%= t("oecd_representative.legislation.processes.form.allegations_phase") %></label>
+      <label><%= t("admin.legislation.processes.form.allegations_phase") %></label>
     </div>
 
     <div class="small-12 medium-3 column">
@@ -144,7 +144,7 @@
                         id: "allegations_end_date" %>
     </div>
     <div class="small-12 medium-2 column margin-top">
-      <%= f.check_box :allegations_phase_enabled, checked: @process.allegations_phase.enabled?, label: t("oecd_representative.legislation.processes.form.enabled") %>
+      <%= f.check_box :allegations_phase_enabled, checked: @process.allegations_phase.enabled?, label: t("admin.legislation.processes.form.enabled") %>
     </div>
 
     <div class="small-12 column">
@@ -152,8 +152,8 @@
     </div>
 
     <div class="small-12 medium-4 column">
-      <label><%= t("oecd_representative.legislation.processes.form.draft_publication_date") %></label>
-      <p class="help-text"><%= t("oecd_representative.legislation.processes.form.descriptive_texts.draft_publication_date") %></p>
+      <label><%= t("admin.legislation.processes.form.draft_publication_date") %></label>
+      <p class="help-text"><%= t("admin.legislation.processes.form.descriptive_texts.draft_publication_date") %></p>
     </div>
 
     <div class="small-12 medium-3 column end">
@@ -163,7 +163,7 @@
                         id: "draft_publication_date" %>
     </div>
     <div class="small-12 medium-2 column margin-top">
-      <%= f.check_box :draft_publication_enabled, checked: @process.draft_publication.enabled?, label: t("oecd_representative.legislation.processes.form.enabled") %>
+      <%= f.check_box :draft_publication_enabled, checked: @process.draft_publication.enabled?, label: t("admin.legislation.processes.form.enabled") %>
     </div>
 
     <div class="small-12 column">
@@ -171,9 +171,9 @@
     </div>
 
     <div class="small-12 medium-4 column">
-      <label><%= t("oecd_representative.legislation.processes.form.result_publication_date") %></label>
+      <label><%= t("admin.legislation.processes.form.result_publication_date") %></label>
       <ul>
-        <%- t("oecd_representative.legislation.processes.form.descriptive_texts.final_result_publication_date.points").each do |point| %>
+        <%- t("admin.legislation.processes.form.descriptive_texts.final_result_publication_date.points").each do |point| %>
           <li><%= point %></li>
         <% end %>
       </ul>
@@ -186,7 +186,7 @@
                         id: "result_publication_date" %>
     </div>
     <div class="small-12 medium-2 column margin-top">
-      <%= f.check_box :result_publication_enabled, checked: @process.result_publication.enabled?, label: t("oecd_representative.legislation.processes.form.enabled") %>
+      <%= f.check_box :result_publication_enabled, checked: @process.result_publication.enabled?, label: t("admin.legislation.processes.form.enabled") %>
     </div>
 
     <div class="small-12 column">
@@ -210,12 +210,12 @@
     </div>
 
     <div class="small-12 column">
-      <h3><%= t("oecd_representative.legislation.processes.form.banner_title") %></h3>
+      <h3><%= t("admin.legislation.processes.form.banner_title") %></h3>
     </div>
 
     <div class="small-6 large-3 column">
       <%= f.label :background_color, nil, for: "background_color_input" %>
-      <p class="help-text"><%= t("oecd_representative.shared.color_help") %></p>
+      <p class="help-text"><%= t("admin.shared.color_help") %></p>
       <div class="row collapse">
         <div class="small-12 medium-6 column">
           <%= f.text_field :background_color, label: false, type: :color,
@@ -229,7 +229,7 @@
 
     <div class="small-6 large-3 column end">
       <%= f.label :font_color, nil, for: "font_color_input" %>
-      <p class="help-text"><%= t("oecd_representative.shared.color_help") %></p>
+      <p class="help-text"><%= t("admin.shared.color_help") %></p>
       <div class="row collapse">
         <div class="small-12 medium-6 column">
           <%= f.text_field :font_color, label: false, type: :color, value: font_color_or_default %>
@@ -249,14 +249,14 @@
     <%= f.translatable_fields do |translations_form| %>
       <div class="small-12 medium-9 column">
         <%= translations_form.text_field :title,
-                                         placeholder: t("oecd_representative.legislation.processes.form.title_placeholder") %>
+                                         placeholder: t("admin.legislation.processes.form.title_placeholder") %>
       </div>
 
       <div class="small-12 medium-9 column">
         <%= translations_form.text_area :summary,
                                         rows: 2,
-                                        placeholder: t("oecd_representative.legislation.processes.form.summary_placeholder"),
-                                        hint: t("oecd_representative.legislation.processes.form.descriptive_texts.summary_html",
+                                        placeholder: t("admin.legislation.processes.form.summary_placeholder"),
+                                        hint: t("admin.legislation.processes.form.descriptive_texts.summary_html",
                                                 markdown_guide_link: 'https://www.markdownguide.org/basic-syntax/',
                                                 markdown_editor_link: 'https://stackedit.io/app')
         %>
@@ -265,8 +265,8 @@
       <div class="small-12 medium-9 column">
         <%= translations_form.text_area :description,
                                         rows: 5,
-                                        placeholder: t("oecd_representative.legislation.processes.form.description_placeholder"),
-                                        hint: t("oecd_representative.legislation.processes.form.descriptive_texts.description_html",
+                                        placeholder: t("admin.legislation.processes.form.description_placeholder"),
+                                        hint: t("admin.legislation.processes.form.descriptive_texts.description_html",
                                                 markdown_guide_link: 'https://www.markdownguide.org/basic-syntax/',
                                                 markdown_editor_link: 'https://stackedit.io/app')
         %>
@@ -275,8 +275,8 @@
       <div class="small-12 medium-9 column end">
         <%= translations_form.text_area :additional_info,
                                         rows: 10,
-                                        placeholder: t("oecd_representative.legislation.processes.form.additional_info_placeholder"),
-                                        hint: t("oecd_representative.legislation.processes.form.descriptive_texts.additional_info_html",
+                                        placeholder: t("admin.legislation.processes.form.additional_info_placeholder"),
+                                        hint: t("admin.legislation.processes.form.descriptive_texts.additional_info_html",
                                                 markdown_guide_link: 'https://www.markdownguide.org/basic-syntax/',
                                                 markdown_editor_link: 'https://stackedit.io/app')
         %>
@@ -286,7 +286,7 @@
 
   <div class="row">
     <div class="small-12 medium-3 column clear end">
-      <%= f.submit(class: "button success expanded", value: t("oecd_representative.legislation.processes.#{admin_submit_action(@process)}.submit_button")) %>
+      <%= f.submit(class: "button success expanded", value: t("admin.legislation.processes.#{admin_submit_action(@process)}.submit_button")) %>
     </div>
   </div>
 <% end %>

@@ -284,7 +284,7 @@ describe "OECD Representative collaborative legislation" do
 
       fill_in_ckeditor "Description", with: "The homepage description"
 
-      click_button(I18n.t("oecd_representative.legislation.processes.edit.submit_button"))
+      click_button(I18n.t("admin.legislation.processes.edit.submit_button"))
 
       expect(page).to have_current_path edit_oecd_representative_legislation_process_homepage_path(process)
 

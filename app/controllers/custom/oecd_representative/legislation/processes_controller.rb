@@ -14,10 +14,10 @@ class OecdRepresentative::Legislation::ProcessesController < OecdRepresentative:
   def create
     if @process.save
       link = legislation_process_path(@process)
-      notice = t("oecd_representative.legislation.processes.create.notice", link: link)
+      notice = t("admin.legislation.processes.create.notice", link: link)
       redirect_to edit_oecd_representative_legislation_process_path(@process), notice: notice
     else
-      flash.now[:error] = t("oecd_representative.legislation.processes.create.error")
+      flash.now[:error] = t("admin.legislation.processes.create.error")
       render :new
     end
   end
@@ -26,16 +26,16 @@ class OecdRepresentative::Legislation::ProcessesController < OecdRepresentative:
     if @process.update(process_params)
       link = legislation_process_path(@process)
       redirect_back(fallback_location: (request.referer || root_path),
-                    notice: t("oecd_representative.legislation.processes.update.notice", link: link))
+                    notice: t("admin.legislation.processes.update.notice", link: link))
     else
-      flash.now[:error] = t("oecd_representative.legislation.processes.update.error")
+      flash.now[:error] = t("admin.legislation.processes.update.error")
       render :edit
     end
   end
 
   def destroy
     @process.destroy!
-    notice = t("oecd_representative.legislation.processes.destroy.notice")
+    notice = t("admin.legislation.processes.destroy.notice")
     redirect_to oecd_representative_legislation_processes_path, notice: notice
   end
 

@@ -1,9 +1,9 @@
 <% provide :title do %>
-  <%= "#{t("oecd_representative.header.title")} - #{t("oecd_representative.menu.legislation")}" %> -
-  <%= "#{@process.title} - #{t("oecd_representative.legislation.milestones.index.title")}" %>
+  <%= "#{t("oecd_representative.header.title")} - #{t("admin.menu.legislation")}" %> -
+  <%= "#{@process.title} - #{t("admin.legislation.milestones.index.title")}" %>
 <% end %>
 
-<%= back_link_to oecd_representative_legislation_processes_path, t("oecd_representative.legislation.processes.edit.back") %>
+<%= back_link_to oecd_representative_legislation_processes_path, t("admin.legislation.processes.edit.back") %>
 
 <h2><%= @process.title %></h2>
 

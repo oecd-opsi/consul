@@ -1,11 +1,11 @@
 <% provide :title do %>
-  <%= t("oecd_representative.header.title") %> - <%= t("oecd_representative.menu.legislation") %> - <%= @process.title %> - <%= t("oecd_representative.legislation.draft_versions.index.title") %> - <%= @draft_version.title %>
+  <%= t("oecd_representative.header.title") %> - <%= t("admin.menu.legislation") %> - <%= @process.title %> - <%= t("admin.legislation.draft_versions.index.title") %> - <%= @draft_version.title %>
 <% end %>
 
 <div class="legislation-draft-versions-edit legislation-draft-versions-form">
   <div class="small-12 column">
     <%= back_link_to oecd_representative_legislation_process_draft_versions_path(@process),
-                     t("oecd_representative.legislation.draft_versions.edit.back") %>
+                     t("admin.legislation.draft_versions.edit.back") %>
 
     <h2><%= @process.title %></h2>
 
@@ -13,7 +13,7 @@
 
     <div class="small-12 column">
       <div class="callout warning" style="display: none;">
-        <%= t("oecd_representative.legislation.draft_versions.edit.warning") %>
+        <%= t("admin.legislation.draft_versions.edit.warning") %>
       </div>
     </div>
 
@@ -21,7 +21,7 @@
       <h3 class="inline-block"><%= @draft_version.title %></h3>
 
       <div class="float-right">
-        <%= link_to t("oecd_representative.legislation.draft_versions.index.delete"),
+        <%= link_to t("admin.legislation.draft_versions.index.delete"),
                     oecd_representative_legislation_process_draft_version_path(@process, @draft_version),
                     method: :delete,
                     class: "button hollow alert" %>

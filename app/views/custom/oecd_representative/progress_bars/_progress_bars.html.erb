@@ -1,6 +1,6 @@
-<h2 class="inline-block"><%= t("oecd_representative.progress_bars.index.title") %></h2>
+<h2 class="inline-block"><%= t("admin.progress_bars.index.title") %></h2>
 
-<%= link_to t("oecd_representative.progress_bars.index.new_progress_bar"),
+<%= link_to t("admin.progress_bars.index.new_progress_bar"),
             oecd_representative_polymorphic_path(
               ProgressBar.new(progressable: progressable),
               action: :new
@@ -11,11 +11,11 @@
   <table>
     <thead>
       <tr>
-        <th><%= t("oecd_representative.progress_bars.index.table_id") %></th>
-        <th><%= t("oecd_representative.progress_bars.index.table_kind") %></th>
-        <th><%= t("oecd_representative.progress_bars.index.table_title") %></th>
-        <th class="text-center"><%= t("oecd_representative.progress_bars.index.table_percentage") %></th>
-        <th><%= t("oecd_representative.actions.actions") %></th>
+        <th><%= t("admin.progress_bars.index.table_id") %></th>
+        <th><%= t("admin.progress_bars.index.table_kind") %></th>
+        <th><%= t("admin.progress_bars.index.table_title") %></th>
+        <th class="text-center"><%= t("admin.progress_bars.index.table_percentage") %></th>
+        <th><%= t("admin.actions.actions") %></th>
       </tr>
     </thead>
     <tbody>
@@ -29,18 +29,18 @@
             <% if progress_bar.title.present? %>
               <%= progress_bar.title %>
             <% else %>
-              <strong><%= t("oecd_representative.progress_bars.index.primary") %></strong>
+              <strong><%= t("admin.progress_bars.index.primary") %></strong>
             <% end %>
           </td>
           <td class="text-center">
             <%= number_to_percentage(progress_bar.percentage, strip_insignificant_zeros: true) %>
           </td>
           <td>
-            <%= link_to t("oecd_representative.actions.edit"),
+            <%= link_to t("admin.actions.edit"),
                         oecd_representative_polymorphic_path(progress_bar, action: :edit),
                         class: "button hollow" %>
 
-            <%= link_to t("oecd_representative.actions.delete"),
+            <%= link_to t("admin.actions.delete"),
                         oecd_representative_polymorphic_path(progress_bar),
                         method: :delete,
                         class: "button hollow alert" %>
@@ -51,6 +51,6 @@
   </table>
 <% else %>
   <div class="callout primary">
-    <%= t("oecd_representative.progress_bars.index.no_progress_bars") %>
+    <%= t("admin.progress_bars.index.no_progress_bars") %>
   </div>
 <% end %>

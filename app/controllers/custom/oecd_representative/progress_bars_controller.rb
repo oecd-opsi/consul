@@ -15,7 +15,7 @@ class OecdRepresentative::ProgressBarsController < OecdRepresentative::BaseContr
   def create
     @progress_bar = @progressable.progress_bars.new(progress_bar_params)
     if @progress_bar.save
-      redirect_to progress_bars_index, notice: t("oecd_representative.progress_bars.create.notice")
+      redirect_to progress_bars_index, notice: t("admin.progress_bars.create.notice")
     else
       render :new
     end
@@ -26,7 +26,7 @@ class OecdRepresentative::ProgressBarsController < OecdRepresentative::BaseContr
 
   def update
     if @progress_bar.update(progress_bar_params)
-      redirect_to progress_bars_index, notice: t("oecd_representative.progress_bars.update.notice")
+      redirect_to progress_bars_index, notice: t("admin.progress_bars.update.notice")
     else
       render :edit
     end
@@ -34,7 +34,7 @@ class OecdRepresentative::ProgressBarsController < OecdRepresentative::BaseContr
 
   def destroy
     @progress_bar.destroy!
-    redirect_to progress_bars_index, notice: t("oecd_representative.progress_bars.delete.notice")
+    redirect_to progress_bars_index, notice: t("admin.progress_bars.delete.notice")
   end
 
   private
