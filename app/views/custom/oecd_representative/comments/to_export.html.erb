@@ -1,0 +1,41 @@
+<% provide(:title) do %>
+  <%= t("oecd_representative.header.title") %> - <%= t("oecd_representative.comments.index.title") %>
+<% end %>
+
+<h2><%= t("oecd_representative.comments.to_export.title") %></h2>
+
+<% if @processes.any? %>
+  <h3 class="inline-block"><%= page_entries_info @processes %></h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th class="text-center"><%= t("oecd_representative.comments.to_export.id") %></th>
+        <th><%= t("oecd_representative.comments.to_export.process") %></th>
+        <th><%= t("oecd_representative.comments.to_export.comments") %></th>
+        <th><%= t("oecd_representative.comments.to_export.actions") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @processes.each do |process| %>
+        <tr id="<%= dom_id(process) %>" class="debates">
+          <td class="text-center"><%= process.id %></td>
+          <td><%= process.title %></td>
+          <td><%= process.total_comments %></td>
+          <td>
+            <%= link_to export_oecd_representative_comments_path(process_id: process.id), title: t("oecd_representative.comments.to_export.table_link_title"), class: "button hollow big expanded", target: '_blank' do %>
+              <span class="icon-file-text-o"></span>&nbsp; <%= t("oecd_representative.comments.to_export.table_link") %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @processes %>
+
+<% else %>
+  <div class="callout primary margin">
+    <%= t("oecd_representative.comments.to_export.no_processes") %>
+  </div>
+<% end %>

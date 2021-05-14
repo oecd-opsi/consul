@@ -1,0 +1,9 @@
+<% provide :title do %>
+  <%= "#{t("oecd_representative.header.title")} - #{t("oecd_representative.progress_bars.index.title")}" %>
+<% end %>
+
+<%= back_link_to oecd_representative_polymorphic_path(@progressable) %>
+
+<div class="clear"></div>
+
+<%= render "oecd_representative/progress_bars/progress_bars", progressable: @progressable %>
