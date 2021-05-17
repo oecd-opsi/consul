@@ -27,6 +27,27 @@ class Comment < ApplicationRecord
   delegate :process_title, to: :commentable, prefix: true
   delegate :name, to: :user, prefix: true
 
+  scope :for_processes, ->(processes_ids) do
+    Comment.where(
+      commentable_type: "Legislation::Question",
+      commentable_id:   Legislation::Question.where(
+        legislation_process_id: processes_ids
+      ).pluck(:id)
+    ).or(Comment.where(
+        commentable_type: "Legislation::Proposal",
+        commentable_id:   Legislation::Proposal.where(
+          legislation_process_id: processes_ids
+        ).pluck(:id))
+      ).or(Comment.where(
+        commentable_type: "Legislation::Annotation",
+        commentable_id:   Legislation::Annotation.where(
+          legislation_draft_version_id: Legislation::DraftVersion.where(
+            legislation_process_id: processes_ids
+          ).pluck(:id)
+        ).pluck(:id))
+      )
+  end
+
   def self.csv_headers
     CSV.generate_line(CSV_HEADERS)
   end

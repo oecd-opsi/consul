@@ -3,11 +3,13 @@ class OecdRepresentative::CommentsController < OecdRepresentative::BaseControlle
   before_action :fetch_process, only: :export
 
   def index
-    @comments = Comment.sort_by_newest.page(params[:page])
+    @comments = Comment.for_processes(current_user.legislation_process_ids)
+                  .sort_by_newest
+                  .page(params[:page])
   end
 
   def to_export
-    @processes = ::Legislation::Process.page(params[:page])
+    @processes = current_user.legislation_processes.page(params[:page])
   end
 
   def export
@@ -19,7 +21,7 @@ class OecdRepresentative::CommentsController < OecdRepresentative::BaseControlle
   private
 
     def fetch_process
-      @process = ::Legislation::Process.find_by(id: params[:process_id])
+      @process = current_user.legislation_processes.find_by(id: params[:process_id])
       return unless @process.nil?
 
       redirect_to to_export_oecd_representative_comments_path,

@@ -1,11 +1,12 @@
 require "rails_helper"
 
 describe OecdRepresentative::CommentsController, type: :controller do
-  before { sign_in create(:oecd_representative).user }
+  let(:user) { create(:oecd_representative).user }
+  before { sign_in user }
 
   describe "GET export" do
     context "when Process can be found" do
-      let(:legislation_process) { create(:legislation_process) }
+      let(:legislation_process) { create(:legislation_process, author: user) }
       let(:question_comment) do
         create(:comment, commentable: create(:legislation_question, process: legislation_process))
       end
@@ -34,6 +35,20 @@ describe OecdRepresentative::CommentsController, type: :controller do
         expected_body = [Comment.csv_headers, question_comment.for_csv, proposal_comment.for_csv].join
 
         expect(response.body).to eq expected_body
+      end
+    end
+
+    context "when user is not a creator of Process" do
+      before do
+        get :export, params: { process_id: create(:legislation_process) }, format: :csv
+      end
+
+      it "redirects back to processes selection page" do
+        expect(response).to redirect_to to_export_oecd_representative_comments_path
+      end
+
+      it "sets correct error notification" do
+        expect(flash[:alert]).to eq I18n.t("admin.comments.export.process_missing")
       end
     end
 
