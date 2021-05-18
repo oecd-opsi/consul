@@ -59,6 +59,12 @@ module UsersHelper
     current_user&.oecd_representative?
   end
 
+  def show_admin_moderation?
+    return false unless current_user
+
+    current_user.administrator? || current_user.moderator? || current_user.manager?
+  end
+
   def show_admin_menu?(user = nil)
     unless namespace == "officing"
       current_administrator? || current_moderator? || current_valuator? || current_manager? ||

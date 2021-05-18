@@ -145,4 +145,50 @@ describe UsersHelper do
       end
     end
   end
+
+  describe "show_admin_moderation??" do
+    context "when logged in user" do
+      context "when logged in user is an OECD Representative" do
+        it "is falsey" do
+          allow(helper).to receive(:current_user).and_return(create(:oecd_representative).user)
+          expect(helper).not_to be_show_admin_moderation
+        end
+      end
+
+      context "when logged in user is a standard user" do
+        it "is falsey" do
+          allow(helper).to receive(:current_user).and_return(create(:user))
+          expect(helper).not_to be_current_oecd_representative
+        end
+      end
+
+      context "when logged in user is an admin" do
+        it "is truthy" do
+          allow(helper).to receive(:current_user).and_return(create(:administrator).user)
+          expect(helper).to be_show_admin_moderation
+        end
+      end
+
+      context "when logged in user is a moderator" do
+        it "is truthy" do
+          allow(helper).to receive(:current_user).and_return(create(:moderator).user)
+          expect(helper).to be_show_admin_moderation
+        end
+      end
+
+      context "when logged in user is a manager" do
+        it "is truthy" do
+          allow(helper).to receive(:current_user).and_return(create(:manager).user)
+          expect(helper).to be_show_admin_moderation
+        end
+      end
+    end
+
+    context "when not logged in user" do
+      it "is falsey" do
+        allow(helper).to receive(:current_user).and_return(nil)
+        expect(helper).not_to be_show_admin_moderation
+      end
+    end
+  end
 end
