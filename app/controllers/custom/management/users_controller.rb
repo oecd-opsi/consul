@@ -1,5 +1,4 @@
 class Management::UsersController < Management::BaseController
-  # load_and_authorize_resource only: :promote_to_oecd_representative
   def new
     @user = User.new(user_params)
   end
