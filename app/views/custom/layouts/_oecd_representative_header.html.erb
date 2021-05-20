@@ -21,14 +21,14 @@
           <li class="menu-text">
             <% if namespace == "officing" %>
               <h1>
-                <%= link_to "#" do %>
+                <%= link_to oecd_representative_root_path do %>
                   <%= setting["org_name"] %>
                   <br><small><%= namespaced_header_title %></small>
                 <% end %>
               </h1>
             <% else %>
               <h1>
-                <%= link_to namespaced_root_path do %>
+                <%= link_to oecd_representative_root_path do %>
                   <%= setting["org_name"] %>
                   <br><small><%= namespaced_header_title %></small>
                 <% end %>
