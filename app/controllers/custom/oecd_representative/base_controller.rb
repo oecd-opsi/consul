@@ -2,7 +2,6 @@ class OecdRepresentative::BaseController < ApplicationController
   layout "oecd_representative"
   before_action :authenticate_user!
   before_action :verify_oecd_representative
-  #todo: remove
   skip_authorization_check
 
   private

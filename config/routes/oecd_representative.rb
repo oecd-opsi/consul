@@ -13,9 +13,21 @@ namespace :oecd_representative, path: "oecd-representative" do
     end
   end
 
-  resources :comments, only: :index do
+  resources :comments do
     get :to_export, on: :collection
     get "export/:process_id", on: :collection, to: "comments#export", as: :export,
         defaults: { format: :csv }
+  end
+
+  namespace :moderation do
+    resources :comments, only: :index do
+      put :hide, on: :member
+      put :moderate, on: :collection
+    end
+
+    resources :proposals, only: :index do
+      put :hide, on: :member
+      put :moderate, on: :collection
+    end
   end
 end

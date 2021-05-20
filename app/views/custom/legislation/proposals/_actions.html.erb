@@ -1,0 +1,15 @@
+<% if can? :hide, proposal %>
+  <% if current_user.oecd_representative? %>
+    <%= link_to t("admin.actions.hide").capitalize, hide_oecd_representative_moderation_proposal_path(proposal),
+                method: :put, remote: true, data: { confirm: t("admin.actions.confirm") } %>
+ <% else %>
+    <%= link_to t("admin.actions.hide").capitalize, hide_moderation_legislation_proposal_path(proposal),
+                method: :put, remote: true, data: { confirm: t("admin.actions.confirm") } %>
+  <% end %>
+<% end %>
+
+<% if can? :hide, proposal.author %>
+  &nbsp;|&nbsp;
+  <%= link_to t("admin.actions.hide_author").capitalize, hide_moderation_user_path(proposal.author_id),
+              method: :put, data: { confirm: t("admin.actions.confirm") } %>
+<% end %>

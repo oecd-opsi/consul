@@ -23,8 +23,6 @@ class Comment < ApplicationRecord
 
   MAX_QUOTE_LENGTH = 1000
 
-  delegate :process, to: :commentable, prefix: true
-  delegate :process_title, to: :commentable, prefix: true
   delegate :name, to: :user, prefix: true
 
   scope :for_processes, ->(processes_ids) do
@@ -35,7 +33,7 @@ class Comment < ApplicationRecord
       ).pluck(:id)
     ).or(Comment.where(
         commentable_type: "Legislation::Proposal",
-        commentable_id:   Legislation::Proposal.where(
+        commentable_id:  Legislation::Proposal.where(
           legislation_process_id: processes_ids
         ).pluck(:id))
       ).or(Comment.where(
@@ -46,6 +44,22 @@ class Comment < ApplicationRecord
           ).pluck(:id)
         ).pluck(:id))
       )
+  end
+
+  def commentable_process
+    return commentable.process if commentable.respond_to?(:process)
+  end
+
+  def commentable_process?
+    commentable_process.present?
+  end
+
+  def commentable_process_id
+    return commentable_process.id if commentable_process?
+  end
+
+  def commentable_process_title
+    return commentable_process.title if commentable_process?
   end
 
   def self.csv_headers

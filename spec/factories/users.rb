@@ -144,6 +144,6 @@ FactoryBot.define do
   end
 
   factory :oecd_representative do
-    user
+    user { create(:user, :verified) }
   end
 end

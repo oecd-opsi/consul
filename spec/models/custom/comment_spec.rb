@@ -46,4 +46,80 @@ describe Comment do
       end
     end
   end
+
+  describe "commentable_process" do
+    context "when there is a process assigned to the commentable" do
+      let(:process) { create(:legislation_process) }
+      let(:comment) { create(:comment, commentable: create(:legislation_question, process: process)) }
+
+      it "returns process from commentable" do
+        expect(comment.commentable_process).to eq process
+      end
+    end
+
+    context "when there is a process assigned to the commentable" do
+      let(:comment) { create(:budget_investment_comment) }
+
+      it "returns nil" do
+        expect(comment.commentable_process).to be_nil
+      end
+    end
+  end
+
+  describe "commentable_process?" do
+    context "when there is a process assigned to the commentable" do
+      let(:process) { create(:legislation_process) }
+      let(:comment) { create(:comment, commentable: create(:legislation_question, process: process)) }
+
+      it "returns true " do
+        expect(comment).to be_commentable_process
+      end
+    end
+
+    context "when there is a process assigned to the commentable" do
+      let(:comment) { create(:budget_investment_comment) }
+
+      it "returns false " do
+        expect(comment).not_to be_commentable_process
+      end
+    end
+  end
+
+  describe "commentable_process_id" do
+    context "when there is a process assigned to the commentable" do
+      let(:process) { create(:legislation_process) }
+      let(:comment) { create(:comment, commentable: create(:legislation_question, process: process)) }
+
+      it "returns process id from commentable" do
+        expect(comment.commentable_process_id).to eq process.id
+      end
+    end
+
+    context "when there is a process assigned to the commentable" do
+      let(:comment) { create(:budget_investment_comment) }
+
+      it "returns nil" do
+        expect(comment.commentable_process_id).to be_nil
+      end
+    end
+  end
+
+  describe "commentable_process_title" do
+    context "when there is a process assigned to the commentable" do
+      let(:process) { create(:legislation_process) }
+      let(:comment) { create(:comment, commentable: create(:legislation_question, process: process)) }
+
+      it "returns process title from commentable" do
+        expect(comment.commentable_process_title).to eq process.title
+      end
+    end
+
+    context "when there is a process assigned to the commentable" do
+      let(:comment) { create(:budget_investment_comment) }
+
+      it "returns nil" do
+        expect(comment.commentable_process_title).to be_nil
+      end
+    end
+  end
 end

@@ -120,9 +120,9 @@ describe Abilities::Manager do
     it { should_not be_able_to(:restore, proposal) }
     it { should_not be_able_to(:restore, other_user) }
 
-    it { should be_able_to(:comment_as_moderator, debate) }
-    it { should be_able_to(:comment_as_moderator, proposal) }
-    it { should be_able_to(:comment_as_moderator, legislation_question) }
+    it { should_not be_able_to(:comment_as_moderator, debate) }
+    it { should_not be_able_to(:comment_as_moderator, proposal) }
+    it { should_not be_able_to(:comment_as_moderator, legislation_question) }
     it { should_not be_able_to(:comment_as_administrator, debate) }
     it { should_not be_able_to(:comment_as_administrator, proposal) }
     it { should_not be_able_to(:comment_as_administrator, legislation_question) }
