@@ -31,15 +31,18 @@
                         management_oecd_representative_request_path(oecd_representative_request),
                         class: "button" %>
 
-            <%= link_to t("management.oecd_representative_requests.oecd_representative_request.accept"),
-                        accept_management_oecd_representative_request_path(oecd_representative_request),
-                        "data-confirm": "Are you sure?",
-                        class: "button hollow" %>
-
-            <%= link_to t("management.oecd_representative_requests.oecd_representative_request.reject"),
-                        reject_management_oecd_representative_request_path(oecd_representative_request),
-                        "data-confirm": "Are you sure?",
-                        class: "button hollow alert" %>
+            <% if can?(:accept, oecd_representative_request) %>
+              <%= link_to t("management.oecd_representative_requests.oecd_representative_request.accept"),
+                          accept_management_oecd_representative_request_path(oecd_representative_request),
+                          "data-confirm": "Are you sure?",
+                          class: "button hollow" %>
+            <% end %>
+            <% if can?(:reject, oecd_representative_request) %>
+              <%= link_to t("management.oecd_representative_requests.oecd_representative_request.reject"),
+                          reject_management_oecd_representative_request_path(oecd_representative_request),
+                          "data-confirm": "Are you sure?",
+                          class: "button hollow alert" %>
+            <% end %>
           </td>
         </tr>
       <% end %>
