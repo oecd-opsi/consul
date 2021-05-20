@@ -14,7 +14,7 @@
     <% if @recipient.administrator? %>
       <%= link_to admin_oecd_representative_request_url(@request), admin_oecd_representative_request_url(@request), style: "color: #2895F1; text-decoration:none;" %>
     <% else %>
-      <%= link_to management_oecd_representative_request_url(@request), admin_oecd_representative_request_url(@request), style: "color: #2895F1; text-decoration:none;" %>
+      <%= link_to management_oecd_representative_request_url(@request), management_oecd_representative_request_url(@request), style: "color: #2895F1; text-decoration:none;" %>
   <% end %>
   </p>
 </td>
