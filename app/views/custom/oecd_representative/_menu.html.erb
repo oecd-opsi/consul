@@ -4,12 +4,12 @@
     <li class="section-title">
       <a href="#">
         <span class="icon-comments"></span>
-        <strong><%= t("admin.menu.comments") %></strong>
+        <strong><%= t("oecd_representative.menu.moderation") %></strong>
       </a>
       <ul id="booths_menu" <%= "class=is-active" if controller_name == "comments" %>>
         <li <%= "class=is-active"  if controller_name == "comments" &&
           action_name == "index" %>>
-          <%= link_to t("admin.menu.comments_all"), oecd_representative_moderation_comments_path %>
+          <%= link_to t("admin.menu.all_comments"), oecd_representative_moderation_comments_path %>
         </li>
 
         <li <%= "class=is-active" if controller_name == "comments" &&
@@ -27,29 +27,5 @@
         <% end %>
       </li>
     <% end %>
-
-<!--    <li class="section-title">-->
-<!--      <a href="#">-->
-<!--        <span class="icon-eye"></span>-->
-<!--        <strong><%#= t("admin.menu.title_moderated_content") %></strong>-->
-<!--      </a>-->
-<!--      <ul <%#= "class=is-active" if menu_moderated_content? %>>-->
-<!--        <li <%#= "class=is-active" if controller_name == "hidden_comments" %>>-->
-          <%#= link_to t("admin.menu.hidden_comments"), oecd_representative_hidden_comments_path %>
-<!--        </li>-->
-
-<!--        <li <%#= "class=is-active" if controller_name == "hidden_proposal_notifications" %>>-->
-          <%#= link_to t("admin.menu.hidden_proposal_notifications"), oecd_representative_hidden_proposal_notifications_path %>
-<!--        </li>-->
-
-<!--        <li <%#= "class=is-active" if controller_name == "hidden_users" %>>-->
-          <%#= link_to t("admin.menu.hidden_users"), oecd_representative_hidden_users_path %>
-<!--        </li>-->
-
-<!--        <li <%#= "class=is-active" if controller_name == "activity" %>>-->
-          <%#= link_to t("admin.menu.activity"), oecd_representative_activity_path %>
-<!--        </li>-->
-<!--      </ul>-->
-<!--    </li>-->
   </ul>
 </div>

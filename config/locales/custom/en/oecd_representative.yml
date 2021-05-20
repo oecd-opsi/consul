@@ -6,8 +6,8 @@ en:
       title: OECD Representation Interface
     menu:
       admin: OECD Representation Interface
+      moderation: Comments moderation
     dashboard:
       index:
         title: OECD Representation Interface
         description: Welcome to the OECD Representation Interface.
-    
