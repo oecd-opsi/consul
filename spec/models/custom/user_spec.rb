@@ -161,4 +161,77 @@ describe User do
       end
     end
   end
+
+  describe "oecd_representative?" do
+    let(:user) { build(:user) }
+
+    it "is false when the user is not an OECD representative" do
+      expect(user.oecd_representative?).to be_falsey
+    end
+
+    it "is true when the user is an admin" do
+      user.save!
+      create(:oecd_representative, user: user)
+      expect(user.oecd_representative?).to be_truthy
+    end
+  end
+
+  describe "standard_user?" do
+    let(:user) { build(:user) }
+
+    context "when does not have any additional roles" do
+      it "is true" do
+        expect(user).to be_standard_user
+      end
+    end
+
+    context "when is an admin" do
+      let(:user) { create(:administrator).user }
+      it "is false" do
+        expect(user).not_to be_standard_user
+      end
+    end
+
+    context "when is a moderator" do
+      let(:user) { create(:moderator).user }
+      it "is false" do
+        expect(user).not_to be_standard_user
+      end
+    end
+
+    context "when is a valuator" do
+      let(:user) { create(:valuator).user }
+      it "is false" do
+        expect(user).not_to be_standard_user
+      end
+    end
+
+    context "when is a manager" do
+      let(:user) { create(:manager).user }
+      it "is false" do
+        expect(user).not_to be_standard_user
+      end
+    end
+
+    context "when is a poll officer" do
+      let(:user) { create(:poll_officer).user }
+      it "is false" do
+        expect(user).not_to be_standard_user
+      end
+    end
+
+    context "when is a organization" do
+      let(:user) { create(:organization).user }
+      it "is false" do
+        expect(user).not_to be_standard_user
+      end
+    end
+
+    context "when is a OECD Representative" do
+      let(:user) { create(:oecd_representative).user }
+      it "is false" do
+        expect(user).not_to be_standard_user
+      end
+    end
+  end
 end

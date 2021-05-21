@@ -1,9 +1,8 @@
 require "rails_helper"
 
-describe "Moderate proposals" do
+shared_examples "Proposals moderation" do
   scenario "Disabled with a feature flag" do
     Setting["process.proposals"] = nil
-    moderator = create(:moderator)
     login_as(moderator.user)
 
     expect { visit moderation_proposals_path }.to raise_exception(FeatureFlags::FeatureDisabled)
@@ -12,7 +11,6 @@ describe "Moderate proposals" do
   scenario "Hide", :js do
     citizen   = create(:user)
     proposal  = create(:proposal)
-    moderator = create(:moderator)
 
     login_as(moderator.user)
     visit proposal_path(proposal)
@@ -30,7 +28,6 @@ describe "Moderate proposals" do
   end
 
   scenario "Can hide own proposal" do
-    moderator = create(:moderator)
     proposal = create(:proposal, author: moderator.user)
 
     login_as(moderator.user)
@@ -44,7 +41,6 @@ describe "Moderate proposals" do
 
   describe "/moderation/ screen" do
     before do
-      moderator = create(:moderator)
       login_as(moderator.user)
     end
 
@@ -174,9 +170,17 @@ describe "Moderate proposals" do
     end
 
     scenario "sorting proposals" do
-      flagged_proposal = create(:proposal, title: "Flagged proposal", created_at: Time.current - 1.day, flags_count: 5)
-      flagged_new_proposal = create(:proposal, title: "Flagged new proposal", created_at: Time.current - 12.hours, flags_count: 3)
-      newer_proposal = create(:proposal, title: "Newer proposal", created_at: Time.current)
+      flagged_proposal = create(:proposal,
+                                title: "Flagged proposal",
+                                created_at: Time.current - 1.day,
+                                flags_count: 5)
+      flagged_new_proposal = create(:proposal,
+                                    title: "Flagged new proposal",
+                                    created_at: Time.current - 12.hours,
+                                    flags_count: 3)
+      newer_proposal = create(:proposal,
+                              title: "Newer proposal",
+                              created_at: Time.current)
 
       visit moderation_proposals_path(order: "created_at")
 
@@ -196,5 +200,21 @@ describe "Moderate proposals" do
       expect(flagged_proposal.title).to appear_before(flagged_new_proposal.title)
       expect(flagged_new_proposal.title).to appear_before(newer_proposal.title)
     end
+  end
+end
+describe "Moderate proposals" do
+  context "when logged in as a moderator" do
+    let(:moderator) { create(:moderator) }
+    it_behaves_like "Proposals moderation"
+  end
+
+  context "when logged in as a admin" do
+    let(:moderator) { create(:administrator) }
+    it_behaves_like "Proposals moderation"
+  end
+
+  context "when logged in as a manager" do
+    let(:moderator) { create(:manager) }
+    it_behaves_like "Proposals moderation"
   end
 end

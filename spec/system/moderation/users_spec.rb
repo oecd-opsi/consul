@@ -1,9 +1,7 @@
 require "rails_helper"
-
-describe "Moderate users" do
+shared_examples "Users moderation" do
   scenario "Hide" do
     citizen = create(:user)
-    moderator = create(:moderator)
 
     debate1 = create(:debate, author: citizen)
     debate2 = create(:debate, author: citizen)
@@ -51,7 +49,6 @@ describe "Moderate users" do
 
   scenario "Search and ban users" do
     citizen = create(:user, username: "Wanda Maximoff")
-    moderator = create(:moderator)
 
     login_as(moderator.user)
 
@@ -71,5 +68,22 @@ describe "Moderate users" do
       expect(page).to have_content citizen.name
       expect(page).to have_content "Blocked"
     end
+  end
+end
+
+describe "Moderate users" do
+  context "when logged in as a moderator" do
+    let(:moderator) { create(:moderator) }
+    it_behaves_like "Users moderation"
+  end
+
+  context "when logged in as a admin" do
+    let(:moderator) { create(:administrator) }
+    it_behaves_like "Users moderation"
+  end
+
+  context "when logged in as a manager" do
+    let(:moderator) { create(:manager) }
+    it_behaves_like "Users moderation"
   end
 end

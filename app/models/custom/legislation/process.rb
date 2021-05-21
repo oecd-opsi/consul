@@ -2,6 +2,7 @@ require_dependency Rails.root.join("app", "models", "legislation", "process").to
 
 class Legislation::Process < ApplicationRecord
   has_many :annotations, through: :draft_versions, inverse_of: :draft_version
+  belongs_to :author, -> { with_hidden }, class_name: "User", inverse_of: :legislation_processes
 
   def status_indicator_key
     if in_draft_phase?

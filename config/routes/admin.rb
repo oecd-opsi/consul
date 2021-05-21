@@ -121,7 +121,21 @@ namespace :admin do
     get :search, on: :collection
   end
 
-  resources :users, only: [:index, :show]
+  resources :oecd_representatives, only: [:index, :create, :destroy] do
+    get :search, on: :collection
+  end
+
+  resources :oecd_representative_requests, only: [:index, :show] do
+    get :accept, on: :member
+    get :reject, on: :member
+  end
+
+  resources :users, only: [:index, :show] do
+    member do
+      get :promote_to_admin
+      get :promote_to_oecd_representative
+    end
+  end
 
   scope module: :poll do
     resources :polls do

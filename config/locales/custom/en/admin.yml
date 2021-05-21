@@ -502,6 +502,8 @@ en:
           debate_phase: Debate phase
           draft_phase: Draft phase
           draft_phase_description: If this phase is active, the process won't be listed on processes index. Allow to preview the process and create content before the start.
+          draft_publication_date: Draft publication date
+          result_publication_date: Result publication date
           allegations_phase: Comments phase
           proposals_phase: Proposals phase
           use_markdown: Use Markdown to format the text
@@ -735,6 +737,8 @@ en:
       hidden_proposal_notifications: Hidden proposal notifications
       hidden_users: Hidden users
       administrators: Administrators
+      oecd_representatives: OECD Representatives
+      oecd_representative_requests: OECD Representative Requests
       managers: Managers
       moderators: Moderators
       messaging_users: Messages to users
@@ -776,6 +780,7 @@ en:
             update: "Update Block"
       title_moderated_content: Moderated content
       title_profiles: Profiles
+      title_requests: Requests
       title_settings: Settings
       title_site_customization: Site content
       title_booths: Voting booths
@@ -806,6 +811,44 @@ en:
       form:
         edit_title: "Edit administrator"
         updated: "Administrator updated successfully"
+    oecd_representatives:
+      index:
+        title: OECD Representatives
+        name: Name
+        email: Email
+        id: OECD Representative ID
+        no_oecd_representatives: There are no OECD Representatives.
+      oecd_representative:
+        add: Add
+        delete: Delete
+      search:
+        title: "OECD Representatives: User search"
+    oecd_representative_requests:
+      index:
+        title: OECD Representative Requests
+        status: Status
+        name: Name
+        email: Email
+        id: User ID
+        no_oecd_representative_requests: There are no OECD Representative Requests.
+      oecd_representative_request:
+        accept: Accept
+        reject: Reject
+        view: View
+      show:
+        title: "OECD Representative Request"
+        sent_at: Sent at
+        name: Name
+        email: Email
+        status: Status
+        message: Message
+        accept: Accept
+        reject: Reject
+        send_email: Contact user via email
+        send_private_message: Send private message
+      actions:
+        accepted: The request has been accepted and the user is now an OECD Representative.
+        rejected: The request has been rejected.
     moderators:
       index:
         title: Moderators
@@ -1537,12 +1580,20 @@ en:
         document_number: Document number
         roles: Roles
         verification_level: Verification level
+        actions: Actions
+      actions:
+        promote_admin: Promote to Admin
+        promote_oecd_representative: Promote to OECD Representative
       index:
         title: User
         no_users: There are no users.
       search:
         placeholder: Search user by email, name or document number
         search: Search
+      promote_to_admin:
+        success: "User successfully promoted to Admin"
+      promote_to_oecd_representative:
+        success: "User successfully promoted to OECD Representative"
     verifications:
       index:
         phone_not_given: Phone not given

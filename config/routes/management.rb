@@ -13,6 +13,9 @@ namespace :management do
       delete :logout
       delete :erase
     end
+    member do
+      get :promote_to_oecd_representative
+    end
   end
 
   resource :account, controller: "account", only: [:show] do
@@ -42,5 +45,10 @@ namespace :management do
       post :vote, on: :member
       get :print, on: :collection
     end
+  end
+
+  resources :oecd_representative_requests, only: [:index, :show] do
+    get :accept, on: :member
+    get :reject, on: :member
   end
 end

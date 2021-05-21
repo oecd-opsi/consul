@@ -31,4 +31,31 @@ describe "Admin users" do
     expect(page).not_to have_content admin.name
     expect(page).not_to have_content admin.email
   end
+
+  scenario "Promotes the user to Admin" do
+    fill_in :search, with: "Luis"
+    click_button "Search"
+
+    click_link I18n.t("admin.users.actions.promote_admin")
+    expect(page).to have_content I18n.t("admin.users.promote_to_admin.success")
+
+    fill_in :search, with: "Luis"
+    click_button "Search"
+    expect(page).not_to have_content I18n.t("admin.users.actions.promote_admin")
+    expect(page).to have_content "admin"
+  end
+
+  scenario "Promotes the user to OECD Representative" do
+    create(:user, username: "John Doe")
+    fill_in :search, with: "Doe"
+    click_button "Search"
+
+    click_link I18n.t("admin.users.actions.promote_oecd_representative")
+    expect(page).to have_content I18n.t("admin.users.promote_to_oecd_representative.success")
+
+    fill_in :search, with: "Doe"
+    click_button "Search"
+    expect(page).not_to have_content I18n.t("admin.users.actions.promote_oecd_representative")
+    expect(page).to have_content "oecd_representative"
+  end
 end

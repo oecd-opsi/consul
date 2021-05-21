@@ -1,0 +1,43 @@
+<h2><%= t("admin.oecd_representatives.index.title") %></h2>
+
+<%= render "admin/shared/user_search", url: search_admin_oecd_representatives_path %>
+
+<div id="oecd_representatives">
+  <% if @oecd_representatives.any? %>
+    <h3 class="margin"><%= page_entries_info @oecd_representatives %></h3>
+
+    <table>
+      <thead>
+        <th scope="col" class="text-center"><%= t("admin.oecd_representatives.index.id") %></th>
+        <th scope="col"><%= t("admin.oecd_representatives.index.name") %></th>
+        <th scope="col"><%= t("admin.oecd_representatives.index.email") %></th>
+        <th scope="col" class="small-3"><%= t("admin.shared.actions") %></th>
+      </thead>
+      <% @oecd_representatives.each do |oecd_representative| %>
+        <tr id="<%= dom_id(oecd_representative) %>">
+          <td class="text-center">
+            <%= oecd_representative.id %>
+          </td>
+          <td>
+            <%= oecd_representative.name %>
+          </td>
+          <td>
+            <%= oecd_representative.email %>
+          </td>
+          <td>
+            <%= link_to t("admin.oecd_representatives.oecd_representative.delete"),
+                        admin_oecd_representative_path(oecd_representative),
+                        method: :delete,
+                        class: "button hollow alert" %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+
+    <%= paginate @oecd_representatives %>
+  <% else %>
+    <div class="callout primary margin">
+      <%= t("admin.oecd_representatives.index.no_oecd_representatives") %>
+    </div>
+  <% end %>
+</div>

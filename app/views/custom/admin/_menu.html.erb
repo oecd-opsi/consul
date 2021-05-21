@@ -207,6 +207,10 @@
           <%= link_to t("admin.menu.administrators"), admin_administrators_path %>
         </li>
 
+        <li <%= "class=is-active" if controller_name == "oecd_representatives" %>>
+          <%= link_to t("admin.menu.oecd_representatives"), admin_oecd_representatives_path %>
+        </li>
+
         <li <%= "class=is-active" if controller_name == "organizations" %>>
           <%= link_to t("admin.menu.organizations"), admin_organizations_path %>
         </li>
@@ -229,6 +233,18 @@
 
         <li <%= "class=is-active" if controller_name == "users" %>>
           <%= link_to t("admin.menu.users"), admin_users_path %>
+        </li>
+      </ul>
+    </li>
+
+    <li class="section-title">
+      <a href="#">
+        <span class="icon-letter"></span>
+        <strong><%= t("admin.menu.title_requests") %></strong>
+      </a>
+      <ul <%= "class=is-active" if controller_name == "oecd_representative_requests" %>>
+        <li <%= "class=is-active" if controller_name == "oecd_representative_requests" %>>
+          <%= link_to t("admin.menu.oecd_representative_requests"), admin_oecd_representative_requests_path %>
         </li>
       </ul>
     </li>

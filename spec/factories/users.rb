@@ -142,4 +142,8 @@ FactoryBot.define do
     association :sender,   factory: :user
     association :receiver, factory: :user
   end
+
+  factory :oecd_representative do
+    user { create(:user, :verified) }
+  end
 end

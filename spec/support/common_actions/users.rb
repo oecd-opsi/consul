@@ -51,6 +51,11 @@ module Users
     visit management_sign_in_path
   end
 
+  def sign_in_as_manager(manager = create(:manager))
+    sign_in manager.user
+    session[:manager] = { "login" => "manager_user_#{manager.user_id}" }
+  end
+
   def login_managed_user(user)
     allow_any_instance_of(Management::BaseController).to receive(:managed_user).and_return(user)
   end

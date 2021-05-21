@@ -1,8 +1,9 @@
 require "rails_helper"
 
 describe "Admin collaborative legislation" do
+  let(:admin) { create(:administrator) }
+
   before do
-    admin = create(:administrator)
     login_as(admin.user)
   end
 
@@ -101,6 +102,7 @@ describe "Admin collaborative legislation" do
 
       expect(page).to have_content "An example legislation process"
       expect(page).to have_content "Process created successfully"
+      expect(Legislation::Process.last.author).to eq(admin.user)
 
       click_link "Click to visit"
 
