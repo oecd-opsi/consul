@@ -9,7 +9,7 @@
       <ul id="booths_menu" <%= "class=is-active" if controller_name == "comments" %>>
         <li <%= "class=is-active"  if controller_name == "comments" &&
           action_name == "index" %>>
-          <%= link_to t("admin.menu.all_comments"), oecd_representative_moderation_comments_path %>
+          <%= link_to t("admin.menu.comments_all"), oecd_representative_moderation_comments_path %>
         </li>
 
         <li <%= "class=is-active" if controller_name == "comments" &&

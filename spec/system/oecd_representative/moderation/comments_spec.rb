@@ -46,7 +46,7 @@ describe "Admin comments" do
       proposal_comment
       Flag.flag(create(:user), question_comment)
       visit oecd_representative_root_path
-      within("#side_menu") { click_link I18n.t("admin.menu.comments") }
+      within("#side_menu") { click_link I18n.t("oecd_representative.menu.moderation") }
       within("#side_menu") { click_link I18n.t("admin.menu.comments_all") }
 
       expect(page).to have_content question_comment.body
@@ -278,7 +278,7 @@ describe "Admin comments" do
     other_process
 
     visit oecd_representative_root_path
-    within("#side_menu") { click_link I18n.t("admin.menu.comments") }
+    within("#side_menu") { click_link I18n.t("oecd_representative.menu.moderation") }
     within("#side_menu") { click_link I18n.t("admin.menu.comments_to_export") }
 
     expect(page).to have_content own_process.title
