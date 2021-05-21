@@ -8,8 +8,9 @@
             @statuses.collect { |s| [s.name, s.id] },
             { include_blank: @statuses.any? ? "" : t("admin.milestones.form.no_statuses_defined") },
             { disabled: @statuses.blank? } %>
-      <%= link_to t("admin.milestones.form.admin_statuses"),
-                  admin_milestone_statuses_path %>
+      
+<!--      Only Admin can manage milestone statuses-->
+      <%#= link_to t("admin.milestones.form.admin_statuses"), admin_milestone_statuses_path %>
     </div>
   </div>
 
