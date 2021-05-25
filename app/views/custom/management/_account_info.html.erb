@@ -28,6 +28,13 @@
         </p>
       <% end %>
 
+      <% if managed_user.display_name.present? %>
+        <p>
+          <%= t("management.account_info.display_name_label") %>
+          <strong><%= managed_user.display_name %></strong>
+        </p>
+      <% end %>
+
       <% if managed_user.email.present? %>
         <p>
           <%= t("management.account_info.email_label") %>

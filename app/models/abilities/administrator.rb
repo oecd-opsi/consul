@@ -46,10 +46,14 @@ module Abilities
       cannot :confirm_hide, User, hidden_at: nil
 
       can :promote_to_admin, User do |resource|
-        !resource.administrator?
+        resource.persisted? && !resource.administrator?
       end
 
+      cannot :promote_to_oecd_representative, User
       can :promote_to_oecd_representative, User, &:standard_user?
+      cannot :promote_to_oecd_representative, User do |resource|
+        !resource.persisted?
+      end
 
       can :mark_featured, Debate
       can :unmark_featured, Debate
