@@ -33,6 +33,8 @@
               <%= f.text_field :phone_number, placeholder: t("account.show.phone_number_label") %>
 
             <% else %>
+              <%= f.text_field :display_name, placeholder: t("account.show.display_name_label"), label: t("account.show.display_name_label")  %>
+
               <%= f.text_field :username, maxlength: User.username_max_length, placeholder: t("account.show.username_label"), disabled: true %>
             <% end %>
           </div>

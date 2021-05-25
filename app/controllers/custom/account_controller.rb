@@ -7,7 +7,7 @@ class AccountController < ApplicationController
   end
 
   def update
-    if @account.update(account_params)
+    if @account.update(account_params.merge(validate_display_name: true))
       redirect_to account_path, notice: t("flash.actions.save_changes.notice")
     else
       @account.errors.messages.delete(:organization)
@@ -26,7 +26,7 @@ class AccountController < ApplicationController
                      [:phone_number, :email_on_comment, :email_on_comment_reply, :newsletter,
                       organization_attributes: [:name, :responsible_name]]
                    else
-                     [:public_activity, :public_interests, :email_on_comment,
+                     [:public_activity, :public_interests, :email_on_comment, :display_name,
                       :email_on_comment_reply, :email_on_direct_message, :email_digest, :newsletter,
                       :official_position_badge, :recommended_debates, :recommended_proposals]
                    end

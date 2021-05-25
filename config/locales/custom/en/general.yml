@@ -23,6 +23,7 @@ en:
       user_permission_verify_info: "* Only for users on Census."
       user_permission_votes: Participate on final voting
       username_label: Username
+      display_name_label: Name
       verified_account: Account verified
       verify_my_account: Verify my account
       request_upgrade: Request upgrade to OECD Representative
