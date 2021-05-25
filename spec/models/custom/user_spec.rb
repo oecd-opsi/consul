@@ -23,7 +23,8 @@ describe User do
 
     context "when validate_display_name set to true" do
       it "is not valid without display name" do
-        user.update!(display_name: nil, validate_display_name: true)
+        user.display_name = nil
+        user.validate_display_name = true
         expect(user).not_to be_valid
         expect(user.errors[:display_name]).not_to be_empty
       end
