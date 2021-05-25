@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe "Admin users" do
   let(:admin) { create(:administrator) }
-  let!(:user) { create(:user, username: "Jose Luis Balbin") }
+  let!(:user) { create(:user, display_name: "Jose Luis Balbin") }
 
   before do
     login_as(admin.user)
@@ -46,7 +46,7 @@ describe "Admin users" do
   end
 
   scenario "Promotes the user to OECD Representative" do
-    create(:user, username: "John Doe")
+    create(:user, display_name: "John Doe")
     fill_in :search, with: "Doe"
     click_button "Search"
 
