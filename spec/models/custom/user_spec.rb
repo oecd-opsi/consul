@@ -21,14 +21,14 @@ describe User do
       end
     end
 
-    context "when validate_display_name set" do
+    context "when validate_display_name set to true" do
       it "is not valid without display name" do
         user.update!(display_name: nil, validate_display_name: true)
         expect(user).not_to be_valid
         expect(user.errors[:display_name]).not_to be_empty
       end
 
-      it "is is valid with display name" do
+      it "is valid with display name" do
         user.update!(display_name: Faker::Name.name, validate_display_name: true)
         expect(user).to be_valid
         expect(user.errors[:display_name]).to be_empty
@@ -335,7 +335,7 @@ describe User do
   describe "#display_name_required?" do
     let(:user) { build(:user) }
 
-    context "when username_required? and validate_display_name" do
+    context "when username_required? and validate_display_name set to true" do
       it "is truthy" do
         allow(user).to receive(:username_required?).and_return(true)
         allow(user).to receive(:validate_display_name).and_return(true)
