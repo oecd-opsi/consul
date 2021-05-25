@@ -138,7 +138,7 @@ describe "Users", js: true do
 
         visit "/"
         click_link "My account"
-        expect(page).to have_field("account_username", with: "manuela")
+        expect(page).to have_field("account_username", with: "manuela", disabled: true)
 
         visit edit_user_registration_path
         expect(page).to have_field("user_email", with: "manuelacarmena@example.com")
@@ -166,7 +166,7 @@ describe "Users", js: true do
 
         visit "/"
         click_link "My account"
-        expect(page).to have_field("account_username", with: "manuela")
+        expect(page).to have_field("account_username", with: "manuela", disabled: true)
 
         visit edit_user_registration_path
         expect(page).to have_field("user_email", with: "manuelacarmena@example.com")
@@ -196,7 +196,7 @@ describe "Users", js: true do
 
         visit "/"
         click_link "My account"
-        expect(page).to have_field("account_username", with: "manuela")
+        expect(page).to have_field("account_username", with: "manuela", disabled: true)
 
         visit edit_user_registration_path
         expect(page).to have_field("user_email", with: "manueladelascarmenas@example.com")
@@ -229,7 +229,7 @@ describe "Users", js: true do
 
         visit "/"
         click_link "My account"
-        expect(page).to have_field("account_username", with: user.username)
+        expect(page).to have_field("account_username", with: user.username, disabled: true)
 
         visit edit_user_registration_path
         expect(page).to have_field("user_email", with: user.email)
@@ -258,7 +258,7 @@ describe "Users", js: true do
         expect_to_be_signed_in
 
         click_link "My account"
-        expect(page).to have_field("account_username", with: "manuela2")
+        expect(page).to have_field("account_username", with: "manuela2", disabled: true)
 
         visit edit_user_registration_path
         expect(page).to have_field("user_email", with: "manuelacarmena@example.com")
@@ -296,7 +296,7 @@ describe "Users", js: true do
 
         visit "/"
         click_link "My account"
-        expect(page).to have_field("account_username", with: "manuela")
+        expect(page).to have_field("account_username", with: "manuela", disabled: true)
 
         visit edit_user_registration_path
         expect(page).to have_field("user_email", with: "somethingelse@example.com")
@@ -330,7 +330,7 @@ describe "Users", js: true do
 
         visit "/"
         click_link "My account"
-        expect(page).to have_field("account_username", with: "manuela")
+        expect(page).to have_field("account_username", with: "manuela", disabled: true)
 
         visit edit_user_registration_path
         expect(page).to have_field("user_email", with: "somethingelse@example.com")
@@ -369,7 +369,7 @@ describe "Users", js: true do
 
         visit "/"
         click_link "My account"
-        expect(page).to have_field("account_username", with: "manuela")
+        expect(page).to have_field("account_username", with: "manuela", disabled: true)
 
         visit edit_user_registration_path
         expect(page).to have_field("user_email", with: "manuelacarmena@example.com")
@@ -413,7 +413,7 @@ describe "Users", js: true do
 
         visit "/"
         click_link "My account"
-        expect(page).to have_field("account_username", with: "manuela2")
+        expect(page).to have_field("account_username", with: "manuela2", disabled: true)
 
         visit edit_user_registration_path
         expect(page).to have_field("user_email", with: "manuela@consul.dev")
@@ -465,7 +465,7 @@ describe "Users", js: true do
 
         visit "/"
         click_link "My account"
-        expect(page).to have_field("account_username", with: "manuela")
+        expect(page).to have_field("account_username", with: "manuela", disabled: true)
 
         visit edit_user_registration_path
         expect(page).to have_field("user_email", with: "manuelacarmena@example.com")
@@ -489,7 +489,7 @@ describe "Users", js: true do
 
         visit "/"
         click_link "My account"
-        expect(page).to have_field("account_username", with: "manuela")
+        expect(page).to have_field("account_username", with: "manuela", disabled: true)
 
         visit edit_user_registration_path
         expect(page).to have_field("user_email", with: "manuelacarmena@example.com")
@@ -516,7 +516,7 @@ describe "Users", js: true do
 
         visit "/"
         click_link "My account"
-        expect(page).to have_field("account_username", with: "manuela")
+        expect(page).to have_field("account_username", with: "manuela", disabled: true)
 
         visit edit_user_registration_path
         expect(page).to have_field("user_email", with: "manueladelascarmenas@example.com")
@@ -546,7 +546,7 @@ describe "Users", js: true do
 
         visit "/"
         click_link "My account"
-        expect(page).to have_field("account_username", with: user.username)
+        expect(page).to have_field("account_username", with: user.username, disabled: true)
 
         visit edit_user_registration_path
         expect(page).to have_field("user_email", with: user.email)
@@ -572,7 +572,7 @@ describe "Users", js: true do
         expect_to_be_signed_in
 
         click_link "My account"
-        expect(page).to have_field("account_username", with: "manuela2")
+        expect(page).to have_field("account_username", with: "manuela2", disabled: true)
         password_login_identity
 
         visit edit_user_registration_path
@@ -607,7 +607,8 @@ describe "Users", js: true do
 
         visit "/"
         click_link "My account"
-        expect(page).to have_field("account_username", with: "manuela")
+        expect(page).to have_field("account_username", with: "manuela", disabled: true)
+
         password_login_identity
 
         visit edit_user_registration_path
@@ -638,7 +639,7 @@ describe "Users", js: true do
 
         visit "/"
         click_link "My account"
-        expect(page).to have_field("account_username", with: "manuela")
+        expect(page).to have_field("account_username", with: "manuela", disabled: true)
         password_login_identity
 
         visit edit_user_registration_path

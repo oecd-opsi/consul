@@ -33,7 +33,7 @@ describe "Custom information texts" do
 
   scenario "Show custom text with options", :js do
     admin = create(:administrator)
-    user = create(:user, username: "Rachel")
+    user = create(:user, display_name: "Rachel")
     create(:budget_investment, author_id: user.id)
 
     intro_key = "mailers.budget_investment_created.intro"

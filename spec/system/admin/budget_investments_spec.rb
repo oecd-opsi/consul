@@ -3,7 +3,7 @@ require "rails_helper"
 describe "Admin budget investments" do
   let(:budget) { create(:budget) }
   let(:administrator) do
-    create(:administrator, user: create(:user, username: "Ana", email: "ana@admins.org"))
+    create(:administrator, user: create(:user, display_name: "Ana", email: "ana@admins.org"))
   end
 
   it_behaves_like "admin_milestoneable",
@@ -74,12 +74,12 @@ describe "Admin budget investments" do
     end
 
     scenario "Display admin and valuator assignments" do
-      olga = create(:user, username: "Olga")
-      miriam = create(:user, username: "Miriam")
+      olga = create(:user, display_name: "Olga")
+      miriam = create(:user, display_name: "Miriam")
       valuator1 = create(:valuator, user: olga, description: "Valuator Olga")
       valuator2 = create(:valuator, user: miriam, description: "Valuator Miriam")
       valuator_group = create(:valuator_group, name: "Health")
-      admin = create(:administrator, user: create(:user, username: "Gema"))
+      admin = create(:administrator, user: create(:user, display_name: "Gema"))
 
       budget_investment1 = create(:budget_investment, budget: budget, valuators: [valuator1])
       budget_investment2 = create(:budget_investment, budget: budget, valuators: [valuator1, valuator2],
@@ -157,8 +157,8 @@ describe "Admin budget investments" do
     end
 
     scenario "Filtering by admin", :js do
-      user = create(:user, username: "Admin 1")
-      user2 = create(:user, username: "Admin 2")
+      user = create(:user, display_name: "Admin 1")
+      user2 = create(:user, display_name: "Admin 2")
       administrator = create(:administrator, user: user)
       create(:administrator, user: user2, description: "Alias")
       create(:budget_investment, title: "Realocate visitors", budget: budget,
@@ -643,7 +643,7 @@ describe "Admin budget investments" do
     end
 
     scenario "Combination of checkbox with text search", :js do
-      user = create(:user, username: "Admin 1")
+      user = create(:user, display_name: "Admin 1")
       administrator = create(:administrator, user: user)
 
       create(:budget_investment, budget: budget, title: "Educate the children",
@@ -714,7 +714,7 @@ describe "Admin budget investments" do
     end
 
     scenario "Combination of checkbox with text search and checkbox", :js do
-      user = create(:user, username: "Admin 1")
+      user = create(:user, display_name: "Admin 1")
       administrator = create(:administrator, user: user)
 
       create(:budget_investment, :feasible, :finished, budget: budget, title: "Educate the children",
@@ -954,7 +954,7 @@ describe "Admin budget investments" do
 
   context "Show" do
     scenario "Show the investment details" do
-      user = create(:user, username: "Rachel", email: "rachel@valuators.org")
+      user = create(:user, display_name: "Rachel", email: "rachel@valuators.org")
       valuator = create(:valuator, user: user)
       budget_investment = create(:budget_investment,
                                   :unfeasible,
@@ -1088,7 +1088,7 @@ describe "Admin budget investments" do
 
     scenario "Add administrator", :js do
       budget_investment = create(:budget_investment)
-      user = create(:user, username: "Marta", email: "marta@admins.org")
+      user = create(:user, display_name: "Marta", email: "marta@admins.org")
       create(:administrator, user: user, description: "Marta desc")
 
       visit edit_admin_budget_path(budget_investment.budget)
@@ -1110,9 +1110,9 @@ describe "Admin budget investments" do
     scenario "Add valuators" do
       budget_investment = create(:budget_investment)
 
-      user1 = create(:user, username: "Valentina", email: "v1@valuators.org")
-      user2 = create(:user, username: "Valerian",  email: "v2@valuators.org")
-      user3 = create(:user, username: "Val",       email: "v3@valuators.org")
+      user1 = create(:user, display_name: "Valentina", email: "v1@valuators.org")
+      user2 = create(:user, display_name: "Valerian",  email: "v2@valuators.org")
+      user3 = create(:user, display_name: "Val",       email: "v3@valuators.org")
 
       valuator1 = create(:valuator, user: user1)
       valuator3 = create(:valuator, user: user3)
@@ -1171,7 +1171,7 @@ describe "Admin budget investments" do
       budget_investment = create(:budget_investment)
 
       health_group = create(:valuator_group, name: "Health")
-      user = create(:user, username: "Valentina", email: "v1@valuators.org")
+      user = create(:user, display_name: "Valentina", email: "v1@valuators.org")
       create(:valuator, user: user, valuator_group: health_group)
 
       visit admin_budget_budget_investment_path(budget_investment.budget, budget_investment)
@@ -1691,8 +1691,8 @@ describe "Admin budget investments" do
 
   context "Selecting csv" do
     scenario "Downloading CSV file" do
-      admin = create(:administrator, user: create(:user, username: "Admin"))
-      valuator = create(:valuator, user: create(:user, username: "Valuator"))
+      admin = create(:administrator, user: create(:user, display_name: "Admin"))
+      valuator = create(:valuator, user: create(:user, display_name: "Valuator"))
       valuator_group = create(:valuator_group, name: "Valuator Group")
       budget_group = create(:budget_group, name: "Budget Group", budget: budget)
       first_budget_heading = create(:budget_heading, group: budget_group, name: "Budget Heading")
@@ -1754,7 +1754,7 @@ describe "Admin budget investments" do
               :winner,
               :visible_to_valuators,
               budget: budget,
-              author: create(:user, username: "Jon Doe")
+              author: create(:user, display_name: "Jon Doe")
             )
     end
     let(:default_columns) do

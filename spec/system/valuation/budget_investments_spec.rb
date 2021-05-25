@@ -3,7 +3,7 @@ require "rails_helper"
 describe "Valuation budget investments" do
   let(:budget) { create(:budget, :valuating) }
   let(:valuator) do
-    create(:valuator, user: create(:user, username: "Rachel", email: "rachel@valuators.org"))
+    create(:valuator, user: create(:user, display_name: "Rachel", email: "rachel@valuators.org"))
   end
 
   before do
@@ -220,10 +220,10 @@ describe "Valuation budget investments" do
 
   describe "Show" do
     let(:administrator) do
-      create(:administrator, user: create(:user, username: "Ana", email: "ana@admins.org"))
+      create(:administrator, user: create(:user, username: "Ana", display_name: "Ana", email: "ana@admins.org"))
     end
     let(:second_valuator) do
-      create(:valuator, user: create(:user, username: "Rick", email: "rick@valuators.org"))
+      create(:valuator, user: create(:user, username: "Rick", display_name: "Rick", email: "rick@valuators.org"))
     end
     let(:investment) do
       create(:budget_investment, :unfeasible, budget: budget, price: 1234,

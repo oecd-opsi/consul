@@ -3,9 +3,11 @@ require "rails_helper"
 describe Poll::Shift do
   let(:poll) { create(:poll) }
   let(:booth) { create(:poll_booth) }
-  let(:user) { create(:user, username: "Ana", email: "ana@example.com") }
+  let(:user) { create(:user, display_name: "Ana", email: "ana@example.com") }
   let(:officer) { create(:poll_officer, user: user) }
-  let(:recount_shift) { build(:poll_shift, booth: booth, officer: officer, date: Date.current, task: :recount_scrutiny) }
+  let(:recount_shift) do
+    build(:poll_shift, booth: booth, officer: officer, date: Date.current, task: :recount_scrutiny)
+  end
 
   describe "validations" do
     let(:shift) { build(:poll_shift) }
@@ -37,19 +39,40 @@ describe Poll::Shift do
     it "is not valid with same booth, officer, date and task" do
       recount_shift.save!
 
-      expect(build(:poll_shift, booth: booth, officer: officer, date: Date.current, task: :recount_scrutiny)).not_to be_valid
+      expect(
+        build(:poll_shift,
+              booth:   booth,
+              officer: officer,
+              date:    Date.current,
+              task:    :recount_scrutiny
+        )
+      ).not_to be_valid
     end
 
     it "is valid with same booth, officer and date but different task" do
       recount_shift.save!
 
-      expect(build(:poll_shift, booth: booth, officer: officer, date: Date.current, task: :vote_collection)).to be_valid
+      expect(
+        build(:poll_shift,
+              booth: booth,
+              officer: officer,
+              date: Date.current,
+              task: :vote_collection
+        )
+      ).to be_valid
     end
 
     it "is valid with same booth, officer and task but different date" do
       recount_shift.save!
 
-      expect(build(:poll_shift, booth: booth, officer: officer, date: Date.tomorrow, task: :recount_scrutiny)).to be_valid
+      expect(
+        build(:poll_shift,
+              booth: booth,
+              officer: officer,
+              date: Date.tomorrow,
+              task: :recount_scrutiny
+        )
+      ).to be_valid
     end
   end
 
@@ -58,11 +81,12 @@ describe Poll::Shift do
       booth_assignment1 = create(:poll_booth_assignment, booth: booth)
       booth_assignment2 = create(:poll_booth_assignment, booth: booth)
 
-      expect { create(:poll_shift, booth: booth, officer: officer, date: Date.current) }.to change { Poll::OfficerAssignment.all.count }.by(2)
+      expect { create(:poll_shift, booth: booth, officer: officer, date: Date.current) }
+        .to change { Poll::OfficerAssignment.all.count }.by(2)
 
       officer_assignments = Poll::OfficerAssignment.all
-      oa1 = officer_assignments.first
-      oa2 = officer_assignments.second
+      oa1                 = officer_assignments.first
+      oa2                 = officer_assignments.second
 
       expect(oa1.officer).to eq(officer)
       expect(oa1.date).to eq(Date.current)
