@@ -8,7 +8,7 @@
   <%= render "shared/order_selector", i18n_namespace: "moderation.comments.index" %>
 </div>
 
-<%= form_tag moderate_oecd_representative_moderation_comments_path(request.query_parameters), method: :put do %>
+<%= form_tag moderate_moderation_comments_path(request.query_parameters), method: :put do %>
   <p class="float-left js-check">
     <%= t("shared.check") %>:
     <%= link_to t("shared.check_all"), "#", data: { check_all: "comment_ids[]" } %>
@@ -48,6 +48,11 @@
       <% end %>
     </tbody>
   </table>
+
+  <%= submit_tag t("moderation.comments.index.block_authors"),
+                 name: "block_authors",
+                 class: "button hollow alert",
+                 data: { confirm: t("moderation.comments.index.confirm") } %>
 
   <div class="float-right">
     <%= submit_tag t("moderation.comments.index.hide_comments"),
