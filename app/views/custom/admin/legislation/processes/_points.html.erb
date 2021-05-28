@@ -1,0 +1,18 @@
+<ul id="details_<%= id %>" class="hide" data-toggler="hide">
+  <%- t("admin.legislation.processes.form.descriptive_texts." + id + ".points").each do |point| %>
+    <li><%= point %></li>
+  <% end %>
+</ul>
+<div class="margin">
+  <a id="read_more_<%= id %>"
+      data-toggle="details_<%= id %> read_more_<%= id %> read_less_<%= id %>"
+      data-toggler="hide">
+    <%= t("polls.show.read_more", answer: t("admin.legislation.processes.form." + id2).downcase) %>
+  </a>
+  <a id="read_less_<%= id %>"
+      data-toggle="details_<%= id %> read_more_<%= id %> read_less_<%= id %>"
+      data-toggler="hide"
+      class="hide">
+    <%= t("polls.show.read_less", answer: t("admin.legislation.processes.form." + id2).downcase) %>
+  </a>
+</div>

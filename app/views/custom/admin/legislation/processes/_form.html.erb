@@ -9,11 +9,7 @@
       <label><%= t("admin.legislation.processes.form.draft_phase") %></label>
       <p class="help-text"><%= t("admin.legislation.processes.form.draft_phase_description") %></p>
       <p class="help-text"><%= t("admin.legislation.processes.form.descriptive_texts.draft.heading") %></p>
-      <ul>
-        <%- t("admin.legislation.processes.form.descriptive_texts.draft.points").each do |point| %>
-          <li><%= point %></li>
-        <% end %>
-      </ul>
+      <%= render "points", id: 'draft', id2: 'draft_phase' %>
     </div>
 
     <div class="small-12 medium-3 column">
@@ -67,11 +63,7 @@
     <div class="small-12 medium-4 column">
       <label><%= t("admin.legislation.processes.form.debate_phase") %></label>
       <p class="help-text"><%= t("admin.legislation.processes.form.descriptive_texts.debate.heading") %></p>
-      <ul>
-        <%- t("admin.legislation.processes.form.descriptive_texts.debate.points").each do |point| %>
-         <li><%= point %></li>
-        <% end %>
-      </ul>
+      <%= render "points", id: 'debate', id2: 'debate_phase' %>
     </div>
 
     <div class="small-12 medium-3 column">
@@ -98,11 +90,7 @@
     <div class="small-12 medium-4 column">
       <label><%= t("admin.legislation.processes.form.proposals_phase") %></label>
       <p class="help-text"><%= t("admin.legislation.processes.form.descriptive_texts.proposals.heading") %></p>
-      <ul>
-        <%- t("admin.legislation.processes.form.descriptive_texts.proposals.points").each do |point| %>
-          <li><%= point %></li>
-        <% end %>
-      </ul>
+      <%= render "points", id: 'proposals', id2: 'proposals_phase' %>
     </div>
 
     <div class="small-12 medium-3 column">
@@ -172,11 +160,7 @@
 
     <div class="small-12 medium-4 column">
       <label><%= t("admin.legislation.processes.form.result_publication_date") %></label>
-      <ul>
-        <%- t("admin.legislation.processes.form.descriptive_texts.final_result_publication_date.points").each do |point| %>
-          <li><%= point %></li>
-        <% end %>
-      </ul>
+      <%= render "points", id: 'final_result_publication_date', id2: 'result_publication_date' %>
     </div>
 
     <div class="small-12 medium-3 column end">
