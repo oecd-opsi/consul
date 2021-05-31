@@ -140,7 +140,7 @@ describe "Proposals" do
     expect(page).not_to have_selector ".js-follow"
 
     within(".social-share-button") do
-      expect(page.all("a").count).to be(4) # Twitter, Facebook, Google+, Telegram
+      expect(page.all("a").count).to be(5) # Twitter, Facebook, LinkedIn, Telegram, Email
     end
   end
 
@@ -1402,8 +1402,10 @@ describe "Proposals" do
 
           within "#js-advanced-search" do
             expect(page).to have_select("advanced_search[date_min]", selected: "Customized")
-            expect(page).to have_selector("input[name='advanced_search[date_min]'][value*='#{7.days.ago.strftime("%d/%m/%Y")}']")
-            expect(page).to have_selector("input[name='advanced_search[date_max]'][value*='#{1.day.ago.strftime("%d/%m/%Y")}']")
+            expect(page)
+              .to have_selector("input[name='advanced_search[date_min]'][value*='#{7.days.ago.strftime("%d/%m/%Y")}']")
+            expect(page)
+              .to have_selector("input[name='advanced_search[date_max]'][value*='#{1.day.ago.strftime("%d/%m/%Y")}']")
           end
         end
       end
