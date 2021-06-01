@@ -23,7 +23,7 @@ describe "Admin activity" do
       within("#activity_#{Activity.last.id}") do
         expect(page).to have_content(proposal.title)
         expect(page).to have_content("Hidden")
-        expect(page).to have_content(admin.user.username)
+        expect(page).to have_content(admin.user.display_name)
       end
     end
 
@@ -65,7 +65,7 @@ describe "Admin activity" do
       within("#activity_#{Activity.last.id}") do
         expect(page).to have_content(proposal.title)
         expect(page).to have_content("Restored")
-        expect(page).to have_content(admin.user.username)
+        expect(page).to have_content(admin.user.display_name)
       end
     end
   end
@@ -86,7 +86,7 @@ describe "Admin activity" do
       within("#activity_#{Activity.last.id}") do
         expect(page).to have_content(debate.title)
         expect(page).to have_content("Hidden")
-        expect(page).to have_content(admin.user.username)
+        expect(page).to have_content(admin.user.display_name)
       end
     end
 
@@ -128,7 +128,7 @@ describe "Admin activity" do
       within("#activity_#{Activity.last.id}") do
         expect(page).to have_content(debate.title)
         expect(page).to have_content("Restored")
-        expect(page).to have_content(admin.user.username)
+        expect(page).to have_content(admin.user.display_name)
       end
     end
   end
@@ -150,7 +150,7 @@ describe "Admin activity" do
       within("#activity_#{Activity.last.id}") do
         expect(page).to have_content(comment.body)
         expect(page).to have_content("Hidden")
-        expect(page).to have_content(admin.user.username)
+        expect(page).to have_content(admin.user.display_name)
       end
     end
 
@@ -192,7 +192,7 @@ describe "Admin activity" do
       within("#activity_#{Activity.last.id}") do
         expect(page).to have_content(comment.body)
         expect(page).to have_content("Restored")
-        expect(page).to have_content(admin.user.username)
+        expect(page).to have_content(admin.user.display_name)
       end
     end
   end
@@ -213,9 +213,9 @@ describe "Admin activity" do
 
       within("#activity_#{Activity.last.id}") do
         expect(page).to have_content("Blocked")
-        expect(page).to have_content(proposal.author.username)
+        expect(page).to have_content(proposal.author.display_name)
         expect(page).to have_content(proposal.author.email)
-        expect(page).to have_content(admin.user.username)
+        expect(page).to have_content(admin.user.display_name)
         expect(page).not_to have_content(proposal.title)
       end
     end
@@ -223,7 +223,7 @@ describe "Admin activity" do
     scenario "Shows moderation activity from moderation screen" do
       user = create(:user)
 
-      visit moderation_users_path(name_or_email: user.username)
+      visit moderation_users_path(name_or_email: user.display_name)
 
       within("#moderation_users") do
         click_link "Block"
@@ -232,9 +232,9 @@ describe "Admin activity" do
       visit admin_activity_path
 
       within("#activity_#{Activity.last.id}") do
-        expect(page).to have_content(user.username)
+        expect(page).to have_content(user.display_name)
         expect(page).to have_content(user.email)
-        expect(page).to have_content(admin.user.username)
+        expect(page).to have_content(admin.user.display_name)
       end
     end
 
@@ -257,11 +257,11 @@ describe "Admin activity" do
 
       visit admin_activity_path
 
-      expect(page).to have_content(proposal1.author.username)
+      expect(page).to have_content(proposal1.author.display_name)
       expect(page).to have_content(proposal1.author.email)
-      expect(page).to have_content(proposal3.author.username)
+      expect(page).to have_content(proposal3.author.display_name)
       expect(page).to have_content(proposal3.author.email)
-      expect(page).not_to have_content(proposal2.author.username)
+      expect(page).not_to have_content(proposal2.author.display_name)
     end
 
     scenario "Shows moderation activity from debates moderation screen" do
@@ -283,11 +283,11 @@ describe "Admin activity" do
 
       visit admin_activity_path
 
-      expect(page).to have_content(debate1.author.username)
+      expect(page).to have_content(debate1.author.display_name)
       expect(page).to have_content(debate1.author.email)
-      expect(page).to have_content(debate3.author.username)
+      expect(page).to have_content(debate3.author.display_name)
       expect(page).to have_content(debate3.author.email)
-      expect(page).not_to have_content(debate2.author.username)
+      expect(page).not_to have_content(debate2.author.display_name)
     end
 
     scenario "Shows moderation activity from comments moderation screen" do
@@ -309,11 +309,11 @@ describe "Admin activity" do
 
       visit admin_activity_path
 
-      expect(page).to have_content(comment1.author.username)
+      expect(page).to have_content(comment1.author.display_name)
       expect(page).to have_content(comment1.author.email)
-      expect(page).to have_content(comment3.author.username)
+      expect(page).to have_content(comment3.author.display_name)
       expect(page).to have_content(comment3.author.email)
-      expect(page).not_to have_content(comment2.author.username)
+      expect(page).not_to have_content(comment2.author.display_name)
     end
 
     scenario "Shows admin restores" do
@@ -328,10 +328,10 @@ describe "Admin activity" do
       visit admin_activity_path
 
       within("#activity_#{Activity.last.id}") do
-        expect(page).to have_content(user.username)
+        expect(page).to have_content(user.display_name)
         expect(page).to have_content(user.email)
         expect(page).to have_content("Restored")
-        expect(page).to have_content(admin.user.username)
+        expect(page).to have_content(admin.user.display_name)
       end
     end
   end
@@ -349,7 +349,7 @@ describe "Admin activity" do
       within("#activity_#{Activity.last.id}") do
         expect(page).to have_content(proposal_notification.title)
         expect(page).to have_content("Hidden")
-        expect(page).to have_content(admin.user.username)
+        expect(page).to have_content(admin.user.display_name)
       end
     end
   end

@@ -3,6 +3,40 @@ require "rails_helper"
 describe User do
   let(:user) { create(:user) }
 
+  describe "display_name validations" do
+    let(:user) { create(:user, display_name: nil) }
+
+    context "when validate_display_name not set" do
+      before { user.save }
+
+      it "is valid without display name" do
+        expect(user).to be_persisted
+        expect(user.display_name).to be_nil
+      end
+
+      it "is is valid with display name" do
+        user.update!(display_name: Faker::Name.name)
+        expect(user).to be_valid
+        expect(user.errors[:display_name]).to be_empty
+      end
+    end
+
+    context "when validate_display_name set to true" do
+      it "is not valid without display name" do
+        user.display_name = nil
+        user.validate_display_name = true
+        expect(user).not_to be_valid
+        expect(user.errors[:display_name]).not_to be_empty
+      end
+
+      it "is valid with display name" do
+        user.update!(display_name: Faker::Name.name, validate_display_name: true)
+        expect(user).to be_valid
+        expect(user.errors[:display_name]).to be_empty
+      end
+    end
+  end
+
   describe "synchronize_with_auth!" do
     let(:user) { create(:user, confirmed_at: nil) }
     let(:auth) do
@@ -106,14 +140,67 @@ describe User do
         expect(user.email).to eq email
         expect(user.oauth_email).to eq email
         expect(user.username).to eq name
+        expect(user.display_name).to eq name
         expect(user.terms_of_service).to be_truthy
         expect(user.instance_variable_get("@skip_confirmation_notification")).to be_truthy
       end
 
       context "with username not available in Auth0 app_metadata" do
-        it "uses Name as a username" do
+        context "when username is present in auth info" do
+          let(:auth_info) { OpenStruct.new(email: email, username: "username") }
+
+          it "uses username from auth.info as a username" do
+            user = User.first_or_initialize_for_oauth(auth)
+            expect(user.username).to eq auth_info.username
+          end
+
+          it "uses username from auth.info as a display_name" do
+            user = User.first_or_initialize_for_oauth(auth)
+            expect(user.display_name).to eq auth_info.username
+          end
+        end
+
+        context "when nickname is present in auth info" do
+          let(:auth_info) { OpenStruct.new(email: email, nickname: "nickname") }
+
+          it "uses username from auth.info as a username" do
+            user = User.first_or_initialize_for_oauth(auth)
+            expect(user.username).to eq auth_info.nickname
+          end
+
+          it "uses username from auth.info as a display_name" do
+            user = User.first_or_initialize_for_oauth(auth)
+            expect(user.display_name).to eq auth_info.nickname
+          end
+        end
+
+        context "when only name is present in auth info" do
+          let(:auth_info) { OpenStruct.new(email: email, name: name) }
+
+          it "uses name as a username" do
+            user = User.first_or_initialize_for_oauth(auth)
+            expect(user.username).to eq name
+          end
+
+          it "uses name from auth.info as a display_name" do
+            user = User.first_or_initialize_for_oauth(auth)
+            expect(user.display_name).to eq name
+          end
+        end
+      end
+
+      context "with name not available in info, but available in raw_info" do
+        let(:auth_info) { OpenStruct.new(email: email) }
+        let(:auth_extra) { OpenStruct.new(raw_info: { name: name }) }
+
+        it "uses uid as a username" do
           user = User.first_or_initialize_for_oauth(auth)
-          expect(user.username).to eq name
+          expect(user.username).to eq auth.uid
+        end
+
+        it "uses name from extra as display_name" do
+          user = User.first_or_initialize_for_oauth(auth)
+          expect(user.display_name).to eq name
         end
       end
 
@@ -232,6 +319,150 @@ describe User do
       it "is false" do
         expect(user).not_to be_standard_user
       end
+    end
+  end
+
+  describe "#name" do
+    it "is the display_name when the user is not an organization" do
+      expect(subject.name).to eq(subject.display_name)
+    end
+
+    it "is the organization when the user is not an organization" do
+      organization = create(:organization, user: subject)
+      expect(subject.name).to eq(organization.name)
+    end
+  end
+
+  describe "#display_name_required?" do
+    let(:user) { build(:user) }
+
+    context "when username_required? and validate_display_name set to true" do
+      it "is truthy" do
+        allow(user).to receive(:username_required?).and_return(true)
+        allow(user).to receive(:validate_display_name).and_return(true)
+        expect(user).to be_display_name_required
+      end
+    end
+
+    context "when username_required? but validate_display_name is false" do
+      it "is falsey" do
+        allow(user).to receive(:username_required?).and_return(true)
+        allow(user).to receive(:validate_display_name).and_return(false)
+        expect(user).not_to be_display_name_required
+      end
+    end
+
+    context "when not username_required? and validate_display_name is true" do
+      it "is falsey" do
+        allow(user).to receive(:username_required?).and_return(false)
+        allow(user).to receive(:validate_display_name).and_return(true)
+        expect(user).not_to be_display_name_required
+      end
+    end
+
+    context "when both username_required? and validate_display_name are false" do
+      it "is falsey" do
+        allow(user).to receive(:username_required?).and_return(false)
+        allow(user).to receive(:validate_display_name).and_return(false)
+        expect(user).not_to be_display_name_required
+      end
+    end
+  end
+
+  describe "#erase" do
+    let(:reason) { Faker::Lorem.sentence }
+    let(:user) do
+      create(:user,
+             username:                 "username",
+             display_name:             Faker::Name.name,
+             email:                    Faker::Internet.email,
+             unconfirmed_email:        Faker::Internet.email,
+             phone_number:             Faker::PhoneNumber.phone_number,
+             confirmed_phone:          Faker::PhoneNumber.phone_number,
+             confirmation_token:       "confirmation_token",
+             reset_password_token:     "reset_password_token",
+             email_verification_token: "email_verification_token",
+             password:                 "ValidPassword123!",
+             password_confirmation:    "ValidPassword123!",
+             unconfirmed_phone:        Faker::PhoneNumber.phone_number)
+    end
+    before do
+      user.erase(reason)
+      user.reload
+    end
+
+    it "sets erased_at" do
+      expect(user.erased_at).not_to be_nil
+    end
+
+    it "saves erase_reason" do
+      expect(user.erase_reason).to eq(reason)
+    end
+
+    it "erases username" do
+      expect(user.username).to be_nil
+    end
+
+    it "erases display_name" do
+      expect(user.display_name).to be_nil
+    end
+
+    it "erases email" do
+      expect(user.email).to be_nil
+    end
+
+    it "erases unconfirmed_email" do
+      expect(user.unconfirmed_email).to be_nil
+    end
+
+    it "erases phone_number" do
+      expect(user.phone_number).to be_nil
+    end
+
+    it "erases encrypted_password" do
+      expect(user.encrypted_password).to eq("")
+    end
+
+    it "erases confirmation_token" do
+      expect(user.confirmation_token).to be_nil
+    end
+
+    it "erases reset_password_token" do
+      expect(user.reset_password_token).to be_nil
+    end
+
+    it "erases email_verification_token" do
+      expect(user.email_verification_token).to be_nil
+    end
+
+    it "erases confirmed_phone" do
+      expect(user.confirmed_phone).to be_nil
+    end
+
+    it "erases unconfirmed_phone" do
+      expect(user.unconfirmed_phone).to be_nil
+    end
+  end
+
+  describe "self.search" do
+    it "find users by email" do
+      user1 = create(:user, email: "larry@consul.dev")
+      create(:user, email: "bird@consul.dev")
+      search = User.search("larry@consul.dev")
+
+      expect(search).to eq [user1]
+    end
+
+    it "find users by display_name" do
+      user1 = create(:user, display_name: "Larry Bird")
+      create(:user, display_name: "Robert Parish")
+      search = User.search("larry")
+
+      expect(search).to eq [user1]
+    end
+
+    it "returns no results if no search term provided" do
+      expect(User.search("    ")).to be_empty
     end
   end
 end

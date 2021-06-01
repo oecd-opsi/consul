@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe "Admin administrators" do
   let!(:admin) { create(:administrator) }
-  let!(:user) { create(:user, username: "Jose Luis Balbin") }
+  let!(:user) { create(:user, display_name: "Jose Luis Balbin") }
   let!(:user_administrator) { create(:administrator, description: "admin_alias") }
 
   before do
@@ -51,11 +51,11 @@ describe "Admin administrators" do
 
   context "Search" do
     let!(:administrator1) do
-      create(:administrator, user: create(:user, username: "Bernard Sumner", email: "bernard@sumner.com"))
+      create(:administrator, user: create(:user, display_name: "Bernard Sumner", email: "bernard@sumner.com"))
     end
 
     let!(:administrator2) do
-      create(:administrator, user: create(:user, username: "Tony Soprano", email: "tony@soprano.com"))
+      create(:administrator, user: create(:user, display_name: "Tony Soprano", email: "tony@soprano.com"))
     end
 
     before do
@@ -112,7 +112,7 @@ describe "Admin administrators" do
 
   context "Edit" do
     let!(:administrator1) do
-      create(:administrator, user: create(:user, username: "Bernard Sumner", email: "bernard@sumner.com"))
+      create(:administrator, user: create(:user, display_name: "Bernard Sumner", email: "bernard@sumner.com"))
     end
 
     scenario "admin can edit administrator1" do

@@ -141,7 +141,7 @@ describe "Users" do
     scenario "visible by default" do
       visit user_path(user)
 
-      expect(page).to have_content(user.username)
+      expect(page).to have_content(user.display_name)
       expect(page).not_to have_content("activity list private")
     end
 
@@ -262,7 +262,7 @@ describe "Users" do
     scenario "No visible by default" do
       visit user_path(user)
 
-      expect(page).to have_content(user.username)
+      expect(page).to have_content(user.display_name)
       expect(page).not_to have_css("#public_interests")
     end
 

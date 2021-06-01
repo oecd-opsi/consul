@@ -36,8 +36,8 @@ describe "Admin OECD representatives" do
   end
 
   context "Search" do
-    let(:user)      { create(:user, username: "Taylor Swift", email: "taylor@swift.com") }
-    let(:user2)     { create(:user, username: "Stephanie Corneliussen", email: "steph@mrrobot.com") }
+    let(:user)      { create(:user, display_name: "Taylor Swift", email: "taylor@swift.com") }
+    let(:user2)     { create(:user, display_name: "Stephanie Corneliussen", email: "steph@mrrobot.com") }
     let!(:oecd_representative1) { create(:oecd_representative, user: user) }
     let!(:oecd_representative2) { create(:oecd_representative, user: user2) }
 

@@ -4,7 +4,7 @@ class Management::UsersController < Management::BaseController
   end
 
   def create
-    @user = User.new(user_params)
+    @user = User.new(user_params.merge(validate_display_name: true))
 
     if @user.email.blank?
       user_without_email
@@ -48,7 +48,7 @@ class Management::UsersController < Management::BaseController
   private
 
     def user_params
-      params.require(:user).permit(:document_type, :document_number, :username, :email, :date_of_birth)
+      params.require(:user).permit(:document_type, :document_number, :username, :email, :date_of_birth, :display_name)
     end
 
     def destroy_session

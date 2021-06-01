@@ -70,11 +70,13 @@ describe Abilities::Administrator do
       it { should_not be_able_to(:promote_to_oecd_representative, other_user) }
       it { should_not be_able_to(:promote_to_oecd_representative, oecd_representative) }
       it { should_not be_able_to(:promote_to_oecd_representative, other_administrator) }
+      it { should_not be_able_to(:promote_to_oecd_representative, build(:user)) }
     end
 
     context "when standard user" do
       before { allow(other_user).to receive(:standard_user?).and_return(true) }
       it { should be_able_to(:promote_to_oecd_representative, other_user) }
+      it { should_not be_able_to(:promote_to_oecd_representative, build(:user)) }
     end
   end
 

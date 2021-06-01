@@ -3,6 +3,7 @@ FactoryBot.define do
     sequence(:username) { |n| "Manuela#{n}" }
     sequence(:email)    { |n| "manuela#{n}@consul.dev" }
 
+    display_name { Faker::Name.name }
     password            { "judgmentday" }
     terms_of_service    { "1" }
     confirmed_at        { Time.current }
@@ -110,7 +111,7 @@ FactoryBot.define do
   end
 
   factory :poll_officer, class: "Poll::Officer" do
-    user { association(:user, username: name) }
+    user { association(:user, username: name, display_name: name) }
 
     transient do
       sequence(:name) { |n| "Officer #{n}" }

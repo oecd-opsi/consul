@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "Account" do
-  let(:user) { create(:user, username: "Manuela Colau") }
+  let(:user) { create(:user, display_name: "Manuela Colau") }
   let(:auth0_client_mock) { double(:auth0_client) }
 
   before do
@@ -42,7 +42,7 @@ describe "Account" do
   scenario "Edit" do
     visit account_path
 
-    fill_in "account_username", with: "Larry Bird"
+    fill_in "account_display_name", with: "Larry Bird"
     check "account_email_on_comment"
     check "account_email_on_comment_reply"
     uncheck "account_email_digest"
@@ -149,13 +149,19 @@ describe "Account" do
     end
   end
 
-  scenario "Errors on edit" do
+  scenario "Display name is required on update" do
     visit account_path
 
-    fill_in "account_username", with: ""
+    fill_in "account_display_name", with: ""
     click_button "Save changes"
 
     expect(page).to have_content "1 error prevented this Account from being saved."
+  end
+
+  scenario "Cannot update username" do
+    visit account_path
+
+    expect(page).to have_field "Username", disabled: true
   end
 
   scenario "Errors editing credentials" do

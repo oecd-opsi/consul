@@ -48,7 +48,7 @@ shared_examples "Users moderation" do
   end
 
   scenario "Search and ban users" do
-    citizen = create(:user, username: "Wanda Maximoff")
+    citizen = create(:user, display_name: "Wanda Maximoff")
 
     login_as(moderator.user)
 

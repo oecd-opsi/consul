@@ -28,7 +28,7 @@ describe "Admin hidden users" do
 
     click_link "Restore"
 
-    expect(page).not_to have_content(user.username)
+    expect(page).not_to have_content(user.display_name)
 
     expect(user.reload).not_to be_hidden
   end
@@ -39,9 +39,9 @@ describe "Admin hidden users" do
 
     click_link "Confirm moderation"
 
-    expect(page).not_to have_content(user.username)
+    expect(page).not_to have_content(user.display_name)
     click_link("Confirmed")
-    expect(page).to have_content(user.username)
+    expect(page).to have_content(user.display_name)
 
     expect(user.reload).to be_confirmed_hide
   end
@@ -69,8 +69,8 @@ describe "Admin hidden users" do
   end
 
   scenario "Filtering users" do
-    create(:user, :hidden, username: "Unconfirmed")
-    create(:user, :hidden, :with_confirmed_hide, username: "Confirmed user")
+    create(:user, :hidden, display_name: "Unconfirmed")
+    create(:user, :hidden, :with_confirmed_hide, display_name: "Confirmed user")
 
     visit admin_hidden_users_path(filter: "all")
     expect(page).to have_content("Unconfirmed")
