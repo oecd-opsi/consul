@@ -513,6 +513,8 @@ en:
           additional_info_placeholder: Add an additional information you consider useful
           homepage_description: Here you can explain the content of the process
           banner_title: Header colors
+          read_more: "Read more about %{topic}"
+          read_less: "Read less about %{topic}"
           descriptive_texts:
             process: 'Please enter the start date and end dates for your engagement process.'
             debate:

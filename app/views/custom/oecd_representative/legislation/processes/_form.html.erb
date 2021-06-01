@@ -9,25 +9,21 @@
       <label><%= t("admin.legislation.processes.form.draft_phase") %></label>
       <p class="help-text"><%= t("admin.legislation.processes.form.draft_phase_description") %></p>
       <p class="help-text"><%= t("admin.legislation.processes.form.descriptive_texts.draft.heading") %></p>
-      <ul>
-        <%- t("admin.legislation.processes.form.descriptive_texts.draft.points").each do |point| %>
-          <li><%= point %></li>
-        <% end %>
-      </ul>
+      <%= render "points", id: 'draft', id2: 'draft_phase' %>
     </div>
 
     <div class="small-12 medium-3 column">
       <%= f.text_field :draft_start_date,
-                        value: format_date_for_calendar_form(@process.draft_start_date),
-                        class: "js-calendar-full",
-                        id: "draft_start_date" %>
+                       value: format_date_for_calendar_form(@process.draft_start_date),
+                       class: "js-calendar-full",
+                       id: "draft_start_date" %>
     </div>
 
     <div class="small-12 medium-3 column">
       <%= f.text_field :draft_end_date,
-                        value: format_date_for_calendar_form(@process.draft_end_date),
-                        class: "js-calendar-full",
-                        id: "draft_end_date" %>
+                       value: format_date_for_calendar_form(@process.draft_end_date),
+                       class: "js-calendar-full",
+                       id: "draft_end_date" %>
     </div>
 
     <div class="small-12 medium-2 column margin-top">
@@ -45,16 +41,16 @@
 
     <div class="small-12 medium-3 column">
       <%= f.text_field :start_date,
-                        value: format_date_for_calendar_form(@process.start_date),
-                        class: "js-calendar-full",
-                        id: "start_date" %>
+                       value: format_date_for_calendar_form(@process.start_date),
+                       class: "js-calendar-full",
+                       id: "start_date" %>
     </div>
 
     <div class="small-12 medium-3 column">
       <%= f.text_field :end_date,
-                        value: format_date_for_calendar_form(@process.end_date),
-                        class: "js-calendar-full",
-                        id: "end_date" %>
+                       value: format_date_for_calendar_form(@process.end_date),
+                       class: "js-calendar-full",
+                       id: "end_date" %>
     </div>
     <div class="small-12 medium-2 column margin-top">
       <%= f.check_box :published, checked: @process.published?, label: t("admin.legislation.processes.form.enabled") %>
@@ -67,25 +63,21 @@
     <div class="small-12 medium-4 column">
       <label><%= t("admin.legislation.processes.form.debate_phase") %></label>
       <p class="help-text"><%= t("admin.legislation.processes.form.descriptive_texts.debate.heading") %></p>
-      <ul>
-        <%- t("admin.legislation.processes.form.descriptive_texts.debate.points").each do |point| %>
-         <li><%= point %></li>
-        <% end %>
-      </ul>
+      <%= render "points", id: 'debate', id2: 'debate_phase' %>
     </div>
 
     <div class="small-12 medium-3 column">
       <%= f.text_field :debate_start_date,
-                        value: format_date_for_calendar_form(@process.debate_start_date),
-                        class: "js-calendar-full",
-                        id: "debate_start_date" %>
+                       value: format_date_for_calendar_form(@process.debate_start_date),
+                       class: "js-calendar-full",
+                       id: "debate_start_date" %>
     </div>
 
     <div class="small-12 medium-3 column">
       <%= f.text_field :debate_end_date,
-                        value: format_date_for_calendar_form(@process.debate_end_date),
-                        class: "js-calendar-full",
-                        id: "debate_end_date" %>
+                       value: format_date_for_calendar_form(@process.debate_end_date),
+                       class: "js-calendar-full",
+                       id: "debate_end_date" %>
     </div>
     <div class="small-12 medium-2 column margin-top">
       <%= f.check_box :debate_phase_enabled, checked: @process.debate_phase.enabled?, label: t("admin.legislation.processes.form.enabled") %>
@@ -98,25 +90,21 @@
     <div class="small-12 medium-4 column">
       <label><%= t("admin.legislation.processes.form.proposals_phase") %></label>
       <p class="help-text"><%= t("admin.legislation.processes.form.descriptive_texts.proposals.heading") %></p>
-      <ul>
-        <%- t("admin.legislation.processes.form.descriptive_texts.proposals.points").each do |point| %>
-          <li><%= point %></li>
-        <% end %>
-      </ul>
+      <%= render "points", id: 'proposals', id2: 'proposals_phase' %>
     </div>
 
     <div class="small-12 medium-3 column">
       <%= f.text_field :proposals_phase_start_date,
-                        value: format_date_for_calendar_form(@process.proposals_phase_start_date),
-                        class: "js-calendar-full",
-                        id: "proposals_phase_start_date" %>
+                       value: format_date_for_calendar_form(@process.proposals_phase_start_date),
+                       class: "js-calendar-full",
+                       id: "proposals_phase_start_date" %>
     </div>
 
     <div class="small-12 medium-3 column">
       <%= f.text_field :proposals_phase_end_date,
-                        value: format_date_for_calendar_form(@process.proposals_phase_end_date),
-                        class: "js-calendar-full",
-                        id: "proposals_phase_end_date" %>
+                       value: format_date_for_calendar_form(@process.proposals_phase_end_date),
+                       class: "js-calendar-full",
+                       id: "proposals_phase_end_date" %>
     </div>
     <div class="small-12 medium-2 column margin-top">
       <%= f.check_box :proposals_phase_enabled, checked: @process.proposals_phase.enabled?, label: t("admin.legislation.processes.form.enabled") %>
@@ -132,16 +120,16 @@
 
     <div class="small-12 medium-3 column">
       <%= f.text_field :allegations_start_date,
-                        value: format_date_for_calendar_form(@process.allegations_start_date),
-                        class: "js-calendar-full",
-                        id: "allegations_start_date" %>
+                       value: format_date_for_calendar_form(@process.allegations_start_date),
+                       class: "js-calendar-full",
+                       id: "allegations_start_date" %>
     </div>
 
     <div class="small-12 medium-3 column">
       <%= f.text_field :allegations_end_date,
-                        value: format_date_for_calendar_form(@process.allegations_end_date),
-                        class: "js-calendar-full",
-                        id: "allegations_end_date" %>
+                       value: format_date_for_calendar_form(@process.allegations_end_date),
+                       class: "js-calendar-full",
+                       id: "allegations_end_date" %>
     </div>
     <div class="small-12 medium-2 column margin-top">
       <%= f.check_box :allegations_phase_enabled, checked: @process.allegations_phase.enabled?, label: t("admin.legislation.processes.form.enabled") %>
@@ -158,9 +146,9 @@
 
     <div class="small-12 medium-3 column end">
       <%= f.text_field :draft_publication_date,
-                        value: format_date_for_calendar_form(@process.draft_publication_date),
-                        class: "js-calendar-full",
-                        id: "draft_publication_date" %>
+                       value: format_date_for_calendar_form(@process.draft_publication_date),
+                       class: "js-calendar-full",
+                       id: "draft_publication_date" %>
     </div>
     <div class="small-12 medium-2 column margin-top">
       <%= f.check_box :draft_publication_enabled, checked: @process.draft_publication.enabled?, label: t("admin.legislation.processes.form.enabled") %>
@@ -172,18 +160,14 @@
 
     <div class="small-12 medium-4 column">
       <label><%= t("admin.legislation.processes.form.result_publication_date") %></label>
-      <ul>
-        <%- t("admin.legislation.processes.form.descriptive_texts.final_result_publication_date.points").each do |point| %>
-          <li><%= point %></li>
-        <% end %>
-      </ul>
+      <%= render "points", id: 'final_result_publication_date', id2: 'result_publication_date' %>
     </div>
 
     <div class="small-12 medium-3 column end">
       <%= f.text_field :result_publication_date,
-                        value: format_date_for_calendar_form(@process.result_publication_date),
-                        class: "js-calendar-full",
-                        id: "result_publication_date" %>
+                       value: format_date_for_calendar_form(@process.result_publication_date),
+                       class: "js-calendar-full",
+                       id: "result_publication_date" %>
     </div>
     <div class="small-12 medium-2 column margin-top">
       <%= f.check_box :result_publication_enabled, checked: @process.result_publication.enabled?, label: t("admin.legislation.processes.form.enabled") %>
@@ -219,7 +203,7 @@
       <div class="row collapse">
         <div class="small-12 medium-6 column">
           <%= f.text_field :background_color, label: false, type: :color,
-                                              value: bg_color_or_default %>
+                           value: bg_color_or_default %>
         </div>
         <div class="small-12 medium-6 column">
           <%= f.text_field :background_color, label: false, id: "background_color_input" %>
