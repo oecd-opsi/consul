@@ -28,6 +28,7 @@ en:
       verify_my_account: Verify my account
       request_upgrade: Request upgrade to OECD Representative
       username_hint: Username cannot be changed.
+      oecd_representative_button_hint: If you are an OECD employee and would like the ability to host civic engagement processes on this platform, you may request access with this button.
   application:
     close: Close
     menu: Menu

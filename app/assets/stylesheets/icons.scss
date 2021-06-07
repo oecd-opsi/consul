@@ -327,3 +327,8 @@
   background-image: url("finger.png");
   background-repeat: no-repeat;
 }
+
+.icon-circle::before {
+  content: "\f05a";
+  font-size: 1.8em;
+}
