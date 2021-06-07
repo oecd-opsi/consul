@@ -4,7 +4,7 @@
     <ul class="submenu menu vertical" data-submenu>
       <% if current_user.oecd_representative? %>
         <li>
-          <%= link_to t("layouts.header.oecd_representative"), admin_root_path %>
+          <%= link_to t("layouts.header.oecd_representative"), oecd_representative_root_path %>
         </li>
       <% end %>
     </ul>
