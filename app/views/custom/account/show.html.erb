@@ -7,7 +7,7 @@
       <br>
       <%- if can?(:new, OecdRepresentativeRequest) %>
         <%= link_to t("account.show.request_upgrade"), new_oecd_representative_request_path, class: "button hollow" %>
-        <span class="icon-circle" title="<%= t("account.show.oecd_representative_button_hint")%>"></span>
+        <span class="icon-circle-profile" title="<%= t("account.show.oecd_representative_button_hint")%>"></span>
         <br>
       <% end %>
       <%= link_to t("account.show.erase_account_link"), users_registrations_delete_form_path, class: "delete" %>
