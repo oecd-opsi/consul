@@ -1530,6 +1530,8 @@ en:
         visit: Visits
         level_2_user: Level 2 users
         proposal_created: Citizen proposals
+        legislation_answer_created: Public Engagement Answers
+        legislation_annotation_created: Public Engagement Annotations
       budgets:
         no_data_before_balloting_phase: "There isn't any data to show before the balloting phase."
         title: "Participatory Budgets - Participation stats"
