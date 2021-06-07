@@ -8,8 +8,6 @@
     <div class="small-12 medium-4 column">
       <label><%= t("admin.legislation.processes.form.draft_phase") %></label>
       <p class="help-text"><%= t("admin.legislation.processes.form.draft_phase_description") %></p>
-      <p class="help-text"><%= t("admin.legislation.processes.form.descriptive_texts.draft.heading") %></p>
-      <%= render "points", id: 'draft', id2: 'draft_phase' %>
     </div>
 
     <div class="small-12 medium-3 column">
@@ -116,6 +114,8 @@
 
     <div class="small-12 medium-4 column">
       <label><%= t("admin.legislation.processes.form.allegations_phase") %></label>
+      <p class="help-text"><%= t("admin.legislation.processes.form.descriptive_texts.comments.heading") %></p>
+      <%= render "points", id: 'comments', id2: 'allegations_phase' %>
     </div>
 
     <div class="small-12 medium-3 column">
@@ -160,6 +160,7 @@
 
     <div class="small-12 medium-4 column">
       <label><%= t("admin.legislation.processes.form.result_publication_date") %></label>
+      <p class="help-text"><%= t("admin.legislation.processes.form.descriptive_texts.final_result_publication_date.heading") %></p>
       <%= render "points", id: 'final_result_publication_date', id2: 'result_publication_date' %>
     </div>
 

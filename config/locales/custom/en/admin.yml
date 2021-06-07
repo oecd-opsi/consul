@@ -501,7 +501,8 @@ en:
           process: Process
           debate_phase: Debate phase
           draft_phase: Draft phase
-          draft_phase_description: If this phase is active, the process won't be listed on processes index. Allow to preview the process and create content before the start.
+          draft_phase_description: If this phase is active, the process won't be listed on the engagement processes index. This allows to
+            preview the process and create content before the start of the open process.
           draft_publication_date: Draft publication date
           result_publication_date: Result publication date
           allegations_phase: Comments phase
@@ -529,7 +530,7 @@ en:
                   Users can answer in an open way, build dialogue among themselves, and vote on all the answers to identify
                   the most interesting ones.
                 - >
-                  This can be useful in the early stages of develop new policies and other efforts, but can also be
+                  This can be useful in the early stages of developing new policies and other efforts, but can also be
                   used independently to deal directly and in a concrete way with any problem or issue that is of special
                   importance.
             proposals:
@@ -544,7 +545,7 @@ en:
                 - >
                   This phase can be useful when done sequentially after the Debates phase. However, it can also be used
                   independently if you already have specific ideas and proposals for which you would like feedback.
-            draft:
+            comments:
               heading: >
                 For engagement processes that involve obtaining comments, suggested edits, and other feedback on draft
                 text, such as a draft policy, law, or other document.
@@ -563,10 +564,10 @@ en:
               draft document was provided for feedback. This often coincides with the start of the Comments phase. This
               date will appear on your engagement process page.
             final_result_publication_date:
+              heading: >
+                To keep an open, public record of your process steps and milestones, you may enter the date on which
+                a final document was published.
               points:
-                - >
-                  To keep an open, public record of your process steps and milestones, you may enter the date on which
-                  a final document was published.
                 - >
                   It is also recommended that you provide a copy of the final version. You can do this in one of two
                   ways: 1) by adding it as the Final version (see “Drafting” tab above), or 2) by uploading a copy of
@@ -1530,6 +1531,8 @@ en:
         visit: Visits
         level_2_user: Level 2 users
         proposal_created: Citizen proposals
+        legislation_answer_created: Public Engagement Answers
+        legislation_annotation_created: Public Engagement Annotations
       budgets:
         no_data_before_balloting_phase: "There isn't any data to show before the balloting phase."
         title: "Participatory Budgets - Participation stats"
