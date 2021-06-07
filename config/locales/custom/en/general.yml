@@ -27,6 +27,7 @@ en:
       verified_account: Account verified
       verify_my_account: Verify my account
       request_upgrade: Request upgrade to OECD Representative
+      username_hint: Username cannot be changed.
   application:
     close: Close
     menu: Menu
