@@ -49,6 +49,14 @@ module Abilities
         resource.persisted? && !resource.administrator?
       end
 
+      can :demote_to_user, User do |resource|
+        resource.persisted? && (resource.administrator? || resource.oecd_representative?)
+      end
+
+      can :demote_to_oecd_representative, User do |resource|
+        resource.persisted? && resource.administrator?
+      end
+
       cannot :promote_to_oecd_representative, User
       can :promote_to_oecd_representative, User, &:standard_user?
       cannot :promote_to_oecd_representative, User do |resource|

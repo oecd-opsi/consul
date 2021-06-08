@@ -11,7 +11,7 @@
         <th scope="col" class="text-center"><%= t("admin.oecd_representatives.index.id") %></th>
         <th scope="col"><%= t("admin.oecd_representatives.index.name") %></th>
         <th scope="col"><%= t("admin.oecd_representatives.index.email") %></th>
-        <th scope="col" class="small-3"><%= t("admin.shared.actions") %></th>
+        <th scope="col"><%= t("admin.shared.actions") %></th>
       </thead>
       <% @oecd_representatives.each do |oecd_representative| %>
         <tr id="<%= dom_id(oecd_representative) %>">
@@ -25,10 +25,13 @@
             <%= oecd_representative.email %>
           </td>
           <td>
-            <%= link_to t("admin.oecd_representatives.oecd_representative.delete"),
-                        admin_oecd_representative_path(oecd_representative),
-                        method: :delete,
-                        class: "button hollow alert" %>
+            <div class="small-4 column">
+              <%= link_to t("admin.oecd_representatives.oecd_representative.delete"),
+                          admin_oecd_representative_path(oecd_representative),
+                          method: :delete,
+                          class: "button hollow alert small expanded" %>
+            </div>
+            <%= render 'additional_buttons', oecd_representative: oecd_representative %>
           </td>
         </tr>
       <% end %>

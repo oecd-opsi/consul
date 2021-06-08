@@ -1589,6 +1589,8 @@ en:
       actions:
         promote_admin: Promote to Admin
         promote_oecd_representative: Promote to OECD Representative
+        demote_to_oecd_representative: Demote to OECD Representative
+        demote_to_user: Demote to User
       index:
         title: User
         no_users: There are no users.
@@ -1599,6 +1601,10 @@ en:
         success: "User successfully promoted to Admin"
       promote_to_oecd_representative:
         success: "User successfully promoted to OECD Representative"
+      demote_to_user:
+        success: "User successfully demoted to User"
+      demote_to_oecd_representative:
+        success: "User successfully demoted to OECD Representative"
     verifications:
       index:
         phone_not_given: Phone not given

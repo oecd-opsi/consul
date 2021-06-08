@@ -465,4 +465,134 @@ describe User do
       expect(User.search("    ")).to be_empty
     end
   end
+
+  describe "demote_to_user!" do
+    before do
+      user.demote_to_user!
+      user.reload
+    end
+
+    context "when is an Admin" do
+      let(:user) { create(:administrator).user }
+
+      it "deletes assigned administrator" do
+        expect(user).not_to be_administrator
+        expect(user).to be_standard_user
+      end
+    end
+
+    context "when is an OECD Representative" do
+      let(:user) { create(:oecd_representative).user }
+
+      it "deletes assigned OECD Representative" do
+        expect(user).not_to be_oecd_representative
+        expect(user).to be_standard_user
+      end
+    end
+
+    context "when is an Manager" do
+      let(:user) { create(:manager).user }
+
+      it "does not update user type" do
+        expect(user).to be_manager
+        expect(user).not_to be_standard_user
+      end
+    end
+
+    context "when is a Standard user" do
+      let(:user) { create(:user) }
+
+      it "does not update user type" do
+        expect(user).to be_standard_user
+      end
+    end
+  end
+
+  describe "demote_to_oecd_representative!" do
+    before do
+      user.demote_to_oecd_representative!
+      user.reload
+    end
+
+    context "when is an Admin" do
+      let(:user) { create(:administrator).user }
+
+      it "deletes assigned administrator" do
+        expect(user).not_to be_administrator
+      end
+
+      it "makes user OECD Representative" do
+        expect(user).to be_oecd_representative
+      end
+    end
+
+    context "when is an OECD Representative" do
+      let(:user) { create(:oecd_representative).user }
+
+      it "does not update user type" do
+        expect(user).to be_oecd_representative
+        expect(user).not_to be_standard_user
+      end
+    end
+
+    context "when is an Manager" do
+      let(:user) { create(:manager).user }
+
+      it "does not update user type" do
+        expect(user).to be_manager
+        expect(user).not_to be_standard_user
+      end
+    end
+
+    context "when is a Standard user" do
+      let(:user) { create(:user) }
+
+      it "makes user OECD Representative" do
+        expect(user).to be_oecd_representative
+      end
+    end
+  end
+
+  describe "promote_to_admin!" do
+    before do
+      user.promote_to_admin!
+      user.reload
+    end
+
+    context "when is an Admin" do
+      let(:user) { create(:administrator).user }
+
+      it "does not update user type" do
+        expect(user).to be_administrator
+      end
+    end
+
+    context "when is an OECD Representative" do
+      let(:user) { create(:oecd_representative).user }
+
+      it "deletes assigned OECD Representative" do
+        expect(user).not_to be_oecd_representative
+      end
+
+      it "updates user to Admin" do
+        expect(user).to be_administrator
+      end
+    end
+
+    context "when is an Manager" do
+      let(:user) { create(:manager).user }
+
+      it "updates user to Admin" do
+        expect(user).to be_administrator
+      end
+    end
+
+    context "when is a Standard user" do
+      let(:user) { create(:user) }
+
+      it "updates user to Admin" do
+        expect(user).to be_administrator
+      end
+    end
+  end
 end
