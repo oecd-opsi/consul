@@ -16,15 +16,37 @@ describe Management::OecdRepresentativeRequestsController do
       end
     end
 
+    context "with signed in user who is manager but hasn't confirm the login yet" do
+      let(:user) { create(:manager).user }
+
+      before do
+        sign_in user
+        subject
+      end
+
+      it "redirects to manager sign in" do
+        expect(response).to redirect_to management_sign_in_path
+      end
+
+      it "saves return_to in session" do
+        expect(session[:return_to]).to eq(management_oecd_representative_requests_path)
+      end
+    end
+
     context "when is not permitted to visit the page" do
       let(:user) { create(:user) }
 
       before do
         sign_in user
+        subject
       end
 
-      it "raises AccessDenied" do
-        expect { subject }.to raise_error(CanCan::AccessDenied)
+      it "redirects to manager sign in" do
+        expect(response).to redirect_to management_sign_in_path
+      end
+
+      it "saves return_to in session" do
+        expect(session[:return_to]).to eq(management_oecd_representative_requests_path)
       end
     end
 
@@ -63,7 +85,7 @@ describe Management::OecdRepresentativeRequestsController do
       context "when the request cannot be found" do
         let(:oecd_representative_request) { OpenStruct.new(id: "not-existing") }
         before do
-          sign_in user
+          sign_in_as_manager
         end
 
         it "returns Record not Found error" do
@@ -77,10 +99,15 @@ describe Management::OecdRepresentativeRequestsController do
 
       before do
         sign_in user
+        subject
       end
 
-      it "raises AccessDenied" do
-        expect { subject }.to raise_error(CanCan::AccessDenied)
+      it "redirects to manager sign in" do
+        expect(response).to redirect_to management_sign_in_path
+      end
+
+      it "saves return_to in session" do
+        expect(session[:return_to]).to eq(management_oecd_representative_request_path(oecd_representative_request))
       end
     end
 
@@ -127,7 +154,7 @@ describe Management::OecdRepresentativeRequestsController do
       context "when the request cannot be found" do
         let(:oecd_representative_request) { OpenStruct.new(id: "not-existing") }
         before do
-          sign_in user
+          sign_in_as_manager
         end
 
         it "returns Record not Found error" do
@@ -141,10 +168,16 @@ describe Management::OecdRepresentativeRequestsController do
 
       before do
         sign_in user
+        subject
       end
 
-      it "raises AccessDenied" do
-        expect { subject }.to raise_error(CanCan::AccessDenied)
+      it "redirects to manager sign in" do
+        expect(response).to redirect_to(management_sign_in_path)
+      end
+
+      it "saves return_to in session" do
+        expect(session[:return_to])
+          .to eq(accept_management_oecd_representative_request_path(oecd_representative_request))
       end
     end
 
@@ -191,7 +224,7 @@ describe Management::OecdRepresentativeRequestsController do
       context "when the request cannot be found" do
         let(:oecd_representative_request) { OpenStruct.new(id: "not-existing") }
         before do
-          sign_in user
+          sign_in_as_manager
         end
 
         it "returns Record not Found error" do
@@ -205,10 +238,16 @@ describe Management::OecdRepresentativeRequestsController do
 
       before do
         sign_in user
+        subject
       end
 
-      it "raises AccessDenied" do
-        expect { subject }.to raise_error(CanCan::AccessDenied)
+      it "redirects to manager sign in" do
+        expect(response).to redirect_to management_sign_in_path
+      end
+
+      it "saves return_to in session" do
+        expect(session[:return_to])
+          .to eq(reject_management_oecd_representative_request_path(oecd_representative_request))
       end
     end
 
