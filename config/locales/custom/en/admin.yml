@@ -342,6 +342,7 @@ en:
       to_export:
         id: "ID"
         process: "Process"
+        author: "Author"
         comments: "Comments"
         title: "Public Engagement Comments Export"
         no_processes: "There are no processes to show."
@@ -615,6 +616,7 @@ en:
           status_open: Open
           status_closed: Closed
           status_planned: Planned
+          author: Author
         subnav:
           info: Information
           homepage: Homepage
