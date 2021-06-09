@@ -12,6 +12,7 @@
       <tr>
         <th class="text-center"><%= t("admin.comments.to_export.id") %></th>
         <th><%= t("admin.comments.to_export.process") %></th>
+        <th><%= t("admin.comments.to_export.author") %></th>
         <th><%= t("admin.comments.to_export.comments") %></th>
         <th><%= t("admin.comments.to_export.actions") %></th>
       </tr>
@@ -21,6 +22,11 @@
         <tr id="<%= dom_id(process) %>" class="debates">
           <td class="text-center"><%= process.id %></td>
           <td><%= process.title %></td>
+          <td>
+            <%- if process.author.present? %>
+              <%= link_to process.author.name, user_path(process.author), target: '_blank' %>
+            <% end %>
+          </td>
           <td><%= process.total_comments %></td>
           <td>
             <%= link_to export_admin_comments_path(process_id: process.id), title: t("admin.comments.to_export.table_link_title"), class: "button hollow big expanded", target: '_blank' do %>
