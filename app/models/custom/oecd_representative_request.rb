@@ -1,5 +1,6 @@
 class OecdRepresentativeRequest < ApplicationRecord
   extend Enumerize
+  include Notifiable
 
   belongs_to :user, touch: true
   delegate :name, :email, :name_and_email, to: :user
@@ -18,5 +19,13 @@ class OecdRepresentativeRequest < ApplicationRecord
 
   def reject!
     update(status: :rejected)
+  end
+
+  def notifiable_title
+    "OECD Representative Request"
+  end
+
+  def notifiable_body
+    message
   end
 end

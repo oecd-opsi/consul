@@ -73,13 +73,11 @@ describe OecdRepresentativeRequestsController do
     let(:resource_params) { { message: Faker::Lorem.sentence } }
     let(:admin) { create(:administrator) }
     let(:manager) { create(:manager) }
-    let(:mailer_mock) { double }
 
     context "without any pending requests" do
       before do
         sign_in user
-        allow(Custom::NotificationsMailer).to receive(:new_oecd_representative_request).and_return(mailer_mock)
-        allow(mailer_mock).to receive(:deliver_later)
+        allow(RequestNotifier).to receive(:notify!)
         admin
         manager
         subject
@@ -101,22 +99,24 @@ describe OecdRepresentativeRequestsController do
         end
 
         it "sends notifications to admins and managers" do
-          expect(Custom::NotificationsMailer).to have_received(:new_oecd_representative_request).twice
+          expect(RequestNotifier).to have_received(:notify!).twice
         end
 
         it "sends notification to admins" do
-          expect(Custom::NotificationsMailer)
-            .to have_received(:new_oecd_representative_request).with(
-              admin.id,
-              assigns[:oecd_representative_request].id
+          expect(RequestNotifier)
+            .to have_received(:notify!).with(
+              admin.user,
+              assigns[:oecd_representative_request],
+              :new
             )
         end
 
-        it "sends notificationsto manager" do
-          expect(Custom::NotificationsMailer)
-            .to have_received(:new_oecd_representative_request).with(
-              manager.id,
-              assigns[:oecd_representative_request].id
+        it "sends notifications to manager" do
+          expect(RequestNotifier)
+            .to have_received(:notify!).with(
+              manager.user,
+              assigns[:oecd_representative_request],
+              :new
             )
         end
       end
@@ -133,7 +133,7 @@ describe OecdRepresentativeRequestsController do
         end
 
         it "does not send any notifications" do
-          expect(Custom::NotificationsMailer).not_to have_received(:new_oecd_representative_request)
+          expect(RequestNotifier).not_to have_received(:notify!)
         end
       end
     end

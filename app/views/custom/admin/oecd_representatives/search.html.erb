@@ -10,7 +10,7 @@
       <thead>
         <th scope="col"><%= t("admin.oecd_representatives.index.name") %></th>
         <th scope="col"><%= t("admin.oecd_representatives.index.email") %></th>
-        <th scope="col" class="small-3"><%= t("admin.shared.actions") %></th>
+        <th scope="col"><%= t("admin.shared.actions") %></th>
       </thead>
       <tbody>
         <% @users.each do |user| %>
@@ -19,11 +19,14 @@
             <td><%= user.email %></td>
             <td class="text-right">
               <% if user.oecd_representative? && user.oecd_representative.persisted? %>
-                <%= link_to t("admin.oecd_representatives.oecd_representative.delete"),
-                            admin_oecd_representative_path(user.oecd_representative),
-                            method: :delete,
-                            "data-confirm": "Are you sure?",
-                            class: "button hollow alert expanded" %>
+                <div class="small-4 column">
+                  <%= link_to t("admin.oecd_representatives.oecd_representative.delete"),
+                              admin_oecd_representative_path(user.oecd_representative),
+                              method: :delete,
+                              "data-confirm": "Are you sure?",
+                              class: "button hollow alert expanded small" %>
+                </div>
+                <%= render 'additional_buttons', oecd_representative: user.oecd_representative %>
               <% elsif can?(:promote_to_oecd_representative, user) %>
                 <%= link_to t("admin.oecd_representatives.oecd_representative.add"),
                             { controller: "admin/oecd_representatives",

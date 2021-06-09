@@ -11,7 +11,7 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def promote_to_admin
-    @user.create_administrator
+    @user.promote_to_admin!
 
     redirect_to admin_users_path, notice: t("admin.users.promote_to_admin.success")
   end
@@ -20,5 +20,17 @@ class Admin::UsersController < Admin::BaseController
     @user.create_oecd_representative
 
     redirect_to admin_users_path, notice: t("admin.users.promote_to_oecd_representative.success")
+  end
+
+  def demote_to_user
+    @user.demote_to_user!
+
+    redirect_to admin_users_path, notice: t("admin.users.demote_to_user.success")
+  end
+
+  def demote_to_oecd_representative
+    @user.demote_to_oecd_representative!
+
+    redirect_to admin_users_path, notice: t("admin.users.demote_to_oecd_representative.success")
   end
 end

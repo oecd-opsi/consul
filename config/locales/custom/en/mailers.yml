@@ -133,8 +133,18 @@ en:
       text_9: "You will also find this new recommended dissemination action..."
       text_10: "You sure have more resources to use!"
       dashboard_button: "Go ahead, discover them!"
-    oecd_representative_request:
-      subject: 'New OECD Representative request'
-      title: 'New OECD Representative request'
+    new_oecd_representative_request:
+      subject: 'New OECD Representative Request'
+      title: 'New OECD Representative Request'
       hi: "Hello %{name}"
-      content: "There is a new OECD Representative request awaiting your review. Please click the following link for more details:"
+      content: "There is a new OECD Representative Request awaiting your review. Please click the following link for more details:"
+    accepted_oecd_representative_request:
+      subject: 'OECD Representative Request accepted'
+      title: 'OECD Representative Request'
+      hi: "Hello %{name}"
+      content: "Your OECD Representative Request has been accepted."
+    rejected_oecd_representative_request:
+      subject: 'OECD Representative Request rejected'
+      title: 'OECD Representative Request'
+      hi: "Hello %{name}"
+      content: "Your OECD Representative Request has been rejected."

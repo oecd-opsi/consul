@@ -92,4 +92,36 @@ describe "Admin OECD representatives" do
       expect(page).not_to have_content(oecd_representative2.email)
     end
   end
+
+  scenario "Demote the OECD Representative to Standard user" do
+    fill_in "Search user by name or email", with: oecd_representative.email
+    click_button "Search"
+
+    click_link I18n.t("admin.users.actions.demote_to_user")
+
+    visit admin_oecd_representatives_path
+
+    within("#oecd_representatives") do
+      expect(page).not_to have_content oecd_representative.name
+    end
+  end
+
+  scenario "Promote the OECD Representative to Admin user" do
+    fill_in "Search user by name or email", with: oecd_representative.email
+    click_button "Search"
+
+    click_link I18n.t("admin.users.actions.promote_admin")
+
+    visit admin_oecd_representatives_path
+
+    within("#oecd_representatives") do
+      expect(page).not_to have_content oecd_representative.name
+    end
+
+    visit admin_administrators_path
+
+    within("#administrators") do
+      expect(page).to have_content oecd_representative.name
+    end
+  end
 end

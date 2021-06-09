@@ -36,6 +36,21 @@
                 <% end %>
               </div>
           <% end %>
+            <%- if can?(:demote_to_oecd_representative, user) %>
+              <div class="small-6 column">
+                <%= link_to demote_to_oecd_representative_admin_user_path(user), "data-confirm": "Are you sure?", title:  t("admin.users.actions.demote_to_oecd_representative"), class: "button hollow small expanded" do %>
+                  <%= t("admin.users.actions.demote_to_oecd_representative") %>
+                <% end %>
+              </div>
+            <% end %>
+
+            <%- if can?(:demote_to_user, user) %>
+              <div class="small-6 column">
+                <%= link_to demote_to_user_admin_user_path(user), "data-confirm": "Are you sure?", title: t("admin.users.actions.demote_to_user"), class: "button hollow small expanded" do %>
+                  <%= t("admin.users.actions.demote_to_user") %>
+                <% end %>
+              </div>
+            <% end %>
           </td>
         </tr>
       <% end %>

@@ -48,6 +48,17 @@ describe Management::SessionsController do
       expect(flash[:alert]).to eq "You do not have permission to access this page."
       expect(session[:manager]).to be_nil
     end
+
+    it "redirects to given return path if user has management access" do
+      redirect_url = admin_oecd_representative_requests_path
+      user = create(:administrator).user
+      session[:return_to] = redirect_url
+      sign_in user
+
+      get :create
+      expect(response).to redirect_to(admin_oecd_representative_requests_path)
+      expect(session[:manager][:login]).to eq "admin_user_#{user.id}"
+    end
   end
 
   describe "Sign out" do

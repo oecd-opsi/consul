@@ -279,6 +279,15 @@ en:
         replies_to:
           one: Someone replied to your comment on
           other: There are %{count} new replies to your comment on
+        oecd_representative_request_created:
+          one: Someone sent a new
+          other: There are %{count} new
+        oecd_representative_request_accepted:
+          one: We accepted your
+          other: We accepted your
+        oecd_representative_request_rejected:
+          one: We rejected your
+          other: We rejected your
       mark_as_read: Mark as read
       mark_as_unread: Mark as unread
       notifiable_hidden: This resource is not available anymore.

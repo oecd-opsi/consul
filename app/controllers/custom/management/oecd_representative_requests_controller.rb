@@ -1,5 +1,7 @@
 class Management::OecdRepresentativeRequestsController < Management::BaseController
   before_action :authenticate_user!
+  before_action :auto_sign_in_manager
+
   load_and_authorize_resource
 
   def index
@@ -11,6 +13,7 @@ class Management::OecdRepresentativeRequestsController < Management::BaseControl
 
   def accept
     @oecd_representative_request.accept!
+    RequestNotifier.notify!(@oecd_representative_request.user, @oecd_representative_request, :accepted)
 
     redirect_to management_oecd_representative_request_path(@oecd_representative_request),
                 notice: I18n.t("management.oecd_representative_requests.actions.accepted")
@@ -18,6 +21,7 @@ class Management::OecdRepresentativeRequestsController < Management::BaseControl
 
   def reject
     @oecd_representative_request.reject!
+    RequestNotifier.notify!(@oecd_representative_request.user, @oecd_representative_request, :rejected)
 
     redirect_to management_oecd_representative_request_path(@oecd_representative_request),
                 notice: I18n.t("management.oecd_representative_requests.actions.rejected")
@@ -28,6 +32,14 @@ class Management::OecdRepresentativeRequestsController < Management::BaseControl
   # disable default current user and ability settings of Management Controllers and use CanCanCan instead
     def verify_manager
       true
+    end
+
+    # allow accessing OECD Requests without visiting manager sign in path
+    def auto_sign_in_manager
+      return true if session[:manager]
+
+      session[:return_to] = request.path
+      redirect_to management_sign_in_path
     end
 
     def current_user

@@ -26,7 +26,7 @@ class User < ApplicationRecord
     oauth_user            = User.find_by(email: oauth_email) if oauth_email_confirmed
     oauth_username        = auth.dig(:extra, :raw_info, "#{ENV["AUTH0_METADATA_NAMESPACE"]}app_metadata",
                                      "username") || auth.info.username || auth.info.nickname ||
-                                      auth.info.name || auth.uid
+      auth.info.name || auth.uid
     oauth_name            = auth.info.name || auth.dig(:extra, :raw_info, :name) || oauth_username
 
     user = oauth_user || User.new(
@@ -103,5 +103,20 @@ class User < ApplicationRecord
       unconfirmed_phone:        nil
     )
     identities.destroy_all
+  end
+
+  def promote_to_admin!
+    create_administrator unless administrator?
+    oecd_representative.destroy if oecd_representative?
+  end
+
+  def demote_to_user!
+    administrator.destroy if administrator?
+    oecd_representative.destroy if oecd_representative?
+  end
+
+  def demote_to_oecd_representative!
+    administrator.destroy if administrator?
+    create_oecd_representative unless oecd_representative?
   end
 end

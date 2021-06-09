@@ -119,6 +119,10 @@ namespace :admin do
 
   resources :administrators, only: [:index, :create, :destroy, :edit, :update] do
     get :search, on: :collection
+    member do
+      get :demote_to_user
+      get :demote_to_oecd_representative
+    end
   end
 
   resources :oecd_representatives, only: [:index, :create, :destroy] do
@@ -134,6 +138,8 @@ namespace :admin do
     member do
       get :promote_to_admin
       get :promote_to_oecd_representative
+      get :demote_to_user
+      get :demote_to_oecd_representative
     end
   end
 

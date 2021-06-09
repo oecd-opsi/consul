@@ -124,4 +124,28 @@ describe "Admin administrators" do
       expect(page).to have_content("Admin Alias")
     end
   end
+
+  scenario "Demote the Admin user to Standard user" do
+    within "#administrator_#{user_administrator.id}" do
+      click_on I18n.t("admin.users.actions.demote_to_user")
+    end
+
+    visit admin_administrators_path
+
+    within("#administrators") do
+      expect(page).not_to have_content user_administrator.name
+    end
+  end
+
+  scenario "Demote the Admin user to OECD Representative" do
+    within "#administrator_#{user_administrator.id}" do
+      click_on I18n.t("admin.users.actions.demote_to_oecd_representative")
+    end
+
+    visit admin_administrators_path
+
+    within("#administrators") do
+      expect(page).not_to have_content user_administrator.name
+    end
+  end
 end

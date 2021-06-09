@@ -1,0 +1,11 @@
+<div class="small-4 column">
+  <%= link_to demote_to_oecd_representative_admin_user_path(administrator.user), "data-confirm": "Are you sure?", title: t("admin.users.actions.promote_oecd_representative"), class: "button hollow small expanded" do %>
+    <%= t("admin.users.actions.demote_to_oecd_representative") %>
+  <% end %>
+</div>
+
+<div class="small-4 column">
+  <%= link_to demote_to_user_admin_user_path(administrator.user), "data-confirm": "Are you sure?", title: t("admin.users.actions.demote_to_user"), class: "button hollow small expanded" do %>
+    <%= t("admin.users.actions.demote_to_user") %>
+  <% end %>
+</div>
