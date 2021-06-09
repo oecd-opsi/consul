@@ -8,6 +8,8 @@ module MailerHelper
 
     return legislation_process_proposal_url(commentable.legislation_process_id,
                                             commentable.id) if commentable.is_a?(Legislation::Proposal)
+    return legislation_process_question_url(commentable.legislation_process_id,
+                                            commentable.id) if commentable.is_a?(Legislation::Question)
   end
 
   def valuation_comments_url(commentable)
