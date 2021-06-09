@@ -501,8 +501,8 @@ en:
           process: Process
           debate_phase: Debate phase
           draft_phase: Draft phase
-          draft_phase_description: If this phase is active, the process won't be listed on the engagement processes index. This allows to
-            preview the process and create content before the start of the open process.
+          draft_phase_description: If this phase is active, the process won't be listed on the engagement processes index.
+            This allows you to preview the process and create content before the start of the open process.
           draft_publication_date: Draft publication date
           result_publication_date: Result publication date
           allegations_phase: Comments phase
