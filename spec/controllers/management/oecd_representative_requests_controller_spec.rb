@@ -134,6 +134,7 @@ describe Management::OecdRepresentativeRequestsController do
     context "with signed in manager user" do
       context "when the request can be found" do
         before do
+          allow(RequestNotifier).to receive(:notify!)
           sign_in_as_manager
           subject
         end
@@ -148,6 +149,12 @@ describe Management::OecdRepresentativeRequestsController do
 
         it "accepts the request" do
           expect(oecd_representative_request.reload.status).to eq(:accepted)
+        end
+
+        it "notifies the requester" do
+          expect(RequestNotifier).to have_received(:notify!).with(oecd_representative_request.user,
+                                                                  oecd_representative_request,
+                                                                  :accepted)
         end
       end
 
@@ -204,6 +211,7 @@ describe Management::OecdRepresentativeRequestsController do
     context "with signed in manager user" do
       context "when the request can be found" do
         before do
+          allow(RequestNotifier).to receive(:notify!)
           sign_in_as_manager
           subject
         end
@@ -218,6 +226,12 @@ describe Management::OecdRepresentativeRequestsController do
 
         it "rejects the request" do
           expect(oecd_representative_request.reload.status).to eq(:rejected)
+        end
+
+        it "notifies the requester" do
+          expect(RequestNotifier).to have_received(:notify!).with(oecd_representative_request.user,
+                                                                  oecd_representative_request,
+                                                                  :rejected)
         end
       end
 

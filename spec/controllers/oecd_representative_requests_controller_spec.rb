@@ -106,15 +106,17 @@ describe OecdRepresentativeRequestsController do
           expect(RequestNotifier)
             .to have_received(:notify!).with(
               admin.user,
-              assigns[:oecd_representative_request]
+              assigns[:oecd_representative_request],
+              :new
             )
         end
 
-        it "sends notificationsto manager" do
+        it "sends notifications to manager" do
           expect(RequestNotifier)
             .to have_received(:notify!).with(
               manager.user,
-              assigns[:oecd_representative_request]
+              assigns[:oecd_representative_request],
+              :new
             )
         end
       end

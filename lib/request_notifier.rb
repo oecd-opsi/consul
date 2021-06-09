@@ -1,11 +1,12 @@
 class RequestNotifier
-  def initialize(user, request)
+  def initialize(user, request, action)
     @user = user
     @request = request
+    @action = action
   end
 
-  def self.notify!(user, request)
-    new(user, request).notify!
+  def self.notify!(user, request, action)
+    new(user, request, action).notify!
   end
 
   def notify!
@@ -20,7 +21,8 @@ class RequestNotifier
     end
 
     def send_email
-      Custom::NotificationsMailer.new_oecd_representative_request(
+      Custom::NotificationsMailer.send(
+        "#{@action}_oecd_representative_request",
         @user.id,
         @request.id
       ).deliver_later

@@ -13,6 +13,7 @@ class Management::OecdRepresentativeRequestsController < Management::BaseControl
 
   def accept
     @oecd_representative_request.accept!
+    RequestNotifier.notify!(@oecd_representative_request.user, @oecd_representative_request, :accepted)
 
     redirect_to management_oecd_representative_request_path(@oecd_representative_request),
                 notice: I18n.t("management.oecd_representative_requests.actions.accepted")
@@ -20,6 +21,7 @@ class Management::OecdRepresentativeRequestsController < Management::BaseControl
 
   def reject
     @oecd_representative_request.reject!
+    RequestNotifier.notify!(@oecd_representative_request.user, @oecd_representative_request, :rejected)
 
     redirect_to management_oecd_representative_request_path(@oecd_representative_request),
                 notice: I18n.t("management.oecd_representative_requests.actions.rejected")

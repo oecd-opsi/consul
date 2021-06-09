@@ -30,11 +30,11 @@ class OecdRepresentativeRequestsController < ApplicationController
 
     def send_notifications
       Administrator.all.each do |administrator|
-        RequestNotifier.notify!(administrator.user, @oecd_representative_request)
+        RequestNotifier.notify!(administrator.user, @oecd_representative_request, :new)
       end
 
       Manager.all.each do |manager|
-        RequestNotifier.notify!(manager.user, @oecd_representative_request)
+        RequestNotifier.notify!(manager.user, @oecd_representative_request, :new)
       end
     end
 end

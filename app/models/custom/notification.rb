@@ -10,9 +10,17 @@ class Notification < ApplicationRecord
     when "AdminNotification"
       nil
     when "OecdRepresentativeRequest"
-      "oecd_representative_request_created"
+      request_notifiable_action
     else
       "comments_on"
+    end
+  end
+
+  def request_notifiable_action
+    if user.administrator? || user.manager?
+      "oecd_representative_request_created"
+    else
+      "oecd_representative_request_#{notifiable.status}"
     end
   end
 end
