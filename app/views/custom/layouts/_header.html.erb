@@ -120,6 +120,15 @@ if show_admin_menu?(current_user)
     menu_items_admin.push({ title: t("layouts.header.officing"), href: officing_root_path })
   end
 
+  if current_user.administrator?
+    menu_items_admin.push(
+      {
+        title: t("layouts.header.oecd_representative_requests"),
+        href:  admin_oecd_representative_requests_path
+      }
+    )
+  end
+
   menu_items.push({ title: t("layouts.header.administration_menu"), children: menu_items_admin })
 end
 

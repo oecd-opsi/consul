@@ -231,7 +231,7 @@ en:
       participation_title: Participation
       privacy: Privacy Policy
     header:
-      administration_menu: Menu
+      administration_menu: Engagement Menu
       administration: Administration
       oecd_representative: OECD Representation Interface
       available_locales: Available languages
@@ -251,6 +251,7 @@ en:
       proposals: Proposals
       poll_questions: Voting
       budgets: Participatory budgeting
+      oecd_representative_requests: Upgrade Requests
       notification_item:
         new_notifications:
           one: You have a new notification
