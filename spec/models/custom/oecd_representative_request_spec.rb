@@ -43,4 +43,16 @@ describe OecdRepresentativeRequest do
       expect(resource.reload.user).not_to be_oecd_representative
     end
   end
+
+  describe "notifiable_title" do
+    it "uses model name as notifiable_title" do
+      expect(resource.notifiable_title).to eq "OECD Representative Request"
+    end
+  end
+
+  describe "notifiable_body" do
+    it "uses the message as notifiable_body" do
+      expect(resource.notifiable_body).to eq resource.message
+    end
+  end
 end

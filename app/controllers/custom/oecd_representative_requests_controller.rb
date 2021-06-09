@@ -29,19 +29,12 @@ class OecdRepresentativeRequestsController < ApplicationController
     end
 
     def send_notifications
-      Administrator.all.each do |user|
-        notify_user(user)
+      Administrator.all.each do |administrator|
+        RequestNotifier.notify!(administrator.user, @oecd_representative_request)
       end
 
-      Manager.all.each do |user|
-        notify_user(user)
+      Manager.all.each do |manager|
+        RequestNotifier.notify!(manager.user, @oecd_representative_request)
       end
-    end
-
-    def notify_user(user)
-      Custom::NotificationsMailer.new_oecd_representative_request(
-        user.id,
-        @oecd_representative_request.id
-      ).deliver_later
     end
 end
