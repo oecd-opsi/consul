@@ -1,9 +1,9 @@
 require "rails_helper"
 
-describe Custom::NotificationsMailer do
+describe NotificationsMailer do
   describe "#new_oecd_representative_request" do
     let(:request) { create(:oecd_representative_request) }
-    let(:email) { Custom::NotificationsMailer.new_oecd_representative_request(user.id, request.id) }
+    let(:email) { NotificationsMailer.new_oecd_representative_request(user.id, request.id) }
 
     context "when recipient is an admin" do
       let(:user) { create(:administrator).user }
@@ -32,7 +32,7 @@ describe Custom::NotificationsMailer do
 
   describe "#accepted_oecd_representative_request" do
     let(:request) { create(:oecd_representative_request) }
-    let(:email) { Custom::NotificationsMailer.accepted_oecd_representative_request(user.id, request.id) }
+    let(:email) { NotificationsMailer.accepted_oecd_representative_request(user.id, request.id) }
 
     let(:user) { request.user }
 
@@ -47,7 +47,7 @@ describe Custom::NotificationsMailer do
 
   describe "#rejected_oecd_representative_request" do
     let(:request) { create(:oecd_representative_request) }
-    let(:email) { Custom::NotificationsMailer.rejected_oecd_representative_request(user.id, request.id) }
+    let(:email) { NotificationsMailer.rejected_oecd_representative_request(user.id, request.id) }
 
     let(:user) { request.user }
 

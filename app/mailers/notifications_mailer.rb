@@ -1,4 +1,4 @@
-class Custom::NotificationsMailer < ApplicationMailer
+class NotificationsMailer < ApplicationMailer
   def new_oecd_representative_request(recipient_id, request_id)
     fetch_resources(recipient_id, request_id)
     with_user(@recipient) do

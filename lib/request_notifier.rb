@@ -21,7 +21,7 @@ class RequestNotifier
     end
 
     def send_email
-      Custom::NotificationsMailer.send(
+      NotificationsMailer.send(
         "#{@action}_oecd_representative_request",
         @user.id,
         @request.id

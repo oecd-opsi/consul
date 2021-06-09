@@ -7,7 +7,7 @@ describe RequestNotifier do
 
   describe "#notify!" do
     before do
-      allow(Custom::NotificationsMailer).to receive(mailer_method)
+      allow(NotificationsMailer).to receive(mailer_method)
                                               .and_return(mailer_mock)
       allow(mailer_mock).to receive(:deliver_later)
     end
@@ -17,7 +17,7 @@ describe RequestNotifier do
 
       it "sends an email to user" do
         RequestNotifier.notify!(user, request, :new)
-        expect(Custom::NotificationsMailer).to have_received(mailer_method)
+        expect(NotificationsMailer).to have_received(mailer_method)
                                                  .with(user.id, request.id)
         expect(mailer_mock).to have_received(:deliver_later)
       end
@@ -34,7 +34,7 @@ describe RequestNotifier do
 
       it "sends an email to user" do
         RequestNotifier.notify!(user, request, :accepted)
-        expect(Custom::NotificationsMailer).to have_received(mailer_method)
+        expect(NotificationsMailer).to have_received(mailer_method)
                                                  .with(user.id, request.id)
         expect(mailer_mock).to have_received(:deliver_later)
       end
@@ -51,7 +51,7 @@ describe RequestNotifier do
 
       it "sends an email to user" do
         RequestNotifier.notify!(user, request, :rejected)
-        expect(Custom::NotificationsMailer).to have_received(mailer_method)
+        expect(NotificationsMailer).to have_received(mailer_method)
                                                  .with(user.id, request.id)
         expect(mailer_mock).to have_received(:deliver_later)
       end
