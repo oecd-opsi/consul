@@ -65,6 +65,11 @@ FactoryBot.define do
       after(:create) { |user| create(:comment, author: user) }
     end
 
+    trait :comment_notifications_disabled do
+      email_on_comment { false }
+      email_on_comment_reply { false }
+    end
+
     transient do
       votables { [] }
       followables { [] }
