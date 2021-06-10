@@ -595,4 +595,18 @@ describe User do
       end
     end
   end
+
+  describe "preferences" do
+    describe "email_on_comment" do
+      it "is false by default" do
+        expect(subject.email_on_comment).to eq(true)
+      end
+    end
+
+    describe "email_on_comment_reply" do
+      it "is false by default" do
+        expect(subject.email_on_comment_reply).to eq(true)
+      end
+    end
+  end
 end

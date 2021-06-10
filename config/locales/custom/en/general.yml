@@ -181,6 +181,7 @@ en:
     geozone: geozone
     legislation/draft_version: draft
     legislation/process: process
+    legislation/proposal: proposal
     legislation/question: question
     poll/shift: Shift
     poll/question/answer: Answer
