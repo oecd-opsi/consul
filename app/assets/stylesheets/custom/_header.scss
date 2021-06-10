@@ -185,6 +185,13 @@
   }
 }
 
+.c-header__menu-element {
+  &[data-admin] {
+    border: 1px solid #dee0e3;
+    border-bottom: 0;
+  }
+}
+
 .c-header__menu-link {
   font: inherit;
   color: inherit;

@@ -129,7 +129,7 @@ if show_admin_menu?(current_user)
     )
   end
 
-  menu_items.push({ title: t("layouts.header.administration_menu"), children: menu_items_admin })
+  menu_items.push({ title: t("layouts.header.administration_menu"), children: menu_items_admin, admin: true })
 end
 
 
@@ -284,7 +284,7 @@ end
       <div class="column medium-6 large-8 hide-for-small-only c-header__desktop-menu-column">
         <ul class="c-header__menu-list float-right">
           <% menu_items.reject{|v| v[:mobileOnly]}.each do |item| %>
-            <li class="c-header__menu-element">
+            <%= content_tag :li, class: 'c-header__menu-element', 'data-admin': item[:admin] ? '' : nil do %>
               <% a_attrs = item[:href].blank? ? { href: '#', 'aria-hidden': 'true', tabindex: '-1' } : { href: item[:href] } %>
               <%= content_tag :a, { class: 'c-header__menu-link' }.merge(a_attrs).merge(item[:attrs] || {}) do %>
                 <%= item[:title] %>
@@ -307,7 +307,7 @@ end
                   </div>
                 </div>
               <% end %>
-            </li>
+            <% end %>
           <% end %>
           <%= raw content_block("top_links", I18n.locale) %>
         </ul>
