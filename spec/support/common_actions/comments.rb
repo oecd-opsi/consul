@@ -9,7 +9,7 @@ module Comments
   def reply_to(original_user, manuela = nil)
     manuela ||= create(:user)
 
-    debate  = create(:debate)
+    debate  = create(:debate, author: create(:user, :comment_notifications_disabled))
     comment = create(:comment, commentable: debate, user: original_user)
 
     login_as(manuela)

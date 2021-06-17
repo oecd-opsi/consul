@@ -161,7 +161,6 @@ FactoryBot.define do
   factory :legislation_proposal, class: "Legislation::Proposal" do
     sequence(:title) { |n| "Proposal #{n} for a legislation" }
     summary { "This law should include..." }
-    terms_of_service { "1" }
     process factory: :legislation_process
     author factory: :user
   end

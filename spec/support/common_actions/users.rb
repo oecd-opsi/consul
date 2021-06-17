@@ -2,7 +2,7 @@ module Users
   def sign_up(email = "manuela@consul.dev", password = "judgementday")
     visit "/"
 
-    click_link "Register"
+    first(:link, I18n.t("devise_views.menu.login_items.signup")).click
 
     fill_in "user_username",              with: "Manuela Carmena #{rand(99999)}"
     fill_in "user_email",                 with: email
@@ -10,12 +10,12 @@ module Users
     fill_in "user_password_confirmation", with: password
     check "user_terms_of_service"
 
-    click_button "Register"
+    click_button I18n.t("devise_views.users.registrations.new.submit")
   end
 
   def login_through_form_with_email_and_password(email = "manuela@consul.dev", password = "judgementday")
     visit root_path
-    click_link "Sign in"
+    first(:link, I18n.t("devise_views.menu.login_items.login")).click
 
     fill_in "user_login", with: email
     fill_in "user_password", with: password
@@ -25,7 +25,8 @@ module Users
 
   def login_through_form_as(user)
     visit root_path
-    click_link "Sign in"
+
+    first(:link, I18n.t("devise_views.menu.login_items.login")).click
 
     fill_in "user_login", with: user.email
     fill_in "user_password", with: user.password
@@ -35,7 +36,8 @@ module Users
 
   def login_through_form_as_officer(user)
     visit root_path
-    click_link "Sign in"
+
+    first(:link, I18n.t("devise_views.menu.login_items.login")).click
 
     fill_in "user_login", with: user.email
     fill_in "user_password", with: user.password
@@ -47,6 +49,11 @@ module Users
   def login_as_manager(manager = create(:manager))
     login_as(manager.user)
     visit management_sign_in_path
+  end
+
+  def sign_in_as_manager(manager = create(:manager))
+    sign_in manager.user
+    session[:manager] = { "login" => "manager_user_#{manager.user_id}" }
   end
 
   def login_managed_user(user)
@@ -63,11 +70,16 @@ module Users
     expect(page).to have_content "Your account has been confirmed"
   end
 
+  def confirm_newly_created_user
+    user = User.last
+    user.reload && user.confirm
+  end
+
   def reset_password
     create(:user, email: "manuela@consul.dev")
 
     visit "/"
-    click_link "Sign in"
+    first(:link, I18n.t("devise_views.menu.login_items.login")).click
     click_link "Forgotten your password?"
 
     fill_in "user_email", with: "manuela@consul.dev"
@@ -75,10 +87,19 @@ module Users
   end
 
   def expect_to_be_signed_in
-    expect(find(".top-bar-right")).to have_content "My account"
+    expect(find("a[href='#{account_path}']")).to be_visible
   end
 
   def expect_not_to_be_signed_in
-    expect(find(".top-bar-right")).not_to have_content "My account"
+    expect { find("a[href='#{account_path}']") }.to raise_error(Capybara::ElementNotFound)
+  end
+
+  def sign_out(close_notification: true)
+    find("a[href='#{account_path}'][title='#{I18n.t("layouts.header.my_account_link")}']").hover
+    click_link I18n.t("devise_views.menu.login_items.logout")
+
+    if close_notification && page.has_css?("button.close-button")
+      first("div.callout").find("button.close-button").click
+    end
   end
 end

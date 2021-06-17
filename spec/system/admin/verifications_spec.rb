@@ -14,16 +14,16 @@ describe "Incomplete verifications" do
 
     visit admin_verifications_path
 
-    expect(page).to have_content(incompletely_verified_user1.username)
-    expect(page).to have_content(incompletely_verified_user2.username)
-    expect(page).not_to have_content(never_tried_to_verify_user.username)
-    expect(page).not_to have_content(verified_user.username)
+    expect(page).to have_content(incompletely_verified_user1.display_name)
+    expect(page).to have_content(incompletely_verified_user2.display_name)
+    expect(page).not_to have_content(never_tried_to_verify_user.display_name)
+    expect(page).not_to have_content(verified_user.display_name)
   end
 
   scenario "Search" do
-    create(:user, :level_two, username: "Juan Carlos")
-    create(:user, :incomplete_verification, username: "Juan_anonymous")
-    create(:user, :incomplete_verification, username: "Isabel_anonymous")
+    create(:user, :level_two, display_name: "Juan Carlos")
+    create(:user, :incomplete_verification, display_name: "Juan_anonymous")
+    create(:user, :incomplete_verification, display_name: "Isabel_anonymous")
 
     visit admin_verifications_path
 

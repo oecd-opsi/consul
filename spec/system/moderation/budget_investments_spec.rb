@@ -1,20 +1,16 @@
 require "rails_helper"
-
-describe "Moderate budget investments" do
-  let(:budget)      { create(:budget) }
-  let(:heading)     { create(:budget_heading, budget: budget, price: 666666) }
-  let(:mod)         { create(:moderator) }
-  let!(:investment) { create(:budget_investment, heading: heading, author: create(:user)) }
+shared_examples "Budget investments moderation" do
+  before { investment }
 
   scenario "Disabled with a feature flag" do
     Setting["process.budgets"] = nil
-    login_as(mod.user)
+    login_as(moderator.user)
 
     expect { visit moderation_budget_investments_path }.to raise_exception(FeatureFlags::FeatureDisabled)
   end
 
   scenario "Hiding an investment", :js do
-    login_as(mod.user)
+    login_as(moderator.user)
     visit budget_investment_path(budget, investment)
 
     accept_confirm { click_link "Hide" }
@@ -27,7 +23,7 @@ describe "Moderate budget investments" do
   end
 
   scenario "Hiding an investment's author", :js do
-    login_as(mod.user)
+    login_as(moderator.user)
     visit budget_investment_path(budget, investment)
 
     accept_confirm { click_link "Hide author" }
@@ -39,21 +35,28 @@ describe "Moderate budget investments" do
     expect(page).not_to have_content(investment.title)
   end
 
-  scenario "Can not hide own investment" do
-    investment.update!(author: mod.user)
-    login_as(mod.user)
+  scenario "Hiding own investment" do
+    user = moderator.user
+    investment.update!(author: user)
+    login_as(user)
 
     visit budget_investment_path(budget, investment)
-
-    within "#budget_investment_#{investment.id}" do
-      expect(page).not_to have_link("Hide")
-      expect(page).not_to have_link("Hide author")
+    if user.administrator?
+      within "#budget_investment_#{investment.id}" do
+        expect(page).to have_link("Hide")
+        expect(page).not_to have_link("Hide author")
+      end
+    else
+      within "#budget_investment_#{investment.id}" do
+        expect(page).not_to have_link("Hide")
+        expect(page).not_to have_link("Hide author")
+      end
     end
   end
 
   describe "/moderation/ screen" do
     before do
-      login_as(mod.user)
+      login_as(moderator.user)
     end
 
     describe "moderate in bulk" do
@@ -196,23 +199,23 @@ describe "Moderate budget investments" do
 
     scenario "sorting investments" do
       flagged_investment = create(:budget_investment,
-        heading: heading,
-        title: "Flagged investment",
-        created_at: Time.current - 1.day,
-        flags_count: 5
+                                  heading: heading,
+                                  title: "Flagged investment",
+                                  created_at: Time.current - 1.day,
+                                  flags_count: 5
       )
 
       flagged_new_investment = create(:budget_investment,
-        heading: heading,
-        title: "Flagged new investment",
-        created_at: Time.current - 12.hours,
-        flags_count: 3
+                                      heading: heading,
+                                      title: "Flagged new investment",
+                                      created_at: Time.current - 12.hours,
+                                      flags_count: 3
       )
 
       latest_investment = create(:budget_investment,
-        heading: heading,
-        title: "Latest investment",
-        created_at: Time.current
+                                 heading: heading,
+                                 title: "Latest investment",
+                                 created_at: Time.current
       )
 
       visit moderation_budget_investments_path(order: "created_at")
@@ -233,5 +236,25 @@ describe "Moderate budget investments" do
       expect(flagged_investment.title).to appear_before(flagged_new_investment.title)
       expect(flagged_new_investment.title).to appear_before(latest_investment.title)
     end
+  end
+end
+describe "Moderate budget investments" do
+  let(:budget)      { create(:budget) }
+  let(:heading)     { create(:budget_heading, budget: budget, price: 666666) }
+  let(:investment) { create(:budget_investment, heading: heading, author: create(:user)) }
+
+  context "when logged in as a moderator" do
+    let(:moderator) { create(:moderator) }
+    it_behaves_like "Budget investments moderation"
+  end
+
+  context "when logged in as a admin" do
+    let(:moderator) { create(:administrator) }
+    it_behaves_like "Budget investments moderation"
+  end
+
+  context "when logged in as a manager" do
+    let(:moderator) { create(:manager) }
+    it_behaves_like "Budget investments moderation"
   end
 end

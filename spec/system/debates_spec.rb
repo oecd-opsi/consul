@@ -95,7 +95,7 @@ describe "Debates" do
     expect(page.html).to include "<title>#{debate.title}</title>"
 
     within(".social-share-button") do
-      expect(page.all("a").count).to be(4) # Twitter, Facebook, Google+, Telegram
+      expect(page.all("a").count).to be(5) # Twitter, Facebook, LinkedIn, Telegram, Email
     end
   end
 
@@ -861,8 +861,10 @@ describe "Debates" do
 
           within "#js-advanced-search" do
             expect(page).to have_select("advanced_search[date_min]", selected: "Customized")
-            expect(page).to have_selector("input[name='advanced_search[date_min]'][value*='#{7.days.ago.strftime("%d/%m/%Y")}']")
-            expect(page).to have_selector("input[name='advanced_search[date_max]'][value*='#{1.day.ago.strftime("%d/%m/%Y")}']")
+            expect(page)
+              .to have_selector("input[name='advanced_search[date_min]'][value*='#{7.days.ago.strftime("%d/%m/%Y")}']")
+            expect(page)
+              .to have_selector("input[name='advanced_search[date_max]'][value*='#{1.day.ago.strftime("%d/%m/%Y")}']")
           end
         end
       end
@@ -1038,8 +1040,9 @@ describe "Debates" do
       create(:debate, title: "Third debate has 3 votes", cached_votes_up: 3)
       create(:debate, title: "This one has 4 votes", description: "This is the fourth debate", cached_votes_up: 4)
       create(:debate, title: "Fifth debate has 5 votes", cached_votes_up: 5)
-      create(:debate, title: "Sixth debate has 6 votes", description: "This is the sixth debate",  cached_votes_up: 6)
-      create(:debate, title: "This has seven votes, and is not suggest", description: "This is the seven", cached_votes_up: 7)
+      create(:debate, title: "Sixth debate has 6 votes", description: "This is the sixth debate", cached_votes_up: 6)
+      create(:debate, title: "This has seven votes, and is not suggest",
+             description: "This is the seven", cached_votes_up: 7)
 
       login_as(create(:user))
       visit new_debate_path

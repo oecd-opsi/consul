@@ -16,7 +16,7 @@ shared_examples "notifiable in-app" do |factory_name|
 
     login_as author
     visit root_path
-    find(".icon-notification").click
+    click_notifications_icon
 
     expect(page).to have_css ".notification", count: 1
     expect(page).to have_content "Someone commented on"
@@ -107,10 +107,8 @@ shared_examples "notifiable in-app" do |factory_name|
       expect(page).to have_content "I commented on my own notifiable"
     end
 
-    within("#notifications") do
-      find(".icon-no-notification").click
-      expect(page).to have_css ".notification", count: 0
-    end
+    find(".icon-no-notification").click
+    expect(page).to have_css ".notification", count: 0
   end
 
   scenario "Author replied to his own comment", :js do
@@ -129,9 +127,7 @@ shared_examples "notifiable in-app" do |factory_name|
       expect(page).to have_content "I replied to my own comment"
     end
 
-    within("#notifications") do
-      find(".icon-no-notification").click
-      expect(page).to have_css ".notification", count: 0
-    end
+    find(".icon-no-notification").click
+    expect(page).to have_css ".notification", count: 0
   end
 end

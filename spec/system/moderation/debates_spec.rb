@@ -1,9 +1,8 @@
 require "rails_helper"
 
-describe "Moderate debates" do
+shared_examples "Debates moderation" do
   scenario "Disabled with a feature flag" do
     Setting["process.debates"] = nil
-    moderator = create(:moderator)
     login_as(moderator.user)
 
     expect { visit moderation_debates_path }.to raise_exception(FeatureFlags::FeatureDisabled)
@@ -11,7 +10,6 @@ describe "Moderate debates" do
 
   scenario "Hide", :js do
     citizen = create(:user)
-    moderator = create(:moderator)
 
     debate = create(:debate)
 
@@ -31,7 +29,6 @@ describe "Moderate debates" do
   end
 
   scenario "Can not hide own debate" do
-    moderator = create(:moderator)
     debate = create(:debate, author: moderator.user)
 
     login_as(moderator.user)
@@ -45,7 +42,6 @@ describe "Moderate debates" do
 
   describe "/moderation/ screen" do
     before do
-      moderator = create(:moderator)
       login_as(moderator.user)
     end
 
@@ -175,9 +171,17 @@ describe "Moderate debates" do
     end
 
     scenario "sorting debates" do
-      flagged_debate = create(:debate, title: "Flagged debate", created_at: Time.current - 1.day, flags_count: 5)
-      flagged_new_debate = create(:debate, title: "Flagged new debate", created_at: Time.current - 12.hours, flags_count: 3)
-      newer_debate = create(:debate, title: "Newer debate", created_at: Time.current)
+      flagged_debate = create(:debate,
+                              title: "Flagged debate",
+                              created_at: Time.current - 1.day,
+                              flags_count: 5)
+      flagged_new_debate = create(:debate,
+                                  title: "Flagged new debate",
+                                  created_at: Time.current - 12.hours,
+                                  flags_count: 3)
+      newer_debate = create(:debate,
+                            title: "Newer debate",
+                            created_at: Time.current)
 
       visit moderation_debates_path(order: "created_at")
 
@@ -197,5 +201,22 @@ describe "Moderate debates" do
       expect(flagged_debate.title).to appear_before(flagged_new_debate.title)
       expect(flagged_new_debate.title).to appear_before(newer_debate.title)
     end
+  end
+end
+
+describe "Moderate debates" do
+  context "when logged in as a moderator" do
+    let(:moderator) { create(:moderator) }
+    it_behaves_like "Debates moderation"
+  end
+
+  context "when logged in as a admin" do
+    let(:moderator) { create(:administrator) }
+    it_behaves_like "Debates moderation"
+  end
+
+  context "when logged in as a manager" do
+    let(:moderator) { create(:manager) }
+    it_behaves_like "Debates moderation"
   end
 end

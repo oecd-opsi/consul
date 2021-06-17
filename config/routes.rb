@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   draw :management
   draw :moderation
   draw :notification
+  draw :oecd_representative
   draw :officing
   draw :poll
   draw :proposal
@@ -43,4 +44,7 @@ Rails.application.routes.draw do
 
   # Static pages
   resources :pages, path: "/", only: [:show]
+
+  # Custom pages
+  get "users/sessions/confirm_login", to: "custom/users/auth0_pages#confirm_login", as: "confirm_login"
 end

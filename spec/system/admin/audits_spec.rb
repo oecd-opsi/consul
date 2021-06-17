@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "Admin change log" do
-  let(:administrator) { create(:administrator, user: create(:user, username: "Ana")) }
+  let(:administrator) { create(:administrator, user: create(:user, display_name: "Ana")) }
   before { login_as(administrator.user) }
 
   context "Investments Participatory Budgets" do

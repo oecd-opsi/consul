@@ -3,7 +3,8 @@
 
 require File.expand_path("../config/application", __FILE__)
 
-Rails.application.load_tasks if Rake::Task.tasks.empty?
+Rails.application.load_tasks
+
 KnapsackPro.load_tasks if defined?(KnapsackPro)
 
 if Rails.env.development?

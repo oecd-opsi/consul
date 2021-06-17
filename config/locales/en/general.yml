@@ -2,7 +2,7 @@ en:
   account:
     show:
       change_credentials_link: Change my credentials
-      erase_account_link: Erase my account
+      erase_account_link: Erase my consultation platform account
       finish_verification: Complete verification
       notifications: Notifications
       organization_name_label: Name of organization
@@ -299,6 +299,10 @@ en:
       sign_in: Sign in with Twitter
       sign_up: Sign up with Twitter
       name: Twitter
+    auth0:
+      sign_in: Sign in with Auth0
+      sign_up: Sign up with Auth0
+      name: Auth0
     info_sign_in: "Sign in with:"
     info_sign_up: "Sign up with:"
     or_fill: "Or fill the following form:"

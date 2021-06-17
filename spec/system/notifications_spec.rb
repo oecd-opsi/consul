@@ -102,16 +102,13 @@ describe "Notifications" do
     create(:notification, user: user)
     visit root_path
 
-    within("#notifications") do
-      expect(page).to have_css(".icon-circle")
-    end
+    expect(page).to have_css(".c-header__notifications-circle")
 
     click_notifications_icon
+
     first(".notification a").click
 
-    within("#notifications") do
-      expect(page).not_to have_css(".icon-circle")
-    end
+    expect(page).not_to have_css(".c-header__notifications-circle")
   end
 
   scenario "No notifications" do
@@ -123,7 +120,7 @@ describe "Notifications" do
     logout
     visit root_path
 
-    expect(page).not_to have_css("#notifications")
+    expect(page).not_to have_css(".c-header__notifications")
   end
 
   scenario "Notification's notifiable model no longer includes Notifiable module" do

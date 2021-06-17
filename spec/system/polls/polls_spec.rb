@@ -349,7 +349,7 @@ describe "Polls" do
         expect(page).to have_link("No")
       end
 
-      click_link "Sign out"
+      sign_out
       login_as user
       visit poll_path(poll)
       within("#poll_question_#{question.id}_answers") do
@@ -359,7 +359,7 @@ describe "Polls" do
         expect(page).to have_link("No")
       end
 
-      click_link "Sign out"
+      sign_out
       login_as user
       visit poll_path(poll)
       within("#poll_question_#{question.id}_answers") do
@@ -390,11 +390,17 @@ describe "Polls" do
       expect(page).to have_content "Vote introduced!"
 
       visit new_officing_residence_path
-      click_link "Sign out"
+
+      click_link I18n.t("devise_views.menu.login_items.logout")
+      if page.has_css?("button.close-button")
+        first("div.callout").find("button.close-button").click
+      end
+
       login_as user
       visit poll_path(poll)
 
-      expect(page).to have_content "You have already participated in a physical booth. You can not participate again."
+      expect(page).to have_content "You have already participated in a physical booth."\
+                                   " You can not participate again."
 
       within("#poll_question_#{question.id}_answers") do
         expect(page).to have_content("Yes")

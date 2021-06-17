@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191108173350) do
+ActiveRecord::Schema.define(version: 20210609120934) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -750,8 +750,10 @@ ActiveRecord::Schema.define(version: 20191108173350) do
     t.boolean "homepage_enabled", default: false
     t.text "background_color"
     t.text "font_color"
+    t.bigint "author_id"
     t.index ["allegations_end_date"], name: "index_legislation_processes_on_allegations_end_date"
     t.index ["allegations_start_date"], name: "index_legislation_processes_on_allegations_start_date"
+    t.index ["author_id"], name: "index_legislation_processes_on_author_id"
     t.index ["debate_end_date"], name: "index_legislation_processes_on_debate_end_date"
     t.index ["debate_start_date"], name: "index_legislation_processes_on_debate_start_date"
     t.index ["draft_end_date"], name: "index_legislation_processes_on_draft_end_date"
@@ -940,6 +942,20 @@ ActiveRecord::Schema.define(version: 20191108173350) do
     t.datetime "emailed_at"
     t.datetime "read_at"
     t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
+  create_table "oecd_representative_requests", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "status"
+    t.text "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_oecd_representative_requests_on_user_id"
+  end
+
+  create_table "oecd_representatives", force: :cascade do |t|
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_oecd_representatives_on_user_id"
   end
 
   create_table "organizations", id: :serial, force: :cascade do |t|
@@ -1447,8 +1463,8 @@ ActiveRecord::Schema.define(version: 20191108173350) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
-    t.boolean "email_on_comment", default: false
-    t.boolean "email_on_comment_reply", default: false
+    t.boolean "email_on_comment", default: true
+    t.boolean "email_on_comment_reply", default: true
     t.string "phone_number", limit: 30
     t.string "official_position"
     t.integer "official_level", default: 0
@@ -1491,6 +1507,7 @@ ActiveRecord::Schema.define(version: 20191108173350) do
     t.boolean "public_interests", default: false
     t.boolean "recommended_debates", default: true
     t.boolean "recommended_proposals", default: true
+    t.string "display_name"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["geozone_id"], name: "index_users_on_geozone_id"
@@ -1633,6 +1650,7 @@ ActiveRecord::Schema.define(version: 20191108173350) do
   add_foreign_key "managers", "users"
   add_foreign_key "moderators", "users"
   add_foreign_key "notifications", "users"
+  add_foreign_key "oecd_representatives", "users"
   add_foreign_key "organizations", "users"
   add_foreign_key "poll_answers", "poll_questions", column: "question_id"
   add_foreign_key "poll_booth_assignments", "polls"

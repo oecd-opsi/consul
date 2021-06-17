@@ -9,6 +9,8 @@ describe Abilities::Administrator do
 
   let(:other_user) { create(:user) }
   let(:hidden_user) { create(:user, :hidden) }
+  let(:other_administrator) { create(:administrator).user }
+  let(:oecd_representative) { create(:oecd_representative).user }
 
   let(:debate) { create(:debate) }
   let(:comment) { create(:comment) }
@@ -58,6 +60,59 @@ describe Abilities::Administrator do
   it { should be_able_to(:confirm_hide, hidden_proposal) }
   it { should be_able_to(:confirm_hide, hidden_user) }
 
+  it { should be_able_to(:promote_to_admin, other_user) }
+  it { should_not be_able_to(:promote_to_admin, other_administrator) }
+
+  describe "promote_to_oecd_representative" do
+    context "when non-standard user" do
+      before { allow(other_user).to receive(:standard_user?).and_return(false) }
+
+      it { should_not be_able_to(:promote_to_oecd_representative, other_user) }
+      it { should_not be_able_to(:promote_to_oecd_representative, oecd_representative) }
+      it { should_not be_able_to(:promote_to_oecd_representative, other_administrator) }
+      it { should_not be_able_to(:promote_to_oecd_representative, build(:user)) }
+    end
+
+    context "when standard user" do
+      before { allow(other_user).to receive(:standard_user?).and_return(true) }
+      it { should be_able_to(:promote_to_oecd_representative, other_user) }
+      it { should_not be_able_to(:promote_to_oecd_representative, build(:user)) }
+    end
+  end
+
+  describe "demote_to_oecd_representative" do
+    context "when admin user" do
+      before { allow(other_user).to receive(:administrator?).and_return(true) }
+
+      it { should be_able_to(:demote_to_oecd_representative, other_user) }
+      it { should_not be_able_to(:demote_to_oecd_representative, build(:user)) }
+    end
+
+    context "when standard user" do
+      before { allow(other_user).to receive(:administrator?).and_return(false) }
+      it { should_not be_able_to(:demote_to_oecd_representative, other_user) }
+    end
+  end
+
+  describe "demote_to_user" do
+    context "when admin user" do
+      before { allow(other_user).to receive(:administrator?).and_return(true) }
+
+      it { should be_able_to(:demote_to_user, other_user) }
+    end
+
+    context "when OECD Representative user" do
+      before { allow(other_user).to receive(:oecd_representative?).and_return(true) }
+
+      it { should be_able_to(:demote_to_user, other_user) }
+    end
+
+    context "when standard user" do
+      it { should_not be_able_to(:demote_to_user, other_user) }
+      it { should_not be_able_to(:demote_to_user, build(:user)) }
+    end
+  end
+
   it { should be_able_to(:comment_as_administrator, debate) }
   it { should_not be_able_to(:comment_as_moderator, debate) }
 
@@ -98,4 +153,36 @@ describe Abilities::Administrator do
   it { should be_able_to(:manage, LocalCensusRecord) }
   it { should be_able_to(:create, LocalCensusRecords::Import) }
   it { should be_able_to(:show, LocalCensusRecords::Import) }
+
+  it { should be_able_to(:search, OecdRepresentative) }
+  it { should be_able_to(:create, OecdRepresentative) }
+  it { should be_able_to(:index, OecdRepresentative) }
+  it { should be_able_to(:destroy, OecdRepresentative) }
+
+  it { should be_able_to(:read, OecdRepresentativeRequest) }
+
+  context "with pending OecdRepresentativeRequest from standard user" do
+    let(:oecd_representative_request) { create(:oecd_representative_request, status: :pending) }
+    it { should be_able_to(:accept, oecd_representative_request) }
+    it { should be_able_to(:reject, oecd_representative_request) }
+  end
+
+  context "with accepted OecdRepresentativeRequest" do
+    let(:oecd_representative_request) { create(:oecd_representative_request, status: :accepted) }
+    it { should_not be_able_to(:accept, oecd_representative_request) }
+    it { should_not be_able_to(:reject, oecd_representative_request) }
+  end
+
+  context "with rejected OecdRepresentativeRequest" do
+    let(:oecd_representative_request) { create(:oecd_representative_request, status: :rejected) }
+    it { should_not be_able_to(:accept, oecd_representative_request) }
+    it { should_not be_able_to(:reject, oecd_representative_request) }
+  end
+
+  context "with pending OecdRepresentativeRequest from already upgraded user" do
+    let(:user) { create(:oecd_representative).user }
+    let(:oecd_representative_request) { create(:oecd_representative_request, status: :pending, user: user) }
+    it { should_not be_able_to(:accept, oecd_representative_request) }
+    it { should_not be_able_to(:reject, oecd_representative_request) }
+  end
 end

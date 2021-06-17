@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe "Admin valuators" do
   let(:admin) { create(:administrator) }
-  let!(:user) { create(:user, username: "Jose Luis Balbin") }
+  let!(:user) { create(:user, display_name: "Jose Luis Balbin") }
   let!(:valuator) { create(:valuator, description: "Very reliable") }
 
   before do
@@ -63,8 +63,8 @@ describe "Admin valuators" do
   end
 
   context "Search" do
-    let!(:user1) { create(:user, username: "David Foster Wallace", email: "david@wallace.com") }
-    let!(:user2) { create(:user, username: "Steven Erikson", email: "steven@erikson.com") }
+    let!(:user1) { create(:user, display_name: "David Foster Wallace", email: "david@wallace.com") }
+    let!(:user2) { create(:user, display_name: "Steven Erikson", email: "steven@erikson.com") }
     let!(:valuator1) { create(:valuator, user: user1) }
     let!(:valuator2) { create(:valuator, user: user2) }
 

@@ -1,0 +1,13 @@
+# the rest of the translations is taken from admin.yml
+# this file contains only the texts which are special for OECD Representation Interface
+en:
+  oecd_representative:
+    header:
+      title: OECD Representation Interface
+    menu:
+      admin: OECD Representation Interface
+      moderation: Comments moderation
+    dashboard:
+      index:
+        title: OECD Representation Interface
+        description: Welcome to the OECD Representation Interface.

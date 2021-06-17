@@ -1,6 +1,6 @@
 module Notifications
   def click_notifications_icon
-    find("#notifications a").click
+    first(:xpath, "//a[@href='#{notifications_path}']").click
   end
 
   def model_name(described_class)
@@ -56,7 +56,7 @@ module Notifications
   def error_message(resource_model = nil)
     resource_model ||= "(.*)"
     field_check_message = "Please check the marked fields to know how to correct them:"
-    /\d errors? prevented this #{resource_model} from being saved. #{field_check_message}/
+    /\d errors? prevented this #{resource_model} from being saved.([\n\s])*#{field_check_message}/
   end
 
   def fill_in_admin_notification_form(options = {})

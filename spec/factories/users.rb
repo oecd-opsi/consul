@@ -3,6 +3,7 @@ FactoryBot.define do
     sequence(:username) { |n| "Manuela#{n}" }
     sequence(:email)    { |n| "manuela#{n}@consul.dev" }
 
+    display_name { Faker::Name.name }
     password            { "judgmentday" }
     terms_of_service    { "1" }
     confirmed_at        { Time.current }
@@ -64,6 +65,11 @@ FactoryBot.define do
       after(:create) { |user| create(:comment, author: user) }
     end
 
+    trait :comment_notifications_disabled do
+      email_on_comment { false }
+      email_on_comment_reply { false }
+    end
+
     transient do
       votables { [] }
       followables { [] }
@@ -88,6 +94,9 @@ FactoryBot.define do
     user { nil }
     provider { "Twitter" }
     uid { "MyString" }
+    trait :authenticated_by_password do
+      uid { "#{Identity::AUTH0_PASSWORD_PREFIX}MyString" }
+    end
   end
 
   factory :administrator do
@@ -107,7 +116,7 @@ FactoryBot.define do
   end
 
   factory :poll_officer, class: "Poll::Officer" do
-    user { association(:user, username: name) }
+    user { association(:user, username: name, display_name: name) }
 
     transient do
       sequence(:name) { |n| "Officer #{n}" }
@@ -138,5 +147,9 @@ FactoryBot.define do
     body     { "How are You doing?" }
     association :sender,   factory: :user
     association :receiver, factory: :user
+  end
+
+  factory :oecd_representative do
+    user { create(:user, :verified) }
   end
 end

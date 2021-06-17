@@ -282,6 +282,10 @@ pl:
       sign_in: Zaloguj się przez Twitter
       sign_up: Zarejestruj się przez Twitter
       name: Twitter
+    auth0:
+      sign_in: Zaloguj się przez Auth0
+      sign_up: Zarejestruj się przez Auth0
+      name: Auth0
     info_sign_in: "Zaloguj się przez:"
     info_sign_up: "Zarejestruj się przez:"
     or_fill: "Lub wypełnij formularz:"

@@ -298,6 +298,10 @@ pt-BR:
       sign_in: Iniciar sessão com o Twitter
       sign_up: Inscrever-se com o Twitter
       name: Twitter
+    auth0:
+      sign_in: Iniciar sessão com o Auth0
+      sign_up: Inscrever-se com o Auth0
+      name: Auth0
     info_sign_in: "Iniciar sessão com:"
     info_sign_up: "Inscrever-se com:"
     or_fill: "Ou preencha o seguinte formulário:"

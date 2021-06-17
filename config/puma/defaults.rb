@@ -7,19 +7,14 @@ rackup "#{rails_root}/config.ru"
 
 tag ""
 
-pidfile "#{rails_root}/tmp/pids/puma.pid"
-state_path "#{rails_root}/tmp/pids/puma.state"
-stdout_redirect "#{rails_root}/log/puma_access.log", "#{rails_root}/log/puma_error.log", true
+max_threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
+min_threads_count = ENV.fetch("RAILS_MIN_THREADS") { max_threads_count }
+threads min_threads_count, max_threads_count
 
-bind "unix://#{rails_root}/tmp/sockets/puma.sock"
-daemonize
-
-threads 0, 16
-workers 2
-preload_app!
-
-restart_command "bundle exec --keep-file-descriptors puma"
+environment ENV.fetch("RAILS_ENV") { "development" }
 plugin :tmp_restart
+
+preload_app!
 
 on_restart do
   puts "Refreshing Gemfile"

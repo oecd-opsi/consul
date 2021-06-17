@@ -90,12 +90,6 @@ describe User do
     end
   end
 
-  describe "#name" do
-    it "is the username when the user is not an organization" do
-      expect(subject.name).to eq(subject.username)
-    end
-  end
-
   describe "#age" do
     it "is the rounded integer age based on the date_of_birth" do
       user = create(:user, date_of_birth: 33.years.ago)
@@ -104,18 +98,6 @@ describe User do
   end
 
   describe "preferences" do
-    describe "email_on_comment" do
-      it "is false by default" do
-        expect(subject.email_on_comment).to eq(false)
-      end
-    end
-
-    describe "email_on_comment_reply" do
-      it "is false by default" do
-        expect(subject.email_on_comment_reply).to eq(false)
-      end
-    end
-
     describe "subscription_to_website_newsletter" do
       it "is true by default" do
         expect(subject.newsletter).to eq(true)
@@ -400,28 +382,6 @@ describe User do
         expect(User.erased).to match_array [user1, user2]
         expect(User.erased).not_to include(user3)
       end
-    end
-  end
-
-  describe "self.search" do
-    it "find users by email" do
-      user1 = create(:user, email: "larry@consul.dev")
-      create(:user, email: "bird@consul.dev")
-      search = User.search("larry@consul.dev")
-
-      expect(search).to eq [user1]
-    end
-
-    it "find users by name" do
-      user1 = create(:user, username: "Larry Bird")
-      create(:user, username: "Robert Parish")
-      search = User.search("larry")
-
-      expect(search).to eq [user1]
-    end
-
-    it "returns no results if no search term provided" do
-      expect(User.search("    ")).to be_empty
     end
   end
 

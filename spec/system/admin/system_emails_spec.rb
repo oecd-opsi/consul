@@ -65,7 +65,7 @@ describe "System Emails" do
   end
 
   context "View" do
-    let(:user)    { create(:user, :level_two, username: "John Doe") }
+    let(:user)    { create(:user, :level_two, display_name: "John Doe") }
     let(:budget)  { create(:budget, name: "Budget for 2019") }
     let(:heading) { create(:budget_heading, budget: budget) }
 
@@ -239,7 +239,7 @@ describe "System Emails" do
     end
 
     scenario "#evaluation_comment" do
-      admin = create(:administrator, user: create(:user, username: "Baby Doe"))
+      admin = create(:administrator, user: create(:user, display_name: "Baby Doe"))
       investment = create(:budget_investment,
         title: "Cleaner city",
         heading: heading,

@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe Administrator do
   describe "#description_or_name" do
-    let!(:user) { create(:user, username: "Billy Wilder") }
+    let!(:user) { create(:user, display_name: "Billy Wilder") }
 
     it "returns description if present" do
       administrator = create(:administrator, user: user, description: "John Doe")
@@ -24,7 +24,7 @@ describe Administrator do
   end
 
   describe "#description_or_name_and_email" do
-    let!(:user) { create(:user, username: "Billy Wilder", email: "test@test.com") }
+    let!(:user) { create(:user, display_name: "Billy Wilder", email: "test@test.com") }
 
     it "returns description and email if decription present" do
       administrator = create(:administrator,

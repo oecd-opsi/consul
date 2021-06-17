@@ -86,7 +86,11 @@ namespace :admin do
     end
   end
 
-  resources :comments, only: :index
+  resources :comments, only: :index do
+    get :to_export, on: :collection
+    get "export/:process_id", on: :collection, to: "comments#export", as: :export,
+         defaults: { format: :csv }
+  end
 
   resources :tags, only: [:index, :create, :update, :destroy]
 
@@ -115,9 +119,29 @@ namespace :admin do
 
   resources :administrators, only: [:index, :create, :destroy, :edit, :update] do
     get :search, on: :collection
+    member do
+      get :demote_to_user
+      get :demote_to_oecd_representative
+    end
   end
 
-  resources :users, only: [:index, :show]
+  resources :oecd_representatives, only: [:index, :create, :destroy] do
+    get :search, on: :collection
+  end
+
+  resources :oecd_representative_requests, only: [:index, :show] do
+    get :accept, on: :member
+    get :reject, on: :member
+  end
+
+  resources :users, only: [:index, :show] do
+    member do
+      get :promote_to_admin
+      get :promote_to_oecd_representative
+      get :demote_to_user
+      get :demote_to_oecd_representative
+    end
+  end
 
   scope module: :poll do
     resources :polls do
@@ -202,7 +226,7 @@ namespace :admin do
     get :polls, on: :collection
   end
 
-  namespace :legislation do
+  namespace :legislation, path: :engagement do
     resources :processes do
       resources :questions
       resources :proposals do
@@ -227,9 +251,12 @@ namespace :admin do
     end
     resources :images, only: [:index, :update, :destroy]
     resources :content_blocks, except: [:show]
-    delete "/heading_content_blocks/:id", to: "content_blocks#delete_heading_content_block", as: "delete_heading_content_block"
-    get "/edit_heading_content_blocks/:id", to: "content_blocks#edit_heading_content_block", as: "edit_heading_content_block"
-    put "/update_heading_content_blocks/:id", to: "content_blocks#update_heading_content_block", as: "update_heading_content_block"
+    delete "/heading_content_blocks/:id", to: "content_blocks#delete_heading_content_block",
+           as: "delete_heading_content_block"
+    get "/edit_heading_content_blocks/:id", to: "content_blocks#edit_heading_content_block",
+        as: "edit_heading_content_block"
+    put "/update_heading_content_blocks/:id", to: "content_blocks#update_heading_content_block",
+        as: "update_heading_content_block"
     resources :information_texts, only: [:index] do
       post :update, on: :collection
     end

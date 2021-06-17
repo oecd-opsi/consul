@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="small-12 medium-9 column">
+    <%= back_link_to %>
+
+    <h1>
+      <%= t("users.oecd_represetative_requests.new.title") %>
+    </h1>
+
+      <%= form_for [@oecd_representative_request] do |f| %>
+        <%= render "shared/errors", resource: @oecd_representative_request %>
+
+        <%= f.text_area :message, rows: "3" %>
+
+        <div class="small-12 medium-4">
+          <%= f.submit t("users.oecd_represetative_requests.new.submit_button"), class: "button expanded" %>
+        </div>
+      <% end %>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<td style="padding-bottom: 20px; padding-left: 10px;">
+
+  <h1 style="font-family: 'Open Sans','Helvetica Neue',arial,sans-serif;">
+    <%= t("mailers.new_oecd_representative_request.title") %>
+  </h1>
+
+  <p style="font-family: 'Open Sans','Helvetica Neue',arial,sans-serif;font-size: 14px;font-weight: normal;line-height: 24px;">
+    <%= t("mailers.new_oecd_representative_request.hi", name: @recipient.name) %>,
+  </p>
+
+  <p style="font-family: 'Open Sans','Helvetica Neue',arial,sans-serif;font-size: 14px;font-weight: normal;line-height: 24px;">
+    <%= t("mailers.new_oecd_representative_request.content") %>
+
+    <% if @recipient.administrator? %>
+      <%= link_to admin_oecd_representative_request_url(@request), admin_oecd_representative_request_url(@request), style: "color: #2895F1; text-decoration:none;" %>
+    <% else %>
+      <%= link_to management_oecd_representative_request_url(@request), management_oecd_representative_request_url(@request), style: "color: #2895F1; text-decoration:none;" %>
+    <% end %>
+  </p>
+</td>

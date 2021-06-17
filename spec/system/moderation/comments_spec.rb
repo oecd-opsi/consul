@@ -1,10 +1,7 @@
 require "rails_helper"
-
-describe "Moderate comments" do
+shared_examples "Comments moderation" do
   scenario "Hide", :js do
     citizen = create(:user)
-    moderator = create(:moderator)
-
     comment = create(:comment)
 
     login_as(moderator.user)
@@ -24,7 +21,6 @@ describe "Moderate comments" do
   end
 
   scenario "Can not hide own comment" do
-    moderator = create(:moderator)
     comment = create(:comment, user: moderator.user)
 
     login_as(moderator.user)
@@ -37,7 +33,6 @@ describe "Moderate comments" do
   end
 
   scenario "Visit items with flagged comments" do
-    moderator = create(:moderator)
     debate = create(:debate, title: "Debate with spam comment")
     proposal = create(:proposal, title: "Proposal with spam comment")
     create(:comment, commentable: debate, body: "This is SPAM comment on debate", flags_count: 2)
@@ -64,7 +59,6 @@ describe "Moderate comments" do
 
   describe "/moderation/ screen" do
     before do
-      moderator = create(:moderator)
       login_as(moderator.user)
     end
 
@@ -194,9 +188,17 @@ describe "Moderate comments" do
     end
 
     scenario "sorting comments" do
-      flagged_comment = create(:comment, body: "Flagged comment", created_at: Time.current - 1.day, flags_count: 5)
-      flagged_new_comment = create(:comment, body: "Flagged new comment", created_at: Time.current - 12.hours, flags_count: 3)
-      newer_comment = create(:comment, body: "Newer comment", created_at: Time.current)
+      flagged_comment = create(:comment,
+                               body: "Flagged comment",
+                               created_at: Time.current - 1.day,
+                               flags_count: 5)
+      flagged_new_comment = create(:comment,
+                                   body: "Flagged new comment",
+                                   created_at: Time.current - 12.hours,
+                                   flags_count: 3)
+      newer_comment = create(:comment,
+                             body: "Newer comment",
+                             created_at: Time.current)
 
       visit moderation_comments_path(order: "newest")
 
@@ -216,5 +218,22 @@ describe "Moderate comments" do
       expect(flagged_comment.body).to appear_before(flagged_new_comment.body)
       expect(flagged_new_comment.body).to appear_before(newer_comment.body)
     end
+  end
+end
+
+describe "Moderate comments" do
+  context "when logged in as a moderator" do
+    let(:moderator) { create(:moderator) }
+    it_behaves_like "Comments moderation"
+  end
+
+  context "when logged in as a admin" do
+    let(:moderator) { create(:administrator) }
+    it_behaves_like "Comments moderation"
+  end
+
+  context "when logged in as a manager" do
+    let(:moderator) { create(:manager) }
+    it_behaves_like "Comments moderation"
   end
 end

@@ -15,6 +15,8 @@ class Ability
         merge Abilities::Moderator.new(user)
       elsif user.manager?
         merge Abilities::Manager.new(user)
+      elsif user.oecd_representative?
+        merge Abilities::OecdRepresentative.new(user)
       else
         merge Abilities::Common.new(user)
       end

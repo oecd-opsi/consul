@@ -121,6 +121,8 @@ ignore_missing:
   - "devise.registrations.destroyed"
   - "devise.password_expired.*"
   - "seeds.settings.*"
+  - "admin.legislation.processes.form.*"
+  - "admin.legislation.processes.form.descriptive_texts.*"
 
 ## Consider these keys used:
 ignore_unused:

@@ -306,6 +306,10 @@ ru:
       sign_in: Войти при помощи Twitter
       sign_up: Зарегистрироваться при помощи Twitter
       name: Twitter
+    auth0:
+      sign_in: Войти при помощи Auth0
+      sign_up: Зарегистрироваться при помощи Auth0
+      name: Auth0
     info_sign_in: "Войти при помощи:"
     info_sign_up: "Зарегистрироваться при помощи:"
     or_fill: "Или заполните следующую форму:"

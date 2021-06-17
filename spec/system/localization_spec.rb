@@ -19,7 +19,7 @@ describe "Localization" do
   scenario "Available locales appear in the locale switcher" do
     visit "/"
 
-    within(".locale-form .js-location-changer") do
+    within(".c-header__locale-form .js-location-changer") do
       expect(page).to have_content "Español"
       expect(page).to have_content "English"
     end
@@ -83,7 +83,7 @@ describe "Localization" do
     scenario "Available locales without language translation display locale key" do
       visit "/"
 
-      within(".locale-form .js-location-changer") do
+      within(".c-header__locale-form .js-location-changer") do
         expect(page).to have_content "wl"
       end
     end
@@ -101,7 +101,7 @@ describe "Localization" do
 
       visit root_path
 
-      expect(page).to have_content "Sign in"
+      expect(page).to have_content "Log In"
     ensure
       I18n.available_locales = default_locales
     end

@@ -299,6 +299,10 @@ es:
       sign_in: Entra con Twitter
       sign_up: Regístrate con Twitter
       name: Twitter
+    auth0:
+      sign_in: Entra con Auth0
+      sign_up: Regístrate con Auth0
+      name: Auth0
     info_sign_in: "Entra con:"
     info_sign_up: "Regístrate con:"
     or_fill: "O rellena el siguiente formulario:"

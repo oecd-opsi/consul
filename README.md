@@ -47,6 +47,7 @@ cd consul
 bundle install
 cp config/database.yml.example config/database.yml
 cp config/secrets.yml.example config/secrets.yml
+cp .env.example .env
 bin/rake db:create
 bin/rake db:migrate
 bin/rake db:dev_seed

@@ -5,3 +5,21 @@
 //
 //
 
+//= require custom/header
+//= require custom/redirect-click
+//= require custom/newsletter-form
+
+var initializeCustomModules = function () {
+  'use strict';
+
+  App.CustomHeader.initialize();
+  App.CustomRedirectClick.initialize();
+  App.CustomNewsletterForm.initialize();
+};
+
+$(function () {
+  'use strict';
+
+  $(document).ready(initializeCustomModules);
+  $(document).on('page:load', initializeCustomModules);
+});

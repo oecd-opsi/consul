@@ -1,0 +1,65 @@
+<% if @users.any? %>
+  <h3 class="margin"><%= page_entries_info @users %></h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th scope="col"><%= t("admin.users.columns.name") %></th>
+        <th scope="col"><%= t("admin.users.columns.email") %></th>
+        <th scope="col"><%= t("admin.users.columns.document_number") %></th>
+        <th scope="col"><%= t("admin.users.columns.roles") %></th>
+        <th scope="col"><%= t("admin.users.columns.verification_level") %></th>
+        <th scope="col" class="small-4"><%= t("admin.users.columns.actions") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= link_to user.name, user_path(user), target: "_blank" %></td>
+          <td><%= user.email %></td>
+          <td><%= user.document_number %></td>
+          <td><%= display_user_roles(user) %></td>
+          <td><%= user.user_type %></td>
+          <td>
+            <%- if can?(:promote_to_oecd_representative, user) %>
+              <div class="small-6 column">
+                <%= link_to promote_to_oecd_representative_admin_user_path(user), "data-confirm": "Are you sure?", title: t("admin.users.actions.promote_oecd_representative"), class: "button hollow small expanded" do %>
+                  <%= t("admin.users.actions.promote_oecd_representative") %>
+                <% end %>
+              </div>
+            <% end %>
+
+            <%- if can?(:promote_to_admin, user) %>
+              <div class="small-6 column">
+                <%= link_to promote_to_admin_admin_user_path(user), "data-confirm": "Are you sure?", title: t("admin.users.actions.promote_admin"), class: "button hollow small expanded" do %>
+                  <%= t("admin.users.actions.promote_admin") %>
+                <% end %>
+              </div>
+          <% end %>
+            <%- if can?(:demote_to_oecd_representative, user) %>
+              <div class="small-6 column">
+                <%= link_to demote_to_oecd_representative_admin_user_path(user), "data-confirm": "Are you sure?", title:  t("admin.users.actions.demote_to_oecd_representative"), class: "button hollow small expanded" do %>
+                  <%= t("admin.users.actions.demote_to_oecd_representative") %>
+                <% end %>
+              </div>
+            <% end %>
+
+            <%- if can?(:demote_to_user, user) %>
+              <div class="small-6 column">
+                <%= link_to demote_to_user_admin_user_path(user), "data-confirm": "Are you sure?", title: t("admin.users.actions.demote_to_user"), class: "button hollow small expanded" do %>
+                  <%= t("admin.users.actions.demote_to_user") %>
+                <% end %>
+              </div>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @users %>
+<% else %>
+  <div class="callout primary">
+    <%= t("admin.users.index.no_users") %>
+  </div>
+<% end %>

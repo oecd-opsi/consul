@@ -27,6 +27,10 @@ module ActionDispatch::Routing::UrlFor
     end
   end
 
+  def oecd_representative_polymorphic_path(resource, options = {})
+    polymorphic_path([:oecd_representative, *resource_hierarchy_for(resource)], options)
+  end
+
   private
 
     def resolve_for(resource)

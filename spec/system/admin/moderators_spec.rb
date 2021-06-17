@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "Admin moderators" do
-  let!(:user)      { create(:user, username: "Jose Luis Balbin") }
+  let!(:user)      { create(:user, display_name: "Jose Luis Balbin") }
   let!(:moderator) { create(:moderator) }
 
   before do
@@ -35,8 +35,8 @@ describe "Admin moderators" do
   end
 
   context "Search" do
-    let(:user)        { create(:user, username: "Elizabeth Bathory", email: "elizabeth@bathory.com") }
-    let(:user2)       { create(:user, username: "Ada Lovelace", email: "ada@lovelace.com") }
+    let(:user)        { create(:user, display_name: "Elizabeth Bathory", email: "elizabeth@bathory.com") }
+    let(:user2)       { create(:user, display_name: "Ada Lovelace", email: "ada@lovelace.com") }
     let!(:moderator1) { create(:moderator, user: user) }
     let!(:moderator2) { create(:moderator, user: user2) }
 

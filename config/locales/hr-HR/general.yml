@@ -298,6 +298,10 @@ hr:
       sign_in: Ulogiraj se s Twitterom
       sign_up: Prijavi se s Twitterom
       name: Twitter
+    auth0:
+      sign_in: Ulogiraj se s Auth0om
+      sign_up: Prijavi se s Auth0om
+      name: Auth0
     info_sign_in: "Ulogiraj se s:"
     info_sign_up: "Prijavi se s:"
     or_fill: "Ili ispunite sljedeći obrazac:"

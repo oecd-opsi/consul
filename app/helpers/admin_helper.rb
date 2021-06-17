@@ -44,7 +44,10 @@ module AdminHelper
   end
 
   def menu_profiles?
-    %w[administrators organizations officials moderators valuators managers users].include?(controller_name)
+    %w[
+      administrators organizations officials moderators
+      valuators managers users oecd_representatives
+    ].include?(controller_name)
   end
 
   def menu_settings?
@@ -101,6 +104,7 @@ module AdminHelper
     roles << :poll_officer if user.poll_officer?
     roles << :official if user.official?
     roles << :organization if user.organization?
+    roles << :oecd_representative if user.oecd_representative?
     roles
   end
 
@@ -111,6 +115,9 @@ module AdminHelper
   private
 
     def namespace
-      controller.class.name.downcase.split("::").first
+      name = controller.class.name.downcase.split("::").first
+      return name unless name == "oecdrepresentative"
+
+      "oecd_representative"
     end
 end

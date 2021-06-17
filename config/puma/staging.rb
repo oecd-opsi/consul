@@ -3,3 +3,4 @@
 _load_from File.expand_path("../defaults.rb", __FILE__)
 
 environment "staging"
+port        ENV.fetch("PORT") { 5000 }

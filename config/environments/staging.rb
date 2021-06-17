@@ -72,11 +72,8 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: Rails.application.secrets.server_name }
   config.action_mailer.asset_host = "https://#{Rails.application.secrets.server_name}"
 
-  # Configure your SMTP service credentials in secrets.yml
-  if Rails.application.secrets.smtp_settings
-    config.action_mailer.delivery_method = Rails.application.secrets.mailer_delivery_method || :smtp
-    config.action_mailer.smtp_settings = Rails.application.secrets.smtp_settings
-  end
+  # Use AWS SES for sending emails
+  config.action_mailer.delivery_method = :ses
 
   # Disable locale fallbacks for I18n
   # (prevents using fallback locales set in application.rb).
@@ -87,6 +84,12 @@ Rails.application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+  if ENV["RAILS_LOG_TO_STDOUT"].present?
+    logger           = ActiveSupport::Logger.new(STDOUT)
+    logger.formatter = config.log_formatter
+    config.logger = ActiveSupport::TaggedLogging.new(logger)
+  end
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false

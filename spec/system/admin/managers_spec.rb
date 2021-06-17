@@ -35,8 +35,8 @@ describe "Admin managers" do
   end
 
   context "Search" do
-    let(:user)      { create(:user, username: "Taylor Swift", email: "taylor@swift.com") }
-    let(:user2)     { create(:user, username: "Stephanie Corneliussen", email: "steph@mrrobot.com") }
+    let(:user)      { create(:user, display_name: "Taylor Swift", email: "taylor@swift.com") }
+    let(:user2)     { create(:user, display_name: "Stephanie Corneliussen", email: "steph@mrrobot.com") }
     let!(:manager1) { create(:manager, user: user) }
     let!(:manager2) { create(:manager, user: user2) }
 

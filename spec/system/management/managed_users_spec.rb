@@ -61,6 +61,7 @@ describe "Managed User" do
       within(".account-info") do
         expect(page).not_to have_content "Identified as"
         expect(page).not_to have_content "Username"
+        expect(page).not_to have_content "Name"
         expect(page).not_to have_content "Email"
         expect(page).to have_content "Document type"
         expect(page).to have_content "Document number"
@@ -72,7 +73,8 @@ describe "Managed User" do
       fill_in "email_verification_email", with: user.email
       click_button "Send verification email"
 
-      expect(page).to have_content("In order to completely verify this user, it is necessary that the user clicks on a link")
+      expect(page)
+        .to have_content("In order to completely verify this user, it is necessary that the user clicks on a link")
 
       within(".account-info") do
         expect(page).to have_content "Identified as"
@@ -94,6 +96,7 @@ describe "Managed User" do
       click_link "Create a new account"
 
       fill_in "user_username", with: "pepe"
+      fill_in "user_display_name", with: "Pepe"
       fill_in "user_email", with: "pepe@gmail.com"
 
       click_button "Create user"
@@ -105,6 +108,7 @@ describe "Managed User" do
       within(".account-info") do
         expect(page).to have_content "Identified as"
         expect(page).to have_content user.username.to_s
+        expect(page).to have_content user.display_name.to_s
         expect(page).to have_content user.email.to_s
         expect(page).to have_content user.document_number.to_s
       end
@@ -122,6 +126,7 @@ describe "Managed User" do
       click_link "Create a new account"
 
       fill_in "user_username", with: "peppa"
+      fill_in "user_display_name", with: "Peppe"
       fill_in "user_email", with: ""
 
       click_button "Create user"
@@ -133,9 +138,33 @@ describe "Managed User" do
       within(".account-info") do
         expect(page).to have_content "Identified as"
         expect(page).to have_content user.username.to_s
+        expect(page).to have_content user.display_name.to_s
         expect(page).to have_content user.document_number.to_s
       end
     end
+  end
+
+  scenario "User cannot be created without display_name" do
+    login_as_manager
+
+    visit management_document_verifications_path
+    fill_in "document_verification_document_number", with: "12345678Z"
+    click_button "Check document"
+
+    expect(page).to have_content "Please introduce the email used on the account"
+
+    click_link "Create a new account"
+
+    username = "pepe"
+    fill_in "user_username", with: username
+    fill_in "user_email", with: "example@example.com"
+
+    click_button "Create user"
+
+    expect(page).to have_content "can't be blank"
+    expect(find_field("Name")[:class]).to include("is-invalid-input")
+    expect(page).to have_button "Create user"
+    expect(User.find_by(username: username)).to be_nil
   end
 
   scenario "Close the currently managed user session" do
@@ -150,6 +179,7 @@ describe "Managed User" do
     within(".account-info") do
       expect(page).to have_content "Identified as"
       expect(page).to have_content user.username.to_s
+      expect(page).to have_content user.name.to_s
 
       click_link "Change user"
     end
@@ -157,6 +187,7 @@ describe "Managed User" do
     expect(page).to have_content "User session signed out successfully."
     expect(page).not_to have_content "Identified as"
     expect(page).not_to have_content user.username.to_s
+    expect(page).not_to have_content user.name.to_s
     expect(page).to have_current_path(management_root_path)
   end
 end

@@ -1,0 +1,13 @@
+<% if feature?(:auth0_login) %>
+  <div class="row">
+    <div class="column">
+        <div class="margin-bottom"><strong>Redirecting...</strong></div>
+        Please <%= link_to 'click here',
+                  omniauth_authorize_path(:user, :auth0),
+                  title: t("omniauth.auth0.sign_in"),
+                  class: 'js-redirect-click',
+                  method: :post %>
+        if you are not redirected within a few seconds...
+    </div>
+  </div>
+<%  end %>

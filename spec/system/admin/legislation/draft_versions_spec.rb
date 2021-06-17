@@ -10,7 +10,8 @@ describe "Admin legislation draft versions" do
     scenario "Disabled with a feature flag" do
       Setting["process.legislation"] = nil
       process = create(:legislation_process)
-      expect { visit admin_legislation_process_draft_versions_path(process) }.to raise_exception(FeatureFlags::FeatureDisabled)
+      expect { visit admin_legislation_process_draft_versions_path(process) }
+        .to raise_exception(FeatureFlags::FeatureDisabled)
     end
   end
 
@@ -37,7 +38,7 @@ describe "Admin legislation draft versions" do
       visit admin_root_path
 
       within("#side_menu") do
-        click_link "Collaborative Legislation"
+        click_link I18n.t("layouts.header.collaborative_legislation")
       end
 
       click_link "All"
@@ -70,7 +71,7 @@ describe "Admin legislation draft versions" do
       visit admin_root_path
 
       within("#side_menu") do
-        click_link "Collaborative Legislation"
+        click_link I18n.t("layouts.header.collaborative_legislation")
       end
 
       click_link "All"

@@ -1,8 +1,9 @@
 require "rails_helper"
 
 describe "Admin collaborative legislation" do
+  let(:admin) { create(:administrator) }
+
   before do
-    admin = create(:administrator)
     login_as(admin.user)
   end
 
@@ -65,7 +66,7 @@ describe "Admin collaborative legislation" do
       visit admin_root_path
 
       within("#side_menu") do
-        click_link "Collaborative Legislation"
+        click_link I18n.t("layouts.header.collaborative_legislation")
       end
 
       expect(page).not_to have_content "An example legislation process"
@@ -101,6 +102,7 @@ describe "Admin collaborative legislation" do
 
       expect(page).to have_content "An example legislation process"
       expect(page).to have_content "Process created successfully"
+      expect(Legislation::Process.last.author).to eq(admin.user)
 
       click_link "Click to visit"
 
@@ -119,7 +121,7 @@ describe "Admin collaborative legislation" do
       visit admin_root_path
 
       within("#side_menu") do
-        click_link "Collaborative Legislation"
+        click_link I18n.t("layouts.header.collaborative_legislation")
       end
 
       expect(page).not_to have_content "An example legislation process"
@@ -198,7 +200,7 @@ describe "Admin collaborative legislation" do
       visit admin_root_path
 
       within("#side_menu") do
-        click_link "Collaborative Legislation"
+        click_link I18n.t("layouts.header.collaborative_legislation")
       end
 
       click_link "An example legislation process"
@@ -221,7 +223,7 @@ describe "Admin collaborative legislation" do
       visit admin_root_path
 
       within("#side_menu") do
-        click_link "Collaborative Legislation"
+        click_link I18n.t("layouts.header.collaborative_legislation")
       end
 
       click_link "An example legislation process"

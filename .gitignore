@@ -17,8 +17,6 @@
 /tmp
 
 /spec/examples.txt
-/config/database.yml
-/config/secrets.yml
 /config/deploy-secrets.yml
 /config/maintenance.yml
 
@@ -38,3 +36,5 @@
 public/sitemap.xml
 public/system/
 /public/ckeditor_assets/
+
+.env

@@ -137,7 +137,7 @@ tr:
       recommendation_four: Bu alanı ve burada paylaşılan farklı seslerin tadını çıkarın. Bu alan size de ait.
       recommendation_one: Tartışma konusu veya cümlelerin tümü için büyük harfler kullanmayın. İnternet üzerinde, bu bağırmak olarak algılanmaktadır. Ve kimse bağrılmaktan hoşlanmaz.
       recommendation_three: Acımasız eleştirilere açığız. Burası düşüncelerin paylaşıldığı bir alandır. Fakat inceliğe ve anlayışa sadık kalmanızı öneriyoruz. Dünya bu erdemler sayesinde daha iyi bir yer olmaktadır.
-      recommendation_two: Yasadışı eylem öneren herhangi bir öneri veya yorum silinecektir, bunun yanı sıra tartışma alanlarını sabote etmek isteyenler de silinecektir. Bunların dışında her şeye izin verilir. 
+      recommendation_two: Yasadışı eylem öneren herhangi bir öneri veya yorum silinecektir, bunun yanı sıra tartışma alanlarını sabote etmek isteyenler de silinecektir. Bunların dışında her şeye izin verilir.
       recommendations_title: Bir tartışma oluşturmak için öneriler
       start_new: Bir tartışma başlat
     show:
@@ -285,6 +285,10 @@ tr:
       sign_in: Twitter ile oturum aç
       sign_up: Twitter ile kaydol
       name: Twitter
+    auth0:
+      sign_in: Auth0 ile oturum aç
+      sign_up: Auth0 ile kaydol
+      name: Auth0
     info_sign_in: "Bununla oturum aç:"
     info_sign_up: "Bununla kaydol:"
     or_fill: "Veya aşağıdaki formu doldur:"

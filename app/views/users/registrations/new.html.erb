@@ -8,7 +8,7 @@
 
   <p>
     <%= sanitize(t("devise_views.users.registrations.new.organization_signup",
-        signup_link: link_to(t("devise_views.users.registrations.new.organization_signup_link"), new_organization_registration_path))) %>
+                   signup_link: link_to(t("devise_views.users.registrations.new.organization_signup_link"), new_organization_registration_path))) %>
   </p>
 
   <div class="row">
@@ -18,8 +18,8 @@
       <%= f.hidden_field :locale, value: I18n.locale %>
 
       <%= f.text_field :username,  autofocus: true, maxlength: User.username_max_length,
-                                   placeholder: t("devise_views.users.registrations.new.username_label"),
-                                   hint: t("devise_views.users.registrations.new.username_note") %>
+                       placeholder: t("devise_views.users.registrations.new.username_label"),
+                       hint: t("devise_views.users.registrations.new.username_note") %>
 
       <%= f.invisible_captcha :address %>
 
@@ -37,12 +37,12 @@
       <% end %>
 
       <%= f.check_box :terms_of_service,
-        title: t("devise_views.users.registrations.new.terms_title"),
-        label: t("devise_views.users.registrations.new.terms",
-                 terms: link_to(t("devise_views.users.registrations.new.terms_link"), "/conditions",
-                                title: t("shared.target_blank"),
-                                target: "_blank")
-                ) %>
+                      title: t("devise_views.users.registrations.new.terms_title"),
+                      label: t("devise_views.users.registrations.new.terms",
+                               terms: link_to(t("devise_views.users.registrations.new.terms_link"), "/conditions",
+                                              title: t("shared.target_blank"),
+                                              target: "_blank")
+                             ) %>
 
       <div class="small-12 medium-6 small-centered">
         <%= f.submit t("devise_views.users.registrations.new.submit"), class: "button expanded" %>

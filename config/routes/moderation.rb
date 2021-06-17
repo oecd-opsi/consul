@@ -18,7 +18,7 @@ namespace :moderation do
     put :moderate, on: :collection
   end
 
-  namespace :legislation do
+  namespace :legislation, path: :engagement do
     resources :proposals, only: :index do
       put :hide, on: :member
       put :moderate, on: :collection

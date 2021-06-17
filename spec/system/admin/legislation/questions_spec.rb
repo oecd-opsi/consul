@@ -14,7 +14,8 @@ describe "Admin legislation questions" do
     end
 
     scenario "Disabled with a feature flag" do
-      expect { visit admin_legislation_process_questions_path(process) }.to raise_exception(FeatureFlags::FeatureDisabled)
+      expect { visit admin_legislation_process_questions_path(process) }
+        .to raise_exception(FeatureFlags::FeatureDisabled)
     end
   end
 
@@ -38,7 +39,7 @@ describe "Admin legislation questions" do
       visit admin_root_path
 
       within("#side_menu") do
-        click_link "Collaborative Legislation"
+        click_link I18n.t("layouts.header.collaborative_legislation")
       end
 
       click_link "All"
@@ -64,7 +65,7 @@ describe "Admin legislation questions" do
       visit admin_root_path
 
       within("#side_menu") do
-        click_link "Collaborative Legislation"
+        click_link I18n.t("layouts.header.collaborative_legislation")
       end
 
       click_link "All"
